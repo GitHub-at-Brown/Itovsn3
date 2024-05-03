@@ -1,0 +1,1826 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     63133,       1818]
+NotebookOptionsPosition[     48055,       1462]
+NotebookOutlinePosition[     48588,       1480]
+CellTagsIndexPosition[     48545,       1477]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["MardiaDryden", "Title",
+ CellChangeTimes->{{3.923661027752301*^9, 3.923661039741314*^9}, 
+   3.923661366325859*^9, 3.9236616709906607`*^9},
+ CellID->973089447,ExpressionUUID->"dac3538a-2d4a-4a84-9368-41fae771bd36"],
+
+Cell["Author Information", "MathCaption",
+ CellFrame->{{0, 0}, {0, 0.5}},
+ CellFrameColor->GrayLevel[0.75],
+ CellChangeTimes->{3.923660275493643*^9},
+ CellID->152286735,ExpressionUUID->"50479f29-2a39-4350-8b74-9b0a9035a5f4"],
+
+Cell["\tWilfrid S . Kendall", "Text",
+ CellChangeTimes->{{3.923660277780325*^9, 3.9236603180877647`*^9}, 
+   3.923660392129348*^9, {3.923661373113601*^9, 3.923661376810999*^9}},
+ CellID->1830131568,ExpressionUUID->"f7ac785e-9272-495c-8234-1ea8886f8d07"],
+
+Cell["\tStatistics, University of Warwick, ", "Text",
+ CellChangeTimes->{{3.923660279789867*^9, 3.923660279794541*^9}, 
+   3.923660318088665*^9, 3.923660392959887*^9, {3.923661384213435*^9, 
+   3.9236613890823603`*^9}},
+ CellID->612987395,ExpressionUUID->"ba874dea-b7c7-4433-8067-0fcb4207dc8d"],
+
+Cell["\tCoventry CV4 7 AL, UK.", "Text",
+ CellChangeTimes->{{3.923660283643339*^9, 3.923660283646084*^9}, 
+   3.923660318089451*^9, 3.9236603937499313`*^9, {3.9236613954211197`*^9, 
+   3.923661402882295*^9}},
+ CellID->1000093106,ExpressionUUID->"19adefc1-fafa-407d-acae-22fa86398542"],
+
+Cell["Purpose", "MathCaption",
+ CellFrame->{{0, 0}, {0, 0.5}},
+ CellFrameColor->GrayLevel[0.75],
+ CellChangeTimes->{{3.9236602077315073`*^9, 3.923660208508951*^9}},
+ CellID->518162834,ExpressionUUID->"51060b1b-0576-4704-a665-240d02d94874"],
+
+Cell["\<\
+This is a Mathematica notebook that derives the Mardia-Dryden distribution \
+for the shape of three points moving by independent Brownian motions started \
+from different points on the plane.\
+\>", "Text",
+ CellChangeTimes->{{3.923659799818636*^9, 3.9236598095249147`*^9}, {
+   3.923660212138755*^9, 3.9236602127486777`*^9}, {3.923660396081377*^9, 
+   3.923660409351466*^9}, 3.923660628603223*^9, {3.923660891391697*^9, 
+   3.9236608969540863`*^9}, {3.923661060588091*^9, 3.923661066678528*^9}, 
+   3.9236614668570232`*^9, {3.923661526524445*^9, 3.9236615358439007`*^9}, 
+   3.923661688143075*^9, {3.923661976728197*^9, 3.923661993440907*^9}},
+ CellID->1167074558,ExpressionUUID->"22d43b2a-b49f-4481-82e0-c4b2384da96d"],
+
+Cell["IMPORTANT", "MathCaption",
+ CellFrame->{{0, 0}, {0, 0.5}},
+ CellFrameColor->GrayLevel[0.75],
+ CellChangeTimes->{3.923660454112468*^9},
+ CellID->1588140415,ExpressionUUID->"55b521e4-d831-455a-8935-0de7132a7495"],
+
+Cell["\<\
+This notebook assumes nothing has been previously defined. Quit Mathematica \
+and reload if this is not the case!\
+\>", "Text",
+ CellChangeTimes->{{3.9236604560174847`*^9, 3.923660469671617*^9}, 
+   3.923660626962617*^9, {3.923661409813809*^9, 3.923661440204958*^9}},
+ CellID->801706342,ExpressionUUID->"4f6369d2-6ff2-4f5f-94be-cccb65b72f2b"],
+
+Cell[CellGroupData[{
+
+Cell["Load package", "MathCaption",
+ CellFrame->{{0, 0}, {0, 0.5}},
+ CellFrameColor->GrayLevel[0.75],
+ CellChangeTimes->{{3.923659784356069*^9, 3.923659786282526*^9}},
+ CellID->1794350774,ExpressionUUID->"4485c882-2f19-43fd-9b5c-55a9da8e94a9"],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<FernandoDuarte`Itovsn3`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.923659751127676*^9, 3.9236597605394897`*^9}},
+ CellLabel->"In[1]:=",
+ CellID->1471730345,ExpressionUUID->"bb124ab7-a1c0-42db-96e5-8db08b7f9fdf"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Specification of problem parameters", "Section",
+ Evaluatable->False,
+ CellID->763945235,ExpressionUUID->"d889086d-1c4b-465c-9991-e605f49a714e"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+We are dealing with pts=3 points moving in n=2 dimensions: the size of the \
+configuration is measured by a Bessel process of dimension dim=n (pts-1) \
+(allows for irrelevant translations). Note that the problem is \
+well-formulated for larger numbers of points and higher dimensions: however \
+we leave it as a (non-trivial!) exercise to generalize this approach \
+accordingly. \
+\>", "Text",
+ Evaluatable->False,
+ CellChangeTimes->{{3.923661961734447*^9, 3.9236619617623873`*^9}, {
+  3.9236638282071133`*^9, 3.9236638291281357`*^9}},
+ CellID->1970322879,ExpressionUUID->"d8630e6e-1910-452b-9e44-0849f37311be"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"n", "=", "2"}], ";", 
+  RowBox[{"pts", "=", "3"}], ";", 
+  RowBox[{"dim", "=", 
+   RowBox[{"n", " ", 
+    RowBox[{"(", 
+     RowBox[{"pts", "-", "1"}], ")"}]}]}]}]], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[2]:=",
+ CellID->1018790613,ExpressionUUID->"cc808ae9-98e3-4a17-83ca-fbf3f947be4d"],
+
+Cell[BoxData["4"], "Output",
+ CellChangeTimes->{3.923664509785898*^9, 3.9236731259465933`*^9},
+ CellLabel->"Out[2]=",
+ CellID->1594834995,ExpressionUUID->"4fe0f623-52bc-43c6-97fe-6827ca2ea0e0"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Semimartingales and change of time-scale", "Section",
+ Evaluatable->False,
+ CellChangeTimes->{{3.923675400759784*^9, 3.9236754037004967`*^9}, 
+   3.923675718327067*^9},
+ CellID->1750286076,ExpressionUUID->"286fb3a8-8898-48c7-abc0-39cb5f5f08c0"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+First we initialize Itovsn3 with basic time semimartingale t and set up a \
+Bessel size process (by modifying a Brownian motion - it would be a minor \
+exercise in Mathematica programming to set up a Bessel procedure, but we \
+choose not to do this here!). Notice the persistent need to declare constants \
+using SetAttributes; a feature of Mathematica is that it chooses to assume \
+implicit dependency unless otherwise stated (it is arguable whether this is \
+(a) annoying or (b) a safety feature or (c) both!).\
+\>", "Text",
+ Evaluatable->False,
+ CellChangeTimes->{{3.923661961768159*^9, 3.923661961773354*^9}},
+ CellID->827082726,ExpressionUUID->"9c320ebd-5ad5-4de1-9990-df935609cce3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"ItoReset", "[", 
+  RowBox[{"t", ",", "dt"}], "]"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"R0", ",", "Constant"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"BrownSingle", "[", 
+   RowBox[{"R", ",", "R0"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AddDrift", "[", 
+   RowBox[{"dR", ",", 
+    FractionBox[
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"dim", "-", "1"}], ")"}], " ", "dt"}], 
+     RowBox[{"2", " ", "R"}]]}], "]"}], ";"}]}], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[3]:=",
+ CellID->117728851,ExpressionUUID->"8496d6b2-6409-48c7-80a1-ed66641e32a8"],
+
+Cell[BoxData[
+ TagBox[
+  TagBox[GridBox[{
+     {"\<\"Itovsn3  resetting ...\"\>"},
+     {"\<\"Itovsn3  initialized\"\>"},
+     {
+      InterpretationBox[
+       RowBox[{"\<\"with time semimartingale \"\>", "\[InvisibleSpace]", "t"}],
+       SequenceForm["with time semimartingale ", $CellContext`t],
+       Editable->False]},
+     {
+      InterpretationBox[
+       RowBox[{"\<\"and time differential \"\>", "\[InvisibleSpace]", "dt"}],
+       SequenceForm["and time differential ", $CellContext`dt],
+       Editable->False]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.5599999999999999]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}],
+   Column],
+  Function[BoxForm`e$, 
+   TableForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{3.923664509800243*^9, 3.923673125960353*^9},
+ CellLabel->"Out[3]//TableForm=",
+ CellID->1648362758,ExpressionUUID->"99728295-3378-49de-a27b-ba27424a6674"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+We need a new timescale dtau to allow for the way that shape changes faster \
+when size is small. We introduce a new innovation Brownian motion W in this \
+new timescale.\
+\>", "Text",
+ Evaluatable->False,
+ CellChangeTimes->{{3.923661961778594*^9, 3.9236619617933702`*^9}},
+ CellID->1419865475,ExpressionUUID->"d46901bf-4672-49dd-bddd-e69319601a6f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"dtau", "=", 
+  FractionBox["dt", 
+   SuperscriptBox["R", "2"]]}], "\n", 
+ RowBox[{
+  RowBox[{"Introduce", "[", 
+   RowBox[{"W", ",", "dW"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AddQuadVar", "[", 
+   RowBox[{
+    SuperscriptBox["dW", "2"], ",", "dtau"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AddQuadVar", "[", 
+   RowBox[{
+    RowBox[{"dW", " ", "dR"}], ",", "0"}], "]"}], ";"}], "\n", 
+ RowBox[{"AddDrift", "[", 
+  RowBox[{"dW", ",", "0"}], "]"}], "\n", 
+ RowBox[{"ItoStatus", "[", "]"}]}], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[7]:=",
+ CellID->840752861,ExpressionUUID->"761c33ac-4ea1-4e54-ba03-ee5c552b2593"],
+
+Cell[BoxData[
+ FractionBox["dt", 
+  SuperscriptBox["R", "2"]]], "Output",
+ CellChangeTimes->{3.923664509812172*^9, 3.923673125972396*^9},
+ CellLabel->"Out[7]=",
+ CellID->1493827406,ExpressionUUID->"561a711d-993c-42ed-bb80-2553525684a5"],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{3.923664509812172*^9, 3.923673125972808*^9},
+ CellLabel->"Out[11]=",
+ CellID->525895565,ExpressionUUID->"6c066a3c-ecfa-49de-9ff3-0c966ea5e0ec"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\<\" Summary of current structure of stochastic differentials\"\>"},
+    {"\<\" Current second-order structure of semimartingale \
+differentials:\"\>"},
+    {
+     TagBox[
+      TagBox[GridBox[{
+         {
+          StyleBox["\[Null]",
+           ShowStringCharacters->False], 
+          TagBox["dW",
+           HoldForm], 
+          TagBox["dR",
+           HoldForm], 
+          TagBox["dt",
+           HoldForm]},
+         {
+          TagBox["dW",
+           HoldForm], 
+          FractionBox["dt", 
+           SuperscriptBox["R", "2"]], "0", "0"},
+         {
+          TagBox["dR",
+           HoldForm], "0", "dt", "0"},
+         {
+          TagBox["dt",
+           HoldForm], "0", "0", "0"}
+        },
+        GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+        GridBoxDividers->{
+         "Columns" -> {False, True, {False}, False}, 
+          "Rows" -> {False, True, {False}, False}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[2.0999999999999996`]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}],
+       {OutputFormsDump`HeadedRows, OutputFormsDump`HeadedColumns}],
+      Function[BoxForm`e$, 
+       TableForm[
+       BoxForm`e$, 
+        TableHeadings -> {{$CellContext`dW, $CellContext`dR, \
+$CellContext`dt}, {$CellContext`dW, $CellContext`dR, $CellContext`dt}}]]]},
+    {"\<\" Current first-order structure of semimartingale \
+differentials:\"\>"},
+    {
+     TagBox[
+      TagBox[GridBox[{
+         {
+          TagBox["dW",
+           HoldForm], 
+          TagBox["dR",
+           HoldForm], 
+          TagBox["dt",
+           HoldForm]},
+         {"0", 
+          FractionBox[
+           RowBox[{"3", " ", "dt"}], 
+           RowBox[{"2", " ", "R"}]], "dt"}
+        },
+        GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+        GridBoxDividers->{
+         "Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}],
+       OutputFormsDump`HeadedRows],
+      Function[BoxForm`e$, 
+       TableForm[
+       BoxForm`e$, TableDirections -> Row, 
+        TableHeadings -> {{$CellContext`dW, $CellContext`dR, \
+$CellContext`dt}, {"Drifts:"}}]]]},
+    {"\<\" Current initial values:\"\>"},
+    {
+     TagBox[
+      TagBox[GridBox[{
+         {
+          TagBox["W",
+           HoldForm], 
+          TagBox["R",
+           HoldForm], 
+          TagBox["t",
+           HoldForm]},
+         {
+          RowBox[{"Fixed", "[", 
+           RowBox[{"0", ",", "W"}], "]"}], "R0", "0"}
+        },
+        GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+        GridBoxDividers->{
+         "Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}],
+       OutputFormsDump`HeadedRows],
+      Function[BoxForm`e$, 
+       TableForm[
+       BoxForm`e$, TableDirections -> Row, 
+        TableHeadings -> {{$CellContext`W, $CellContext`R, $CellContext`t}, {
+          "Initially:"}}]]]}
+   },
+   AutoDelete->False,
+   GridBoxBackground->{
+    "Columns" -> {{None}}, 
+     "RowsIndexed" -> {
+      1 -> GrayLevel[0.85], 2 -> RGBColor[0.87, 0.94, 1], 3 -> GrayLevel[1], 
+       4 -> RGBColor[0.87, 0.94, 1], 5 -> GrayLevel[1], 6 -> 
+       RGBColor[0.87, 0.94, 1]}},
+   GridBoxDividers->{
+    "Columns" -> {False}, 
+     "Rows" -> {True, True, False, False, False, False, False, True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+   GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{1.5}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{3.923664509812172*^9, 3.9236731259733267`*^9},
+ CellLabel->"Out[12]=",
+ CellID->1831553550,ExpressionUUID->"935fc533-c626-4aa1-8f32-18c5b300848a"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Definition of shape-space geometry concepts", "Section",
+ Evaluatable->False,
+ CellID->1315693268,ExpressionUUID->"95280a71-c4aa-4f1e-bb82-71b2cd0bd4fc"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Now we can introduce the shape-metric distance S from the shape-point \
+representing all equilateral shapes. The argument of the trigonometric \
+functions is 2 S rather than S to allow for the shape geometry, which is that \
+of a sphere of radius 1/2. (Detailed justification of the stochastic \
+differential equation for S follows from work cited in the references.)\
+\>", "Text",
+ Evaluatable->False,
+ CellChangeTimes->{{3.9236619617981853`*^9, 3.923661961831492*^9}},
+ CellID->217642117,ExpressionUUID->"42c464f6-d508-4393-9e81-179191838e92"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"S0", ",", "Constant"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Itosde", "[", 
+   RowBox[{"S", ",", 
+    RowBox[{"dS", "==", 
+     RowBox[{"dW", "+", 
+      RowBox[{
+       RowBox[{"Cot", "[", 
+        RowBox[{"2", " ", "S"}], "]"}], " ", "dtau"}]}]}], ",", "S0"}], "]"}],
+   ";"}], "\n", 
+ RowBox[{"ItoStatus", "[", "]"}]}], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[13]:=",
+ CellID->746409578,ExpressionUUID->"f5ce97ca-089e-44ad-bd04-32b363f43be2"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\<\" Summary of current structure of stochastic differentials\"\>"},
+    {"\<\" Current second-order structure of semimartingale \
+differentials:\"\>"},
+    {
+     TagBox[
+      TagBox[GridBox[{
+         {
+          StyleBox["\[Null]",
+           ShowStringCharacters->False], 
+          TagBox["dS",
+           HoldForm], 
+          TagBox["dW",
+           HoldForm], 
+          TagBox["dR",
+           HoldForm], 
+          TagBox["dt",
+           HoldForm]},
+         {
+          TagBox["dS",
+           HoldForm], 
+          FractionBox["dt", 
+           SuperscriptBox["R", "2"]], 
+          FractionBox["dt", 
+           SuperscriptBox["R", "2"]], "0", "0"},
+         {
+          TagBox["dW",
+           HoldForm], 
+          FractionBox["dt", 
+           SuperscriptBox["R", "2"]], 
+          FractionBox["dt", 
+           SuperscriptBox["R", "2"]], "0", "0"},
+         {
+          TagBox["dR",
+           HoldForm], "0", "0", "dt", "0"},
+         {
+          TagBox["dt",
+           HoldForm], "0", "0", "0", "0"}
+        },
+        GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+        GridBoxDividers->{
+         "Columns" -> {False, True, {False}, False}, 
+          "Rows" -> {False, True, {False}, False}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[2.0999999999999996`]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}],
+       {OutputFormsDump`HeadedRows, OutputFormsDump`HeadedColumns}],
+      Function[BoxForm`e$, 
+       TableForm[
+       BoxForm`e$, 
+        TableHeadings -> {{$CellContext`dS, $CellContext`dW, $CellContext`dR, \
+$CellContext`dt}, {$CellContext`dS, $CellContext`dW, $CellContext`dR, \
+$CellContext`dt}}]]]},
+    {"\<\" Current first-order structure of semimartingale \
+differentials:\"\>"},
+    {
+     TagBox[
+      TagBox[GridBox[{
+         {
+          TagBox["dS",
+           HoldForm], 
+          TagBox["dW",
+           HoldForm], 
+          TagBox["dR",
+           HoldForm], 
+          TagBox["dt",
+           HoldForm]},
+         {
+          FractionBox[
+           RowBox[{"dt", " ", 
+            RowBox[{"Cot", "[", 
+             RowBox[{"2", " ", "S"}], "]"}]}], 
+           SuperscriptBox["R", "2"]], "0", 
+          FractionBox[
+           RowBox[{"3", " ", "dt"}], 
+           RowBox[{"2", " ", "R"}]], "dt"}
+        },
+        GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+        GridBoxDividers->{
+         "Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}],
+       OutputFormsDump`HeadedRows],
+      Function[BoxForm`e$, 
+       TableForm[
+       BoxForm`e$, TableDirections -> Row, 
+        TableHeadings -> {{$CellContext`dS, $CellContext`dW, $CellContext`dR, \
+$CellContext`dt}, {"Drifts:"}}]]]},
+    {"\<\" Current initial values:\"\>"},
+    {
+     TagBox[
+      TagBox[GridBox[{
+         {
+          TagBox["S",
+           HoldForm], 
+          TagBox["W",
+           HoldForm], 
+          TagBox["R",
+           HoldForm], 
+          TagBox["t",
+           HoldForm]},
+         {"S0", 
+          RowBox[{"Fixed", "[", 
+           RowBox[{"0", ",", "W"}], "]"}], "R0", "0"}
+        },
+        GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+        GridBoxDividers->{
+         "Columns" -> {{False}}, "Rows" -> {False, {True}, False}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}],
+       OutputFormsDump`HeadedRows],
+      Function[BoxForm`e$, 
+       TableForm[
+       BoxForm`e$, TableDirections -> Row, 
+        TableHeadings -> {{$CellContext`S, $CellContext`W, $CellContext`R, \
+$CellContext`t}, {"Initially:"}}]]]}
+   },
+   AutoDelete->False,
+   GridBoxBackground->{
+    "Columns" -> {{None}}, 
+     "RowsIndexed" -> {
+      1 -> GrayLevel[0.85], 2 -> RGBColor[0.87, 0.94, 1], 3 -> GrayLevel[1], 
+       4 -> RGBColor[0.87, 0.94, 1], 5 -> GrayLevel[1], 6 -> 
+       RGBColor[0.87, 0.94, 1]}},
+   GridBoxDividers->{
+    "Columns" -> {False}, 
+     "Rows" -> {True, True, False, False, False, False, False, True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+   GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{1.5}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{3.923673125984795*^9},
+ CellLabel->"Out[15]=",
+ CellID->889918752,ExpressionUUID->"e687646f-ea1f-489e-8ec6-b1a5406cc99e"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Surrogate for time", "Section",
+ Evaluatable->False,
+ CellID->2016474514,ExpressionUUID->"6825e118-0b25-4383-bb8c-b31b06e1a6da"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+The next step is to produce a surrogate for time, taking into account the \
+Brownian scaling. This will be used as the dispersion parameter. Let t1 be \
+the (real) time for which we allow the original Brownian points to move. The \
+rule kappaSub allows us to rewrite formulae in a more compressed style if \
+required.\
+\>", "Text",
+ Evaluatable->False,
+ CellChangeTimes->{{3.923661961836328*^9, 3.923661961850425*^9}},
+ CellID->1447723491,ExpressionUUID->"faee5e51-84a1-489a-aec4-c8e96080c8d7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"t1", ",", "Constant"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"kappa", "=", 
+   FractionBox[
+    SuperscriptBox["R", "2"], 
+    RowBox[{"4", " ", 
+     RowBox[{"(", 
+      RowBox[{"t1", "-", "t"}], ")"}]}]]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"k", ",", "Constant"}], "]"}], ";"}], "\n", 
+ RowBox[{"kappaSub", "=", 
+  RowBox[{"First", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"kappa", "==", "k"}], ",", "t1"}], "]"}], "]"}]}]}], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[16]:=",
+ CellID->898992727,ExpressionUUID->"10bce4e6-8e15-49e1-bcca-5301e86f8d53"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"t1", "\[Rule]", 
+   FractionBox[
+    RowBox[{
+     SuperscriptBox["R", "2"], "+", 
+     RowBox[{"4", " ", "k", " ", "t"}]}], 
+    RowBox[{"4", " ", "k"}]]}], "}"}]], "Output",
+ CellChangeTimes->{3.923664509845553*^9, 3.923673126003887*^9},
+ CellLabel->"Out[19]=",
+ CellID->1788347156,ExpressionUUID->"e30c934a-026f-4e23-90be-437a88fd17a9"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Backwards differential equation", "Section",
+ Evaluatable->False,
+ CellID->1860522465,ExpressionUUID->"2b033ac7-9ebd-4876-9cff-c1f64abfce32"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Now we can derive the \"backwards differential equation\" for the \
+Mardia-Dryden density:\
+\>", "Text",
+ Evaluatable->False,
+ CellID->291685288,ExpressionUUID->"ad254b85-0f89-4fe9-8695-d0c4ca6300f3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"density", "=", 
+   RowBox[{"f", "[", 
+    RowBox[{
+     RowBox[{"Cos", "[", 
+      RowBox[{"2", " ", "S"}], "]"}], ",", "kappa"}], "]"}]}], ";"}], "\n", 
+ RowBox[{"bde", "=", 
+  RowBox[{
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"Drift", "[", 
+       RowBox[{"ItoD", "[", "density", "]"}], "]"}], "dt"], "/.", 
+     "kappaSub"}], "]"}], "==", "0"}]}]}], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[20]:=",
+ CellID->1796952962,ExpressionUUID->"f916ef85-88a9-4e25-9d86-1b13f683191b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   FractionBox["1", 
+    SuperscriptBox["R", "2"]], 
+   RowBox[{"2", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"2", " ", "k", " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "+", "k"}], ")"}], " ", 
+       RowBox[{
+        SuperscriptBox["f", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         RowBox[{"Cos", "[", 
+          RowBox[{"2", " ", "S"}], "]"}], ",", "k"}], "]"}]}], "+", 
+      RowBox[{
+       SuperscriptBox["k", "2"], " ", 
+       RowBox[{
+        SuperscriptBox["f", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"0", ",", "2"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         RowBox[{"Cos", "[", 
+          RowBox[{"2", " ", "S"}], "]"}], ",", "k"}], "]"}]}], "-", 
+      RowBox[{"2", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"2", " ", "S"}], "]"}], " ", 
+       RowBox[{
+        SuperscriptBox["f", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         RowBox[{"Cos", "[", 
+          RowBox[{"2", " ", "S"}], "]"}], ",", "k"}], "]"}]}], "+", 
+      RowBox[{
+       SuperscriptBox[
+        RowBox[{"Sin", "[", 
+         RowBox[{"2", " ", "S"}], "]"}], "2"], " ", 
+       RowBox[{
+        SuperscriptBox["f", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"2", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         RowBox[{"Cos", "[", 
+          RowBox[{"2", " ", "S"}], "]"}], ",", "k"}], "]"}]}]}], ")"}]}]}], 
+  "\[Equal]", "0"}]], "Output",
+ CellChangeTimes->{3.923664509893336*^9, 3.923673126053733*^9},
+ CellLabel->"Out[21]=",
+ CellID->569527480,ExpressionUUID->"299118d6-aed6-46c3-aa8a-cdcc772792d5"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Trial solutions motivated by perturbation theory", "Section",
+ Evaluatable->False,
+ CellID->40353492,ExpressionUUID->"ff4252df-8bb6-4819-b5aa-6066fee2e1cd"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Instead of trying to solve this directly, we play around a little with trial \
+solutions. Motivated by geometry, consider a \"flat\" trial solution and \
+perturbations:\
+\>", "Text",
+ Evaluatable->False,
+ CellID->1763791239,ExpressionUUID->"ef43871c-fb87-4e8e-92b2-8c50a09bf1e4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"p0", "=", 
+  RowBox[{"kappa", " ", 
+   RowBox[{"Exp", "[", 
+    RowBox[{
+     RowBox[{"-", "kappa"}], " ", 
+     RowBox[{"(", 
+      RowBox[{"1", "-", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"2", " ", "S"}], "]"}]}], ")"}]}], "]"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"a0", ",", "Constant"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"a1", ",", "Constant"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"a2", ",", "Constant"}], "]"}], ";"}], "\n", 
+ RowBox[{"p1", "=", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"a0", "+", 
+     FractionBox["a1", "kappa"], "+", 
+     RowBox[{"a2", " ", 
+      RowBox[{"(", 
+       RowBox[{"1", "-", 
+        RowBox[{"Cos", "[", 
+         RowBox[{"2", " ", "S"}], "]"}]}], ")"}]}]}], ")"}], " ", 
+   "p0"}]}]}], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[22]:=",
+ CellID->175090685,ExpressionUUID->"245738c4-8033-45f3-b261-cb3779684484"],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   SuperscriptBox["\[ExponentialE]", 
+    RowBox[{"-", 
+     FractionBox[
+      RowBox[{
+       SuperscriptBox["R", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "-", 
+         RowBox[{"Cos", "[", 
+          RowBox[{"2", " ", "S"}], "]"}]}], ")"}]}], 
+      RowBox[{"4", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "t"}], "+", "t1"}], ")"}]}]]}]], " ", 
+   SuperscriptBox["R", "2"]}], 
+  RowBox[{"4", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"-", "t"}], "+", "t1"}], ")"}]}]]], "Output",
+ CellChangeTimes->{3.92366450990431*^9, 3.923673126064595*^9},
+ CellLabel->"Out[22]=",
+ CellID->713741681,ExpressionUUID->"b8e48545-9dc1-4b31-897d-2cde60770806"],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   SuperscriptBox["\[ExponentialE]", 
+    RowBox[{"-", 
+     FractionBox[
+      RowBox[{
+       SuperscriptBox["R", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "-", 
+         RowBox[{"Cos", "[", 
+          RowBox[{"2", " ", "S"}], "]"}]}], ")"}]}], 
+      RowBox[{"4", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "t"}], "+", "t1"}], ")"}]}]]}]], " ", 
+   SuperscriptBox["R", "2"], " ", 
+   RowBox[{"(", 
+    RowBox[{"a0", "+", 
+     FractionBox[
+      RowBox[{"4", " ", "a1", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "t"}], "+", "t1"}], ")"}]}], 
+      SuperscriptBox["R", "2"]], "+", 
+     RowBox[{"a2", " ", 
+      RowBox[{"(", 
+       RowBox[{"1", "-", 
+        RowBox[{"Cos", "[", 
+         RowBox[{"2", " ", "S"}], "]"}]}], ")"}]}]}], ")"}]}], 
+  RowBox[{"4", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"-", "t"}], "+", "t1"}], ")"}]}]]], "Output",
+ CellChangeTimes->{3.92366450990431*^9, 3.9236731260651417`*^9},
+ CellLabel->"Out[26]=",
+ CellID->12780425,ExpressionUUID->"992d95d2-548a-4f77-bebe-8401c9991dab"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Constraints induced by small-time and small-scale", "Section",
+ Evaluatable->False,
+ CellID->972324914,ExpressionUUID->"1b4e5172-c60c-45b0-8931-d6e0fba2bd6d"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+We are going to consider constraints on the constants a0, a1, a2 placed by \
+requirements at small distance from equilateral shape:\
+\>", "Text",
+ Evaluatable->False,
+ CellChangeTimes->{{3.923661961855201*^9, 3.923661961859881*^9}},
+ CellID->1661759575,ExpressionUUID->"52812230-ce9f-40bb-99b8-6953774e06f9"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"reference", "=", 
+  RowBox[{"Append", "[", 
+   RowBox[{"kappaSub", ",", 
+    RowBox[{"S", "\[Rule]", "0"}]}], "]"}]}]], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[27]:=",
+ CellID->1168347790,ExpressionUUID->"4cf8f448-c19d-4697-aa26-905b56797874"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"t1", "\[Rule]", 
+    FractionBox[
+     RowBox[{
+      SuperscriptBox["R", "2"], "+", 
+      RowBox[{"4", " ", "k", " ", "t"}]}], 
+     RowBox[{"4", " ", "k"}]]}], ",", 
+   RowBox[{"S", "\[Rule]", "0"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.923664509914822*^9, 3.9236731260761633`*^9},
+ CellLabel->"Out[27]=",
+ CellID->52238275,ExpressionUUID->"8a77f5f8-8b30-4070-a119-70b407975659"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Now study the constraint of requiring zero drift at the equilateral triangle \
+shape:\
+\>", "Text",
+ Evaluatable->False,
+ CellID->168698762,ExpressionUUID->"d61b57ff-7c47-4c8a-9973-7c2921906913"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"equiDrift", "=", 
+  RowBox[{
+   RowBox[{"Together", "[", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"Drift", "[", 
+       RowBox[{"ItoD", "[", "p1", "]"}], "]"}], 
+      RowBox[{"p0", " ", "dt"}]], "/.", "kappaSub"}], "]"}], "/.", 
+   "reference"}]}]], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[28]:=",
+ CellID->641678894,ExpressionUUID->"f140d6cb-091b-435d-87f8-f25a8680bf07"],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{"2", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"2", " ", "a0"}], "-", 
+     RowBox[{"2", " ", "a1"}], "+", 
+     RowBox[{"2", " ", "a2"}]}], ")"}]}], 
+  SuperscriptBox["R", "2"]]], "Output",
+ CellChangeTimes->{3.923664509987144*^9, 3.923673126156828*^9},
+ CellLabel->"Out[28]=",
+ CellID->1795359949,ExpressionUUID->"81a7ef03-8de7-4928-a30c-2de9e90cce1a"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Now consider the conservation of mass:", "Text",
+ Evaluatable->False,
+ CellID->891019372,ExpressionUUID->"a2c99aee-d8e4-49e6-9750-1abfd3ef39aa"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"unitMass", "=", 
+  RowBox[{"1", "-", 
+   RowBox[{
+    SubsuperscriptBox["\[Integral]", "0", 
+     FractionBox["\[Pi]", "2"]], 
+    RowBox[{
+     RowBox[{"Together", "[", 
+      RowBox[{"p1", "/.", "kappaSub"}], "]"}], " ", 
+     RowBox[{"Sin", "[", 
+      RowBox[{"2", " ", "S"}], "]"}], 
+     RowBox[{"\[DifferentialD]", "S"}]}]}]}]}]], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[29]:=",
+ CellID->959114673,ExpressionUUID->"57cb14db-f033-4460-a993-cc2c0cf2a255"],
+
+Cell[BoxData[
+ RowBox[{"1", "-", 
+  FractionBox[
+   RowBox[{"a1", "+", "a2", "+", 
+    RowBox[{"a0", " ", "k"}], "-", 
+    RowBox[{
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{
+       RowBox[{"-", "2"}], " ", "k"}]], " ", 
+     RowBox[{"(", 
+      RowBox[{"a1", "+", "a2", "+", 
+       RowBox[{"a0", " ", "k"}], "+", 
+       RowBox[{"2", " ", "a2", " ", "k"}]}], ")"}]}]}], 
+   RowBox[{"2", " ", "k"}]]}]], "Output",
+ CellChangeTimes->{3.923664510365851*^9, 3.923673126561245*^9},
+ CellLabel->"Out[29]=",
+ CellID->321938846,ExpressionUUID->"b811ccc2-883a-47ed-a997-098d6491b09c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+This must be constant in k so we can differentiate and then set k->0:\
+\>", "Text",
+ Evaluatable->False,
+ CellChangeTimes->{{3.923661961864706*^9, 3.9236619618741198`*^9}},
+ CellID->1421797743,ExpressionUUID->"347f4e31-29f3-4f07-9da5-ce6690e6462f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"constancy", "=", 
+  RowBox[{
+   RowBox[{"Together", "[", 
+    RowBox[{
+     SubscriptBox["\[PartialD]", "k"], 
+     RowBox[{"(", 
+      RowBox[{"2", " ", "k", " ", "unitMass"}], ")"}]}], "]"}], "/.", 
+   RowBox[{"k", "\[Rule]", "0"}]}]}]], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[30]:=",
+ CellID->1104126432,ExpressionUUID->"3c654872-3114-496f-864d-299fb6b34384"],
+
+Cell[BoxData[
+ RowBox[{"2", "-", 
+  RowBox[{"2", " ", "a1"}]}]], "Output",
+ CellChangeTimes->{3.923664510376505*^9, 3.9236731265710077`*^9},
+ CellLabel->"Out[30]=",
+ CellID->1314877929,ExpressionUUID->"5649ba9b-b616-47e3-ba37-0064088ac1f4"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Now we can solve all these three constraints:", "Text",
+ Evaluatable->False,
+ CellID->1493974412,ExpressionUUID->"2bf3a94e-64fb-4a50-9734-b773ae6b4508"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"solution", "=", 
+  RowBox[{"Simplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"equiDrift", "==", "0"}], ",", 
+       RowBox[{"unitMass", "==", "0"}], ",", 
+       RowBox[{"constancy", "==", "0"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"a0", ",", "a1", ",", "a2"}], "}"}]}], "]"}], "]"}]}]], "Input",\
+
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[31]:=",
+ CellID->849141760,ExpressionUUID->"5deb3308-59b0-47a6-9e74-f6dd05c3bcae"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"a0", "\[Rule]", "2"}], ",", 
+    RowBox[{"a1", "\[Rule]", "1"}], ",", 
+    RowBox[{"a2", "\[Rule]", 
+     RowBox[{"-", "1"}]}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.923664510389518*^9, 3.9236731265826063`*^9},
+ CellLabel->"Out[31]=",
+ CellID->1546625073,ExpressionUUID->"bc227ece-f3f8-43f5-8e5f-1e5f441eb3ab"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Our trial answer is therefore", "Text",
+ Evaluatable->False,
+ CellID->1998008724,ExpressionUUID->"dd3cfa60-f499-4e7d-9759-9ec07303d051"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"mddensity", "=", 
+  RowBox[{"First", "[", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{"p1", "/.", "solution"}], "/.", "kappaSub"}], "]"}], 
+   "]"}]}]], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[32]:=",
+ CellID->330836129,ExpressionUUID->"9149d7d9-4ee6-4956-a1f1-caac394f263d"],
+
+Cell[BoxData[
+ RowBox[{
+  SuperscriptBox["\[ExponentialE]", 
+   RowBox[{
+    RowBox[{"-", "2"}], " ", "k", " ", 
+    SuperscriptBox[
+     RowBox[{"Sin", "[", "S", "]"}], "2"]}]], " ", 
+  RowBox[{"(", 
+   RowBox[{"1", "+", "k", "+", 
+    RowBox[{"k", " ", 
+     RowBox[{"Cos", "[", 
+      RowBox[{"2", " ", "S"}], "]"}]}]}], ")"}]}]], "Output",
+ CellChangeTimes->{3.923664510407712*^9, 3.923673126602716*^9},
+ CellLabel->"Out[32]=",
+ CellID->985538623,ExpressionUUID->"0c392e47-dac4-4847-be37-e823a11ea470"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Verification", "Section",
+ CellChangeTimes->{{3.923675756399935*^9, 3.923675760135111*^9}},
+ CellID->1461153118,ExpressionUUID->"8e71e3a0-58c8-44c4-b0f6-d887e644f4cb"],
+
+Cell[CellGroupData[{
+
+Cell["By computation of drift and pole behaviour", "Subsection",
+ Evaluatable->False,
+ CellChangeTimes->{{3.923675778238*^9, 3.923675779215983*^9}},
+ CellID->1388363677,ExpressionUUID->"1a6c562f-1a05-4e23-8d90-3b7cac82262d"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Consider the drift (remembering we have to restore some time-dependence by \
+resubstituting kappa for k):\
+\>", "Text",
+ Evaluatable->False,
+ CellChangeTimes->{{3.9236619618790207`*^9, 3.923661961888379*^9}},
+ CellID->1818494684,ExpressionUUID->"db686060-2372-4405-bc0c-fdf492ecc31b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Simplify", "[", 
+  RowBox[{"Drift", "[", 
+   RowBox[{"ItoD", "[", 
+    RowBox[{"mddensity", "/.", 
+     RowBox[{"k", "\[Rule]", "kappa"}]}], "]"}], "]"}], "]"}]], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[33]:=",
+ CellID->452889884,ExpressionUUID->"3a13117a-5741-4232-8012-404ee61a9c8e"],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{3.923664510464298*^9, 3.923673126661388*^9},
+ CellLabel->"Out[33]=",
+ CellID->406267450,ExpressionUUID->"368de307-2c9f-4019-932d-fec91f8107f2"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Hence our trial density is correct as long as we check it has the correct \
+behaviour for t near to t1 (its \"pole\"). This is what we get (a positive \
+limit as t -> t1 for generic S):\
+\>", "Text",
+ Evaluatable->False,
+ CellChangeTimes->{{3.9236619618931007`*^9, 3.923661961930767*^9}},
+ CellID->1318072065,ExpressionUUID->"581a2751-2d5a-41f4-8c9c-9738a86f0793"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Limit", "[", 
+  RowBox[{
+   RowBox[{"Simplify", "[", 
+    FractionBox[
+     RowBox[{"p0", "/.", "kappaSub"}], "mddensity"], "]"}], ",", 
+   RowBox[{"t", "\[Rule]", "t1"}]}], "]"}]], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[34]:=",
+ CellID->1543377650,ExpressionUUID->"dbebb711-c4b8-41a3-8c74-dd97e99e79f0"],
+
+Cell[BoxData[
+ FractionBox["k", 
+  RowBox[{"1", "+", "k", "+", 
+   RowBox[{"k", " ", 
+    RowBox[{"Cos", "[", 
+     RowBox[{"2", " ", "S"}], "]"}]}]}]]], "Output",
+ CellChangeTimes->{3.923664510479072*^9, 3.923673126675724*^9},
+ CellLabel->"Out[34]=",
+ CellID->1286518337,ExpressionUUID->"2e7d26c0-8683-4aa3-9635-86679b6978ce"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["By substitution in backwards differential equation", "Subsection",
+ Evaluatable->False,
+ CellChangeTimes->{
+  3.923607078876917*^9, {3.923675782425992*^9, 3.923675782947083*^9}},
+ CellID->752902996,ExpressionUUID->"ca2c16e8-6366-4133-9156-83877fc4c52a"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Note that we can substitute the trial density in the \"backwards differential \
+equation\" and see if we get the correct answer! (Alternative to computing \
+the Drift.)\
+\>", "Text",
+ Evaluatable->False,
+ CellChangeTimes->{3.9236619619355087`*^9},
+ CellID->1067005648,ExpressionUUID->"3e6bceb1-5084-445b-b9fb-d444785e5041"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"f", ":=", 
+  RowBox[{
+   RowBox[{"Function", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"c", ",", "k"}], "}"}], ",", "result"}], "]"}], "/.", 
+   RowBox[{"result", "\[Rule]", 
+    RowBox[{"(", 
+     RowBox[{"mddensity", "/.", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Cos", "[", 
+          RowBox[{"2", " ", "S"}], "]"}], "\[Rule]", "c"}], ",", 
+        RowBox[{
+         RowBox[{"Sin", "[", "S", "]"}], "\[Rule]", 
+         SqrtBox[
+          FractionBox[
+           RowBox[{"1", "-", "c"}], "2"]]}]}], "}"}]}], ")"}]}]}]}], "\n", 
+ RowBox[{"Simplify", "[", "bde", "]"}]}], "Input",
+ PageWidth->DirectedInfinity[1],
+ CellLabel->"In[35]:=",
+ CellID->1675473486,ExpressionUUID->"7bea13b5-807a-419f-8d88-83be28325c36"],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{3.923664510491397*^9, 3.9236731266889057`*^9},
+ CellLabel->"Out[36]=",
+ CellID->1648331963,ExpressionUUID->"28e50806-596e-4f7c-ae46-9ad4fc934e31"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Contact Information", "Section",
+ CellChangeTimes->{{3.923659840407835*^9, 3.923659844404467*^9}},
+ CellID->908135666,ExpressionUUID->"275f303f-dc31-46b2-a428-9555bb48a205"],
+
+Cell["Email: w.s.kendall@warwick.ac.uk", "Text",
+ CellID->869859233,ExpressionUUID->"03c44c23-9e5d-49c1-afac-8ec570e86989"],
+
+Cell["URL: http://www.warwick.ac.uk/go/WSK", "Text",
+ CellID->1802943902,ExpressionUUID->"c6d23389-878c-4f53-ae7a-169e42f8831a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Acknowledgements", "Section",
+ CellChangeTimes->{3.923659852626163*^9},
+ CellID->1083901744,ExpressionUUID->"aead6004-b255-4503-9518-8f174cec9753"],
+
+Cell["\<\
+The research reported here was supported by EPSRC grants GR/71677 (Stochastic \
+calculus in AXIOM using modules of stochastic differentials) and GR/L56831 \
+(Perfect simulation in stochastic geometry), and a joint EPSRC/BBSRC research \
+grant (Multi-strain species modelling and control via differential algebra \
+reductions). This Mathematica notebook was constructed on a visit to MSRI \
+Berkeley CA during its 1997-1998 program Stochastic Analysis. Finally, it is \
+a pleasure to express my gratitude to my friends Suzanne Scotchmer and Joseph \
+Farrell for the generous hospitality they showed to me during my visit to \
+MSRI.\
+\>", "Text",
+ CellChangeTimes->{
+  3.923659880412659*^9, {3.9236612141958227`*^9, 3.9236612164393377`*^9}, {
+   3.923661451646291*^9, 3.923661453461248*^9}, {3.923661678823091*^9, 
+   3.923661680456913*^9}},
+ CellID->32833907,ExpressionUUID->"74e43655-f287-4f04-9c24-f99574007437"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["References", "Section",
+ CellChangeTimes->{3.923659859165392*^9},
+ CellID->2038148215,ExpressionUUID->"dddf6f31-cc99-40e6-acf3-78445431ecaa"],
+
+Cell["The original Mardia-Dryden derivation:", "Text",
+ CellChangeTimes->{3.923661099581987*^9, 3.9236614783170147`*^9, 
+  3.923661719309751*^9},
+ CellID->934109356,ExpressionUUID->"b3103707-eb30-4268-8a81-75e6809e47b7"],
+
+Cell[TextData[StyleBox["K.V. Mardia and I.L. Dryden: \"Shape distributions \
+for landmark data\", Advances in Applied Probability, 21:742-755 (1989).", \
+"TI"]], "Subitem",
+ CellChangeTimes->{3.923660097842737*^9, 3.9236601587077312`*^9, 
+  3.923661116303735*^9, 3.923661491109561*^9, 3.923661723752036*^9},
+ CellID->1470486722,ExpressionUUID->"a4db602a-8cd7-4936-9408-f0aa9f21df3f"],
+
+Cell["General introductions to shape:", "Text",
+ CellChangeTimes->{3.923661099581987*^9, 3.9236614783170147`*^9, 
+  3.923661719309751*^9, 3.923661757263364*^9},
+ CellID->1130828644,ExpressionUUID->"c3753827-b064-47be-9576-d5491a3555af"],
+
+Cell["\<\
+Chapter 8 of D. Stoyan, WSK and J. Mecke: Stochastic geometry and its \
+applications (Second Edition), Wiley and Sons, Chichester (1995);\
+\>", "Subitem",
+ CellID->606743758,ExpressionUUID->"cbc170a1-ce32-4217-9386-c088b1699e9b"],
+
+Cell["\<\
+WSK: \"Geometry, statistics, and shape\", in Geometry in Present Day Science, \
+edited by O.E. Barndorff-Nielsen and E.B. Vedel-Jensen (1998).\
+\>", "Subitem",
+ CellID->1617946970,ExpressionUUID->"d7ad2d38-9d44-42cb-b142-8be9a2e3afa7"],
+
+Cell["\<\
+Symbolic Ito calculus and Itovsn3 were developed to use stochastic calculus \
+to investigate shape!\
+\>", "Text",
+ CellID->1396786476,ExpressionUUID->"a7443601-6326-4c58-831e-7f4cd6d32175"],
+
+Cell["\<\
+WSK: \"Symbolic computation and the diffusion of shapes of triads\", Advances \
+in Applied Probability, 20:775-797 (1988);\
+\>", "Subitem",
+ CellID->1646556775,ExpressionUUID->"71b8cfd5-ad50-469f-be33-baf560d0ba54"],
+
+Cell["\<\
+WSK: \"The Euclidean diffusion of shape\", in \"Disorder in Physical \
+Systems\", edited by D. Welsh and G. Grimmett, Oxford University Press, \
+Oxford, pp 203-217 (1990);\
+\>", "Subitem",
+ CellID->1205442183,ExpressionUUID->"3c0dc288-eacc-42d1-8a5d-ff2de21120ed"],
+
+Cell["\<\
+WSK: \"A diffusion model for Bookstein triangle shape\", Advances in Applied \
+Probability, 30 number 2 (1998);\
+\>", "Subitem",
+ CellID->506043883,ExpressionUUID->"74bd952a-17bb-490e-9e9c-18e576753dc7"],
+
+Cell["This particular application is also implemented in AXIOM:", "Text",
+ CellID->1044299461,ExpressionUUID->"b79dcdff-7046-4f02-83d7-665541ce3d60"],
+
+Cell["\<\
+WSK: \"Symbolic Ito calculus: an ongoing story\", Research Report 327, \
+Department of Statistics, University of Warwick. Submitted for publication. \
+(1998).\
+\>", "Subitem",
+ CellID->157194096,ExpressionUUID->"616daa48-021f-40ed-9a31-3a80d90bd910"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Related Guides", "TutorialMoreAboutSection",
+ CellChangeTimes->{{3.843042384656711*^9, 3.843042386024461*^9}},
+ CellID->1815633991,ExpressionUUID->"e5e0df6d-9554-43ff-8f40-727d07a083f0"],
+
+Cell[TextData[ButtonBox["Main",
+ BaseStyle->"Link",
+ ButtonData->"paclet:FernandoDuarte/Itovsn3/guide/Main"]], "TutorialMoreAbout",\
+
+ CellChangeTimes->{{3.923664114222208*^9, 3.923664119389077*^9}},
+ CellID->1487403973,ExpressionUUID->"a27c2d4c-9332-4544-a595-c83fd5398d3c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Related Tech Notes", "RelatedTutorialsSection",
+ CellID->544793846,ExpressionUUID->"f918a918-cd2e-4512-a255-b0eb081944c7"],
+
+Cell[TextData[ButtonBox["Bessel",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:FernandoDuarte/Itovsn3/tutorial/Bessel"]], "RelatedTutorials",
+ CellChangeTimes->{{3.923664148438773*^9, 3.9236641659582033`*^9}, {
+  3.9236642559076967`*^9, 3.923664300371608*^9}},
+ CellID->1627382561,ExpressionUUID->"f13d4e6c-9588-4a3d-b886-bec03247b32a"],
+
+Cell[TextData[ButtonBox["BlackScholes",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:FernandoDuarte/Itovsn3/tutorial/BlackScholes"]], "RelatedTutorials",\
+
+ CellChangeTimes->{{3.923664148438773*^9, 3.9236641659582033`*^9}, {
+  3.9236642559076967`*^9, 3.923664302591028*^9}},
+ CellID->1894845875,ExpressionUUID->"971f4cc1-6489-4954-b0a0-10e7f503d1ab"],
+
+Cell[TextData[ButtonBox["ItoArea",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:FernandoDuarte/Itovsn3/tutorial/ItoArea"]], "RelatedTutorials",
+ CellChangeTimes->{{3.923664148438773*^9, 3.9236641659582033`*^9}, {
+   3.9236642559076967`*^9, 3.923664263438678*^9}, 3.923664305056885*^9},
+ CellID->1639619762,ExpressionUUID->"1c6fbec7-ffa3-47d4-a9af-637cd93c8602"],
+
+Cell[TextData[ButtonBox["Reflect",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:FernandoDuarte/Itovsn3/tutorial/Reflect"]], "RelatedTutorials",
+ CellChangeTimes->{3.923664309218031*^9},
+ CellID->1960626817,ExpressionUUID->"3cfe5002-3eb1-487f-a5a5-4819db18d2b3"],
+
+Cell[TextData[ButtonBox["StochasticIntegration",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:FernandoDuarte/Itovsn3/tutorial/StochasticIntegration"]], \
+"RelatedTutorials",
+ CellChangeTimes->{3.923664311692513*^9},
+ CellID->1265833751,ExpressionUUID->"bf07a5bc-9719-4abc-89ec-0a5b7f13e08f"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Metadata", "MetadataSection",
+ CellID->1090832552,ExpressionUUID->"3a999c0b-e528-49a0-a4e5-73195f2edf09"],
+
+Cell[TextData[{
+ "New in: ",
+ Cell["XX", "HistoryData",
+  CellTags->"New",ExpressionUUID->"06b55fea-6d46-494f-aa3f-da827fd3c7de"],
+ " | Modified in: ",
+ Cell[" ", "HistoryData",
+  CellTags->"Modified",ExpressionUUID->"1b82def6-96bf-4f9d-8fbb-99d4937c3dac"],
+ " | Obsolete in: ",
+ Cell[" ", "HistoryData",
+  CellTags->"Obsolete",ExpressionUUID->
+  "2644fa9b-f4ae-4851-91e3-ba569109cf3d"]
+}], "History",
+ CellID->554807025,ExpressionUUID->"83edc2ff-2dc5-4bad-a7c4-c7c2dec9a742"],
+
+Cell[CellGroupData[{
+
+Cell["Categorization", "CategorizationSection",
+ CellID->267673901,ExpressionUUID->"c45a6b11-f320-4721-823e-d97a499b9a58"],
+
+Cell["Tech Note", "Categorization",
+ CellLabel->"Entity Type",
+ CellID->1964497289,ExpressionUUID->"35aefde0-07e8-4185-b76e-8b87b15a84fe"],
+
+Cell["FernandoDuarte/Itovsn3", "Categorization",
+ CellLabel->"Paclet Name",
+ CellID->1892347245,ExpressionUUID->"467507b3-158f-4fc7-a42d-9a931f058d60"],
+
+Cell["FernandoDuarte`Itovsn3`", "Categorization",
+ CellLabel->"Context",
+ CellID->447334645,ExpressionUUID->"44bf738c-cf5d-4e85-807b-530426a074a7"],
+
+Cell["FernandoDuarte/Itovsn3/tutorial/MardiaDryden", "Categorization",
+ CellLabel->"URI",
+ CellID->13130368,ExpressionUUID->"f7eb82a4-e5e3-4caa-9d51-ee2c92f96aff"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Keywords", "KeywordsSection",
+ CellID->1638762982,ExpressionUUID->"68c5a6cb-1d5a-49d5-ab44-592aaca9c9af"],
+
+Cell["Mardia-Dryden, Distribution, Brownian motion on the plane", "Keywords",
+ CellChangeTimes->{{3.923663758586392*^9, 3.923663793136615*^9}},
+ CellID->1211665699,ExpressionUUID->"74278bfe-c3e5-4bf1-b87d-1fea8ace3228"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{700, 770},
+WindowMargins->{{Automatic, 279}, {68, Automatic}},
+TaggingRules-><|"Paclet" -> "FernandoDuarte/Itovsn3"|>,
+FrontEndVersion->"14.0 for Mac OS X ARM (64-bit) (December 12, 2023)",
+StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "TechNotePageStylesExt.nb", 
+  CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"001350c9-6f35-4f0d-ad4a-cf31c50cc668"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 220, 3, 114, "Title",ExpressionUUID->"dac3538a-2d4a-4a84-9368-41fae771bd36",
+ CellID->973089447],
+Cell[803, 27, 224, 4, 41, "MathCaption",ExpressionUUID->"50479f29-2a39-4350-8b74-9b0a9035a5f4",
+ CellID->152286735],
+Cell[1030, 33, 253, 3, 25, "Text",ExpressionUUID->"f7ac785e-9272-495c-8234-1ea8886f8d07",
+ CellID->1830131568],
+Cell[1286, 38, 294, 4, 25, "Text",ExpressionUUID->"ba874dea-b7c7-4433-8067-0fcb4207dc8d",
+ CellID->612987395],
+Cell[1583, 44, 284, 4, 25, "Text",ExpressionUUID->"19adefc1-fafa-407d-acae-22fa86398542",
+ CellID->1000093106],
+Cell[1870, 50, 239, 4, 41, "MathCaption",ExpressionUUID->"51060b1b-0576-4704-a665-240d02d94874",
+ CellID->518162834],
+Cell[2112, 56, 729, 11, 44, "Text",ExpressionUUID->"22d43b2a-b49f-4481-82e0-c4b2384da96d",
+ CellID->1167074558],
+Cell[2844, 69, 216, 4, 41, "MathCaption",ExpressionUUID->"55b521e4-d831-455a-8935-0de7132a7495",
+ CellID->1588140415],
+Cell[3063, 75, 352, 6, 44, "Text",ExpressionUUID->"4f6369d2-6ff2-4f5f-94be-cccb65b72f2b",
+ CellID->801706342],
+Cell[CellGroupData[{
+Cell[3440, 85, 243, 4, 41, "MathCaption",ExpressionUUID->"4485c882-2f19-43fd-9b5c-55a9da8e94a9",
+ CellID->1794350774],
+Cell[3686, 91, 255, 4, 27, "Input",ExpressionUUID->"bb124ab7-a1c0-42db-96e5-8db08b7f9fdf",
+ CellID->1471730345]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3978, 100, 150, 2, 45, "Section",ExpressionUUID->"d889086d-1c4b-465c-9991-e605f49a714e",
+ Evaluatable->False,
+ CellID->763945235],
+Cell[CellGroupData[{
+Cell[4153, 106, 621, 11, 82, "Text",ExpressionUUID->"d8630e6e-1910-452b-9e44-0849f37311be",
+ Evaluatable->False,
+ CellID->1970322879],
+Cell[CellGroupData[{
+Cell[4799, 121, 341, 10, 27, "Input",ExpressionUUID->"cc808ae9-98e3-4a17-83ca-fbf3f947be4d",
+ CellID->1018790613],
+Cell[5143, 133, 193, 3, 26, "Output",ExpressionUUID->"4fe0f623-52bc-43c6-97fe-6827ca2ea0e0",
+ CellID->1594834995]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5397, 143, 250, 4, 45, "Section",ExpressionUUID->"286fb3a8-8898-48c7-abc0-39cb5f5f08c0",
+ Evaluatable->False,
+ CellID->1750286076],
+Cell[CellGroupData[{
+Cell[5672, 151, 699, 11, 101, "Text",ExpressionUUID->"9c320ebd-5ad5-4de1-9990-df935609cce3",
+ Evaluatable->False,
+ CellID->827082726],
+Cell[CellGroupData[{
+Cell[6396, 166, 630, 19, 102, "Input",ExpressionUUID->"8496d6b2-6409-48c7-80a1-ed66641e32a8",
+ CellID->117728851],
+Cell[7029, 187, 1089, 29, 76, "Output",ExpressionUUID->"99728295-3378-49de-a27b-ba27424a6674",
+ CellID->1648362758]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8167, 222, 359, 7, 44, "Text",ExpressionUUID->"d46901bf-4672-49dd-bddd-e69319601a6f",
+ Evaluatable->False,
+ CellID->1419865475],
+Cell[CellGroupData[{
+Cell[8551, 233, 666, 20, 146, "Input",ExpressionUUID->"761c33ac-4ea1-4e54-ba03-ee5c552b2593",
+ CellID->840752861],
+Cell[9220, 255, 236, 5, 43, "Output",ExpressionUUID->"561a711d-993c-42ed-bb80-2553525684a5",
+ CellID->1493827406],
+Cell[9459, 262, 191, 3, 26, "Output",ExpressionUUID->"6c066a3c-ecfa-49de-9ff3-0c966ea5e0ec",
+ CellID->525895565],
+Cell[9653, 267, 4267, 126, 334, "Output",ExpressionUUID->"935fc533-c626-4aa1-8f32-18c5b300848a",
+ CellID->1831553550]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13981, 400, 159, 2, 45, "Section",ExpressionUUID->"95280a71-c4aa-4f1e-bb82-71b2cd0bd4fc",
+ Evaluatable->False,
+ CellID->1315693268],
+Cell[CellGroupData[{
+Cell[14165, 406, 555, 9, 82, "Text",ExpressionUUID->"42c464f6-d508-4393-9e81-179191838e92",
+ Evaluatable->False,
+ CellID->217642117],
+Cell[CellGroupData[{
+Cell[14745, 419, 538, 16, 66, "Input",ExpressionUUID->"f5ce97ca-089e-44ad-bd04-32b363f43be2",
+ CellID->746409578],
+Cell[15286, 437, 4900, 147, 362, "Output",ExpressionUUID->"e687646f-ea1f-489e-8ec6-b1a5406cc99e",
+ CellID->889918752]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20247, 591, 134, 2, 45, "Section",ExpressionUUID->"6825e118-0b25-4383-bb8c-b31b06e1a6da",
+ Evaluatable->False,
+ CellID->2016474514],
+Cell[CellGroupData[{
+Cell[20406, 597, 504, 9, 63, "Text",ExpressionUUID->"faee5e51-84a1-489a-aec4-c8e96080c8d7",
+ Evaluatable->False,
+ CellID->1447723491],
+Cell[CellGroupData[{
+Cell[20935, 610, 693, 21, 111, "Input",ExpressionUUID->"10bce4e6-8e15-49e1-bcca-5301e86f8d53",
+ CellID->898992727],
+Cell[21631, 633, 379, 10, 44, "Output",ExpressionUUID->"e30c934a-026f-4e23-90be-437a88fd17a9",
+ CellID->1788347156]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22071, 650, 147, 2, 45, "Section",ExpressionUUID->"2b033ac7-9ebd-4876-9cff-c1f64abfce32",
+ Evaluatable->False,
+ CellID->1860522465],
+Cell[CellGroupData[{
+Cell[22243, 656, 210, 5, 25, "Text",ExpressionUUID->"ad254b85-0f89-4fe9-8695-d0c4ca6300f3",
+ Evaluatable->False,
+ CellID->291685288],
+Cell[CellGroupData[{
+Cell[22478, 665, 563, 17, 64, "Input",ExpressionUUID->"f916ef85-88a9-4e25-9d86-1b13f683191b",
+ CellID->1796952962],
+Cell[23044, 684, 1955, 63, 65, "Output",ExpressionUUID->"299118d6-aed6-46c3-aa8a-cdcc772792d5",
+ CellID->569527480]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25060, 754, 162, 2, 45, "Section",ExpressionUUID->"ff4252df-8bb6-4819-b5aa-6066fee2e1cd",
+ Evaluatable->False,
+ CellID->40353492],
+Cell[CellGroupData[{
+Cell[25247, 760, 289, 6, 44, "Text",ExpressionUUID->"ef43871c-fb87-4e8e-92b2-8c50a09bf1e4",
+ Evaluatable->False,
+ CellID->1763791239],
+Cell[CellGroupData[{
+Cell[25561, 770, 1008, 32, 124, "Input",ExpressionUUID->"245738c4-8033-45f3-b261-cb3779684484",
+ CellID->175090685],
+Cell[26572, 804, 726, 23, 61, "Output",ExpressionUUID->"b8e48545-9dc1-4b31-897d-2cde60770806",
+ CellID->713741681],
+Cell[27301, 829, 1118, 36, 67, "Output",ExpressionUUID->"992d95d2-548a-4f77-bebe-8401c9991dab",
+ CellID->12780425]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28480, 872, 164, 2, 45, "Section",ExpressionUUID->"1b4e5172-c60c-45b0-8931-d6e0fba2bd6d",
+ Evaluatable->False,
+ CellID->972324914],
+Cell[CellGroupData[{
+Cell[28669, 878, 318, 6, 44, "Text",ExpressionUUID->"52812230-ce9f-40bb-99b8-6953774e06f9",
+ Evaluatable->False,
+ CellID->1661759575],
+Cell[CellGroupData[{
+Cell[29012, 888, 285, 7, 27, "Input",ExpressionUUID->"4cf8f448-c19d-4697-aa26-905b56797874",
+ CellID->1168347790],
+Cell[29300, 897, 438, 12, 44, "Output",ExpressionUUID->"8a77f5f8-8b30-4070-a119-70b407975659",
+ CellID->52238275]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29787, 915, 205, 5, 25, "Text",ExpressionUUID->"d61b57ff-7c47-4c8a-9973-7c2921906913",
+ Evaluatable->False,
+ CellID->168698762],
+Cell[CellGroupData[{
+Cell[30017, 924, 420, 12, 46, "Input",ExpressionUUID->"f140d6cb-091b-435d-87f8-f25a8680bf07",
+ CellID->641678894],
+Cell[30440, 938, 399, 11, 42, "Output",ExpressionUUID->"81a7ef03-8de7-4928-a30c-2de9e90cce1a",
+ CellID->1795359949]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30888, 955, 150, 2, 25, "Text",ExpressionUUID->"a2c99aee-d8e4-49e6-9750-1abfd3ef39aa",
+ Evaluatable->False,
+ CellID->891019372],
+Cell[CellGroupData[{
+Cell[31063, 961, 502, 14, 45, "Input",ExpressionUUID->"57cb14db-f033-4460-a993-cc2c0cf2a255",
+ CellID->959114673],
+Cell[31568, 977, 589, 16, 45, "Output",ExpressionUUID->"b811ccc2-883a-47ed-a997-098d6491b09c",
+ CellID->321938846]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32206, 999, 258, 5, 25, "Text",ExpressionUUID->"347f4e31-29f3-4f07-9da5-ce6690e6462f",
+ Evaluatable->False,
+ CellID->1421797743],
+Cell[CellGroupData[{
+Cell[32489, 1008, 405, 11, 27, "Input",ExpressionUUID->"3c654872-3114-496f-864d-299fb6b34384",
+ CellID->1104126432],
+Cell[32897, 1021, 240, 5, 26, "Output",ExpressionUUID->"5649ba9b-b616-47e3-ba37-0064088ac1f4",
+ CellID->1314877929]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33186, 1032, 158, 2, 25, "Text",ExpressionUUID->"2bf3a94e-64fb-4a50-9734-b773ae6b4508",
+ Evaluatable->False,
+ CellID->1493974412],
+Cell[CellGroupData[{
+Cell[33369, 1038, 522, 15, 27, "Input",ExpressionUUID->"5deb3308-59b0-47a6-9e74-f6dd05c3bcae",
+ CellID->849141760],
+Cell[33894, 1055, 390, 10, 26, "Output",ExpressionUUID->"bc227ece-f3f8-43f5-8e5f-1e5f441eb3ab",
+ CellID->1546625073]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34333, 1071, 142, 2, 25, "Text",ExpressionUUID->"dd3cfa60-f499-4e7d-9759-9ec07303d051",
+ Evaluatable->False,
+ CellID->1998008724],
+Cell[CellGroupData[{
+Cell[34500, 1077, 329, 9, 27, "Input",ExpressionUUID->"9149d7d9-4ee6-4956-a1f1-caac394f263d",
+ CellID->330836129],
+Cell[34832, 1088, 506, 14, 31, "Output",ExpressionUUID->"0c392e47-dac4-4847-be37-e823a11ea470",
+ CellID->985538623]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35399, 1109, 173, 2, 45, "Section",ExpressionUUID->"8e71e3a0-58c8-44c4-b0f6-d887e644f4cb",
+ CellID->1461153118],
+Cell[CellGroupData[{
+Cell[35597, 1115, 224, 3, 42, "Subsection",ExpressionUUID->"1a6c562f-1a05-4e23-8d90-3b7cac82262d",
+ Evaluatable->False,
+ CellID->1388363677],
+Cell[CellGroupData[{
+Cell[35846, 1122, 294, 6, 25, "Text",ExpressionUUID->"db686060-2372-4405-bc0c-fdf492ecc31b",
+ Evaluatable->False,
+ CellID->1818494684],
+Cell[CellGroupData[{
+Cell[36165, 1132, 327, 8, 27, "Input",ExpressionUUID->"3a13117a-5741-4232-8012-404ee61a9c8e",
+ CellID->452889884],
+Cell[36495, 1142, 191, 3, 26, "Output",ExpressionUUID->"368de307-2c9f-4019-932d-fec91f8107f2",
+ CellID->406267450]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[36735, 1151, 374, 7, 44, "Text",ExpressionUUID->"581a2751-2d5a-41f4-8c9c-9738a86f0793",
+ Evaluatable->False,
+ CellID->1318072065],
+Cell[CellGroupData[{
+Cell[37134, 1162, 347, 9, 46, "Input",ExpressionUUID->"dbebb711-c4b8-41a3-8c74-dd97e99e79f0",
+ CellID->1543377650],
+Cell[37484, 1173, 327, 8, 44, "Output",ExpressionUUID->"2e7d26c0-8683-4aa3-9635-86679b6978ce",
+ CellID->1286518337]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37872, 1188, 259, 4, 42, "Subsection",ExpressionUUID->"ca2c16e8-6366-4133-9156-83877fc4c52a",
+ Evaluatable->False,
+ CellID->752902996],
+Cell[CellGroupData[{
+Cell[38156, 1196, 333, 7, 44, "Text",ExpressionUUID->"3e6bceb1-5084-445b-b9fb-d444785e5041",
+ Evaluatable->False,
+ CellID->1067005648],
+Cell[CellGroupData[{
+Cell[38514, 1207, 780, 23, 78, "Input",ExpressionUUID->"7bea13b5-807a-419f-8d88-83be28325c36",
+ CellID->1675473486],
+Cell[39297, 1232, 197, 3, 26, "Output",ExpressionUUID->"28e50806-596e-4f7c-ae46-9ad4fc934e31",
+ CellID->1648331963]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39567, 1243, 179, 2, 45, "Section",ExpressionUUID->"275f303f-dc31-46b2-a428-9555bb48a205",
+ CellID->908135666],
+Cell[39749, 1247, 123, 1, 25, "Text",ExpressionUUID->"03c44c23-9e5d-49c1-afac-8ec570e86989",
+ CellID->869859233],
+Cell[39875, 1250, 128, 1, 25, "Text",ExpressionUUID->"c6d23389-878c-4f53-ae7a-169e42f8831a",
+ CellID->1802943902]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[40040, 1256, 153, 2, 45, "Section",ExpressionUUID->"aead6004-b255-4503-9518-8f174cec9753",
+ CellID->1083901744],
+Cell[40196, 1260, 923, 15, 120, "Text",ExpressionUUID->"74e43655-f287-4f04-9c24-f99574007437",
+ CellID->32833907]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41156, 1280, 147, 2, 45, "Section",ExpressionUUID->"dddf6f31-cc99-40e6-acf3-78445431ecaa",
+ CellID->2038148215],
+Cell[41306, 1284, 220, 3, 25, "Text",ExpressionUUID->"b3103707-eb30-4268-8a81-75e6809e47b7",
+ CellID->934109356],
+Cell[41529, 1289, 383, 5, 21, "Subitem",ExpressionUUID->"a4db602a-8cd7-4936-9408-f0aa9f21df3f",
+ CellID->1470486722],
+Cell[41915, 1296, 236, 3, 25, "Text",ExpressionUUID->"c3753827-b064-47be-9576-d5491a3555af",
+ CellID->1130828644],
+Cell[42154, 1301, 239, 4, 40, "Subitem",ExpressionUUID->"cbc170a1-ce32-4217-9386-c088b1699e9b",
+ CellID->606743758],
+Cell[42396, 1307, 245, 4, 40, "Subitem",ExpressionUUID->"d7ad2d38-9d44-42cb-b142-8be9a2e3afa7",
+ CellID->1617946970],
+Cell[42644, 1313, 199, 4, 25, "Text",ExpressionUUID->"a7443601-6326-4c58-831e-7f4cd6d32175",
+ CellID->1396786476],
+Cell[42846, 1319, 225, 4, 23, "Subitem",ExpressionUUID->"71b8cfd5-ad50-469f-be33-baf560d0ba54",
+ CellID->1646556775],
+Cell[43074, 1325, 274, 5, 40, "Subitem",ExpressionUUID->"3c0dc288-eacc-42d1-8a5d-ff2de21120ed",
+ CellID->1205442183],
+Cell[43351, 1332, 213, 4, 23, "Subitem",ExpressionUUID->"74bd952a-17bb-490e-9e9c-18e576753dc7",
+ CellID->506043883],
+Cell[43567, 1338, 149, 1, 25, "Text",ExpressionUUID->"b79dcdff-7046-4f02-83d7-665541ce3d60",
+ CellID->1044299461],
+Cell[43719, 1341, 260, 5, 40, "Subitem",ExpressionUUID->"616daa48-021f-40ed-9a31-3a80d90bd910",
+ CellID->157194096]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[44016, 1351, 192, 2, 74, "TutorialMoreAboutSection",ExpressionUUID->"e5e0df6d-9554-43ff-8f40-727d07a083f0",
+ CellID->1815633991],
+Cell[44211, 1355, 275, 5, 24, "TutorialMoreAbout",ExpressionUUID->"a27c2d4c-9332-4544-a595-c83fd5398d3c",
+ CellID->1487403973]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[44523, 1365, 128, 1, 74, "RelatedTutorialsSection",ExpressionUUID->"f918a918-cd2e-4512-a255-b0eb081944c7",
+ CellID->544793846],
+Cell[44654, 1368, 335, 6, 24, "RelatedTutorials",ExpressionUUID->"f13d4e6c-9588-4a3d-b886-bec03247b32a",
+ CellID->1627382561],
+Cell[44992, 1376, 349, 7, 24, "RelatedTutorials",ExpressionUUID->"971f4cc1-6489-4954-b0a0-10e7f503d1ab",
+ CellID->1894845875],
+Cell[45344, 1385, 360, 6, 24, "RelatedTutorials",ExpressionUUID->"1c6fbec7-ffa3-47d4-a9af-637cd93c8602",
+ CellID->1639619762],
+Cell[45707, 1393, 260, 5, 24, "RelatedTutorials",ExpressionUUID->"3cfe5002-3eb1-487f-a5a5-4819db18d2b3",
+ CellID->1960626817],
+Cell[45970, 1400, 290, 6, 24, "RelatedTutorials",ExpressionUUID->"bf07a5bc-9719-4abc-89ec-0a5b7f13e08f",
+ CellID->1265833751]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[46309, 1412, 111, 1, 72, "MetadataSection",ExpressionUUID->"3a999c0b-e528-49a0-a4e5-73195f2edf09",
+ CellID->1090832552],
+Cell[46423, 1415, 476, 12, 26, "History",ExpressionUUID->"83edc2ff-2dc5-4bad-a7c4-c7c2dec9a742",
+ CellID->554807025],
+Cell[CellGroupData[{
+Cell[46924, 1431, 122, 1, 21, "CategorizationSection",ExpressionUUID->"c45a6b11-f320-4721-823e-d97a499b9a58",
+ CellID->267673901],
+Cell[47049, 1434, 138, 2, 34, "Categorization",ExpressionUUID->"35aefde0-07e8-4185-b76e-8b87b15a84fe",
+ CellID->1964497289],
+Cell[47190, 1438, 151, 2, 34, "Categorization",ExpressionUUID->"467507b3-158f-4fc7-a42d-9a931f058d60",
+ CellID->1892347245],
+Cell[47344, 1442, 147, 2, 34, "Categorization",ExpressionUUID->"44bf738c-cf5d-4e85-807b-530426a074a7",
+ CellID->447334645],
+Cell[47494, 1446, 163, 2, 34, "Categorization",ExpressionUUID->"f7eb82a4-e5e3-4caa-9d51-ee2c92f96aff",
+ CellID->13130368]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[47694, 1453, 111, 1, 31, "KeywordsSection",ExpressionUUID->"68c5a6cb-1d5a-49d5-ab44-592aaca9c9af",
+ CellID->1638762982],
+Cell[47808, 1456, 219, 2, 20, "Keywords",ExpressionUUID->"74278bfe-c3e5-4bf1-b87d-1fea8ace3228",
+ CellID->1211665699]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
