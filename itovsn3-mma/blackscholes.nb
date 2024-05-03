@@ -1,0 +1,1321 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.1'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     34305,       1044]*)
+(*NotebookOutlinePosition[     35200,       1074]*)
+(*  CellTagsIndexPosition[     35156,       1070]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[TextData["BlackScholes.nb"], "Title",
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[TextData["Wilfrid S. Kendall"], "Subtitle",
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[TextData[
+"Statistics, University of Warwick, \nCoventry CV4 7AL, UK."], "Subsubtitle",
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Contact information:"], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->RGBColor[0.501961, 0, 0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData["Email: w.s.kendall@warwick.ac.uk"], "Name",
+  Editable->False,
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->RGBColor[0, 0, 1],
+  Background->GrayLevel[1]],
+
+Cell["URL: http://www.warwick.ac.uk/go/WSK", "Name",
+  Editable->False,
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->RGBColor[0, 0, 1],
+  Background->GrayLevel[1]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Acknowledgements:"], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->RGBColor[0.501961, 0, 0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"The research reported here was supported by EPSRC grants GR/71677 \
+(Stochastic calculus in AXIOM using modules of stochastic differentials) and \
+GR/L56831 (Perfect simulation in stochastic geometry), and a joint \
+EPSRC/BBSRC research grant (Multi-strain species modelling and control via \
+differential algebra reductions). This Mathematica notebook was constructed \
+on a visit to MSRI Berkeley CA during its 1997-1998 program Stochastic \
+Analysis. Finally, it is a pleasure to expres my gratitude to my friends \
+Suzanne Scotchmer and Joseph Farrell for the generous hospitality they showed \
+to me during my visit to MSRI."], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]],
+
+Cell[TextData[{
+  "Purpose: this is a Mathematica package (working under ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " 5.1.1) which demonstrates a derivation of the Black-Scholes formula using \
+Itovsn3."
+}], "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["References:"], "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"Discussion of applications of symbolic Ito calculus and related software to \
+problems in Mathematical Finance:"], "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"Derivation of Black-Scholes formula using an implementation of diffusion \
+theory in Mathematica:"], "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"J.M. Steele and R.A. Stine: \"Mathematica and Diffusions\", in Economic and \
+Financial Modeling with Mathematica, edited by H. Varian, Springer-Verlag, \
+New York, pp 192-213 (1993)."], "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"Derivation of Duffie-Richardson quadratic hedging formula using Itovsn3:"], 
+  "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"WSK: \"Doing stochastic calculus with Mathematica\", in Economic and \
+Financial Modeling with Mathematica, edited by H. Varian, Springer-Verlag, \
+New York, pp 214-238 (1993)."], "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"This notebook assumes no previous definitions in the Mathematica workspace. \
+If this is not the case, then quit Mathematica and restart.\n\nFirst we \
+ensure that the Itovsn3 package is loaded. "], "Text",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \(\(Needs["\<Itovsn3`\>"];\)\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"Initialize Itovsn3 and set up basic semimartingales"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"Initialize Itovsn3 and  set up a real Brownian motion  W  to serve as the \
+innovation process for the share price:"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(ItoReset[t, dt]\), "\n", 
+    \(\(BrownSingle[W, 0];\)\)}], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    InterpretationBox[GridBox[{
+          {"\<\"Itovsn3  resetting ...\"\>"},
+          {"\<\"Itovsn3  initialized\"\>"},
+          {
+            
+            InterpretationBox[\("with time semimartingale "\[InvisibleSpace]t\
+\),
+              SequenceForm[ "with time semimartingale ", t],
+              Editable->False]},
+          {
+            
+            InterpretationBox[\("and time differential "\[InvisibleSpace]dt\),
+              
+              SequenceForm[ "and time differential ", dt],
+              Editable->False]}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      TableForm[ {"Itovsn3  resetting ...", "Itovsn3  initialized", 
+        SequenceForm[ "with time semimartingale ", t], 
+        SequenceForm[ "and time differential ", dt]}]]], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"Now we can use this to set up a geometric Brownian motion  S  to model the \
+share price, together with a bond  B  which evolves in an entirely \
+deterministic manner. "], "Text",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(alfa\  = \ \[Alpha];\)\), "\n", 
+    \(\(mu\  = \ \[Mu];\)\), "\n", 
+    \(\(sigma\  = \ \[Sigma];\)\), "\n", 
+    \(SetAttributes[\[Sigma], Constant]\), "\n", 
+    \(SetAttributes[\[Mu], Constant]\), "\n", 
+    \(SetAttributes[\[Alpha], Constant]\), "\n", 
+    \(Itosde[S, dS == sigma\ S\ dW + mu\ S\ dt, 1]\), "\n", 
+    \(\(AddFixed[0, S, S0];\)\), "\n", 
+    \(Itosde[B, dB == alfa\ B\ dt, 1]\), "\n", 
+    \(\(AddFixed[0, B, B0];\)\), "\n", 
+    \(\(ItoStatus[];\)\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    InterpretationBox[GridBox[{
+          {"\<\"---------------\"\>"},
+          {"\<\"Summary of current structure of stochastic \
+differentials\"\>"},
+          {"\<\"- - - - - - - -\"\>"},
+          {"\<\"Current second-order structure of semimartingale \
+differentials:\"\>"},
+          {
+            TagBox[GridBox[{
+                  {"\<\"\"\>", "dB", "dS", "dW", "dt"},
+                  {"dB", "0", "0", "0", "0"},
+                  {"dS", "0", \(dt\ S\^2\ \[Sigma]\^2\), \(dt\ S\ \[Sigma]\), 
+                    "0"},
+                  {"dW", "0", \(dt\ S\ \[Sigma]\), "dt", "0"},
+                  {"dt", "0", "0", "0", "0"}
+                  },
+                RowSpacings->1,
+                ColumnSpacings->3,
+                RowAlignments->Baseline,
+                ColumnAlignments->{Left}],
+              Function[ BoxForm`e$, 
+                TableForm[ 
+                BoxForm`e$, TableHeadings -> {{dB, dS, dW, dt}, {dB, dS, dW, 
+                  dt}}]]]},
+          {"\<\"- - - - - - - -\"\>"},
+          {"\<\"Current first-order structure of semimartingale \
+differentials:\"\>"},
+          {
+            InterpretationBox[GridBox[{
+                  {"dB", "dS", "dW", "dt"},
+                  {\(B\ dt\ \[Alpha]\), \(dt\ S\ \[Mu]\), "0", "dt"}
+                  },
+                RowSpacings->3,
+                ColumnSpacings->1,
+                RowAlignments->Baseline,
+                ColumnAlignments->{Left}],
+              TableForm[ {
+                Times[ B, dt, \[Alpha]], 
+                Times[ dt, S, \[Mu]], 0, dt}, TableDirections -> Row, 
+                TableHeadings -> {{dB, dS, dW, dt}, {"Drifts:"}}]]},
+          {"\<\"- - - - - - - -\"\>"},
+          {"\<\"Current initial values:\"\>"},
+          {
+            InterpretationBox[GridBox[{
+                  {"B", "S", "W", "t"},
+                  {"B0", "S0", "0", "0"}
+                  },
+                RowSpacings->3,
+                ColumnSpacings->1,
+                RowAlignments->Baseline,
+                ColumnAlignments->{Left}],
+              
+              TableForm[ {B0, S0, 0, 0}, TableDirections -> Row, 
+                TableHeadings -> {{B, S, W, t}, {"Initially:"}}]]},
+          {"\<\"---------------\"\>"}
+          },
+        GridBaseline->{Baseline, {1, 1}},
+        ColumnAlignments->{Left}],
+      ColumnForm[ {"---------------", 
+        "Summary of current structure of stochastic differentials", 
+        "- - - - - - - -", 
+        "Current second-order structure of semimartingale differentials:", 
+        TableForm[ {{0, 0, 0, 0}, {0, 
+          Times[ dt, 
+            Power[ S, 2], 
+            Power[ \[Sigma], 2]], 
+          Times[ dt, S, \[Sigma]], 0}, {0, 
+          Times[ dt, S, \[Sigma]], dt, 0}, {0, 0, 0, 0}}, TableHeadings -> {{
+          dB, dS, dW, dt}, {dB, dS, dW, dt}}], "- - - - - - - -", 
+        "Current first-order structure of semimartingale differentials:", 
+        TableForm[ {
+          Times[ B, dt, \[Alpha]], 
+          Times[ dt, S, \[Mu]], 0, dt}, TableDirections -> Row, 
+          TableHeadings -> {{dB, dS, dW, dt}, {"Drifts:"}}], 
+        "- - - - - - - -", "Current initial values:", 
+        TableForm[ {B0, S0, 0, 0}, TableDirections -> Row, TableHeadings -> {{
+          B, S, W, t}, {"Initially:"}}], "---------------"}],
+      Editable->False]], "Print"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Construct self-financing trading strategy"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"We now consider a trading strategy, holding  s[t]  units of the share  S  \
+and  b[t]  units of the bond  B,  where  s  and  b  are allowed to vary \
+smoothly with time but we require the strategy to be exactly self-financing. \
+We establish a substitution rule to replace  V[S,t]  by this self-financing \
+trading strategy."], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(Strategy = s[t]\ S + b[t]\ B;\)\), "\n", 
+    \(ValueDefinition = First[Solve[V[S, t] - Strategy == 0, b[t]]]\), "\n", 
+    \(SelfFinancing = 
+      First[Solve[\[PartialD]\_t s[t]\ S + \[PartialD]\_t b[t]\ B == 
+            0, \[PartialD]\_t b[t]]]\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \({b[t] \[Rule] \(\(-S\)\ s[t] + V[S, t]\)\/B}\)], "Output"],
+
+Cell[BoxData[
+    RowBox[{"{", 
+      RowBox[{
+        RowBox[{
+          SuperscriptBox["b", "\[Prime]",
+            MultilineFunction->None], "[", "t", "]"}], "\[Rule]", 
+        RowBox[{"-", 
+          FractionBox[
+            RowBox[{"S", " ", 
+              RowBox[{
+                SuperscriptBox["s", "\[Prime]",
+                  MultilineFunction->None], "[", "t", "]"}]}], "B"]}]}], 
+      "}"}]], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Stochastic analysis of trading strategy"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"Consider then the evolution of the value  V[S,t]  of the trading strategy \
+over time: we know the following stochastic differential should be zero! \
+Notice the self-financing condition means we know how to derive  b[t]  once  \
+a[t]  is given."], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(sd = ItoD[V[S, t] - Strategy];\)\), "\n", 
+    \(SecondOrder = 
+      First[Solve[\((ItoExpand[sd\ dW] /. SelfFinancing)\) == 0, 
+          s[t]]]\), "\n", 
+    \(pde = 
+      Expand[\(\(\(Drift[sd] /. SelfFinancing\) /. ValueDefinition\) /. \
+SecondOrder\)\/dt] == 0\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    RowBox[{"{", 
+      RowBox[{\(s[t]\), "\[Rule]", 
+        RowBox[{
+          SuperscriptBox["V", 
+            TagBox[\((1, 0)\),
+              Derivative],
+            MultilineFunction->None], "[", \(S, t\), "]"}]}], "}"}]], "Output"],
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{\(\(-\[Alpha]\)\ V[S, t]\), "+", 
+        RowBox[{
+          SuperscriptBox["V", 
+            TagBox[\((0, 1)\),
+              Derivative],
+            MultilineFunction->None], "[", \(S, t\), "]"}], "+", 
+        RowBox[{"S", " ", "\[Alpha]", " ", 
+          RowBox[{
+            SuperscriptBox["V", 
+              TagBox[\((1, 0)\),
+                Derivative],
+              MultilineFunction->None], "[", \(S, t\), "]"}]}], "+", 
+        RowBox[{\(1\/2\), " ", \(S\^2\), " ", \(\[Sigma]\^2\), " ", 
+          RowBox[{
+            SuperscriptBox["V", 
+              TagBox[\((2, 0)\),
+                Derivative],
+              MultilineFunction->None], "[", \(S, t\), "]"}]}]}], "\[Equal]", 
+      "0"}]], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"Recasting problem in terms of innovation Brownian motion"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"We now have a linear second-order partial differential equation in  V  which \
+we must solve. In principle one could write a solver for a class of equations \
+including this example. However it seems more illuminating to proceed by a \
+trial-and-error method.\n\nFirst observe that the argument  S  is constrained \
+to be positive. This suggests we should re-cast the argument using the known \
+solution of  S  in terms of its innovation  W. First we check the solution \
+(again, we could have built a solver!): "], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(SS = Exp[sigma\ W + mu\ t - \(sigma\^2\ t\)\/2];\)\), "\n", 
+    \(\(sd = ItoD[S - SS] /. S \[Rule] SS;\)\), "\n", 
+    \(Together[Drift[sd] /. S \[Rule] SS] == 0\), "\n", 
+    \(\((ItoExpand[sd\^2] /. S \[Rule] SS)\) == 0\)}], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(True\)], "Output"],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"Now we work through the derivation of the pde, but this time using  SS  not  \
+S,  and viewing the value as  V1[W,t]  instead of  V[S,t],  in other words \
+viewed as a function of  W  not of  S: "], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(Strategy = s[t]\ SS + b[t]\ B;\)\), "\n", 
+    \(\(ValueDefinition = 
+        First[Solve[V1[W, t] - Strategy == 0, b[t]]];\)\), "\n", 
+    \(\(SelfFinancing = 
+        First[Solve[\[PartialD]\_t s[t]\ SS + \[PartialD]\_t b[t]\ B == 
+              0, \[PartialD]\_t b[t]]];\)\), "\n", 
+    \(\(sd = ItoD[V1[W, t] - Strategy];\)\), "\n", 
+    \(\(SecondOrder = 
+        First[Solve[\((ItoExpand[sd\ dW] /. SelfFinancing)\) == 0, 
+            s[t]]];\)\), "\n", 
+    \(pde = 
+      Expand[\(\(\(Drift[sd] /. SelfFinancing\) /. ValueDefinition\) /. \
+SecondOrder\)\/dt] == 0\)}], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{\(\(-\[Alpha]\)\ V1[W, t]\), "+", 
+        RowBox[{
+          SuperscriptBox["V1", 
+            TagBox[\((0, 1)\),
+              Derivative],
+            MultilineFunction->None], "[", \(W, t\), "]"}], "+", 
+        FractionBox[
+          RowBox[{"\[Alpha]", " ", 
+            RowBox[{
+              SuperscriptBox["V1", 
+                TagBox[\((1, 0)\),
+                  Derivative],
+                MultilineFunction->None], "[", \(W, t\), "]"}]}], "\[Sigma]"],
+         "-", 
+        FractionBox[
+          RowBox[{"\[Mu]", " ", 
+            RowBox[{
+              SuperscriptBox["V1", 
+                TagBox[\((1, 0)\),
+                  Derivative],
+                MultilineFunction->None], "[", \(W, t\), "]"}]}], "\[Sigma]"],
+         "+", 
+        RowBox[{\(1\/2\), " ", 
+          RowBox[{
+            SuperscriptBox["V1", 
+              TagBox[\((2, 0)\),
+                Derivative],
+              MultilineFunction->None], "[", \(W, t\), "]"}]}]}], "\[Equal]", 
+      "0"}]], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Further simplification using drift term"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"This is a considerable improvement, as we can now recognize an orthodox heat \
+equation hiding in there. It looks like we can improve matters still further \
+by adding in a drift term! We work with  V2[WW,t]  where  WW = W - \
+((alfa-mu)/sigma)*t,  instead of  V1[W,t]:"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(WW = W - \(\((alfa - mu)\)\ t\)\/sigma\), "\n", 
+    \(\(Strategy = s[t]\ SS + b[t]\ B;\)\), "\n", 
+    \(\(ValueDefinition = 
+        First[Solve[V2[WW, t] - Strategy == 0, b[t]]];\)\), "\n", 
+    \(\(SelfFinancing = 
+        First[Solve[\[PartialD]\_t s[t]\ SS + \[PartialD]\_t b[t]\ B == 
+              0, \[PartialD]\_t b[t]]];\)\), "\n", 
+    \(\(sd = ItoD[V2[WW, t] - Strategy];\)\), "\n", 
+    \(\(SecondOrder = 
+        First[Solve[\((ItoExpand[sd\ dW] /. SelfFinancing)\) == 0, 
+            s[t]]];\)\), "\n", 
+    \(pde = 
+      Expand[\(\(\(Drift[sd] /. SelfFinancing\) /. ValueDefinition\) /. \
+SecondOrder\)\/dt] == 0\)}], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(W - \(t\ \((\[Alpha] - \[Mu])\)\)\/\[Sigma]\)], "Output"],
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{\(\(-\[Alpha]\)\ V2[
+            W - \(t\ \((\[Alpha] - \[Mu])\)\)\/\[Sigma], t]\), "+", 
+        RowBox[{
+          SuperscriptBox["V2", 
+            TagBox[\((0, 1)\),
+              Derivative],
+            MultilineFunction->None], 
+          "[", \(W - \(t\ \((\[Alpha] - \[Mu])\)\)\/\[Sigma], t\), "]"}], "+",
+         
+        RowBox[{\(1\/2\), " ", 
+          RowBox[{
+            SuperscriptBox["V2", 
+              TagBox[\((2, 0)\),
+                Derivative],
+              MultilineFunction->None], 
+            "[", \(W - \(t\ \((\[Alpha] - \[Mu])\)\)\/\[Sigma], t\), 
+            "]"}]}]}], "\[Equal]", "0"}]], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Further simplification using Feynman-Kac formalism"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"It looks as if we could get an even neater answer by adding in a multiplier \
+to take out the  -alfa V2  term (this is equivalent to using the Feynman-Kac \
+trick). Thus we now work with  VV = Exp[alfa*(t-t1)]*V3[WW,t]  instead of  \
+V1[W,t]  (so we are discounting relative to the value of the bond at time  \
+t1):"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(SetAttributes[t1, Constant]\), "\n", 
+    \(VV = Exp[alfa\ \((t - t1)\)]\ V3[WW, t]\), "\n", 
+    \(\(Strategy = s[t]\ SS + b[t]\ B;\)\), "\n", 
+    \(\(ValueDefinition = First[Solve[VV - Strategy == 0, b[t]]];\)\), "\n", 
+    \(\(SelfFinancing = 
+        First[Solve[\[PartialD]\_t s[t]\ SS + \[PartialD]\_t b[t]\ B == 
+              0, \[PartialD]\_t b[t]]];\)\), "\n", 
+    \(\(sd = ItoD[VV - Strategy];\)\), "\n", 
+    \(\(SecondOrder = 
+        First[Solve[\((ItoExpand[sd\ dW] /. SelfFinancing)\) == 0, 
+            s[t]]];\)\), "\n", 
+    \(pde = 
+      Expand[\(\(\(Drift[sd] /. SelfFinancing\) /. ValueDefinition\) /. \
+SecondOrder\)\/dt] == 0\)}], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(\[ExponentialE]\^\(\((t - t1)\)\ \[Alpha]\)\ V3[
+        W - \(t\ \((\[Alpha] - \[Mu])\)\)\/\[Sigma], t]\)], "Output"],
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{
+        RowBox[{\(\[ExponentialE]\^\(\((t - t1)\)\ \[Alpha]\)\), " ", 
+          RowBox[{
+            SuperscriptBox["V3", 
+              TagBox[\((0, 1)\),
+                Derivative],
+              MultilineFunction->None], 
+            "[", \(W - \(t\ \((\[Alpha] - \[Mu])\)\)\/\[Sigma], t\), "]"}]}], 
+        "+", 
+        RowBox[{\(1\/2\), 
+          " ", \(\[ExponentialE]\^\(\((t - t1)\)\ \[Alpha]\)\), " ", 
+          RowBox[{
+            SuperscriptBox["V3", 
+              TagBox[\((2, 0)\),
+                Derivative],
+              MultilineFunction->None], 
+            "[", \(W - \(t\ \((\[Alpha] - \[Mu])\)\)\/\[Sigma], t\), 
+            "]"}]}]}], "\[Equal]", "0"}]], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"Recognition of Brownian kernel and explicit solution"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"We can now recognize  V3  as solving the Kolmogorov backwards differential \
+equation solved by the well-known Brownian heat kernel. Consequently we know \
+the general form for  V3:  integrals with respect to  S1  and  t1  of the \
+following (and notice the option we establish so that this can be eventually \
+rephrased in terms of the terminal share price  S1  rather than the terminal \
+innovation  W1!):"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(TerminalShare = 
+      W1 \[Rule] \(Log[S1] - \((mu\ t - \(sigma\^2\ t\)\/2)\)\)\/sigma\), "\n\
+", 
+    \(V3 = 
+      Exp[\(-\(\((#1 - \((W1 - \(\((alfa - mu)\)\ t1\)\/sigma)\))\)\^2\/\(2\ \
+\((t1 - #2)\)\)\)\)]\/\@\(2\ \[Pi]\ \((t1 - #2)\)\) &\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(W1 \[Rule] \(\(-t\)\ \[Mu] + \(t\ \[Sigma]\^2\)\/2 + \
+Log[S1]\)\/\[Sigma]\)], "Output"],
+
+Cell[BoxData[
+    \(\[ExponentialE]\^\(-\(\((#1 - \((W1 - \(\((alfa - mu)\)\ \
+t1\)\/sigma)\))\)\^2\/\(2\ \((t1 - #2)\)\)\)\)\/\@\(2\ \[Pi]\ \((t1 - #2)\)\) \
+&\)], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Verification of answer"], "Section",
+  Evaluatable->False],
+
+Cell[TextData["Substituting back shows we have got the answer:"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Together[First[pde]] == 0\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Rewriting of solution in terms of share price  S"], "Section",
+  Evaluatable->False],
+
+Cell["\<\
+So now we know the kernel which should be integrated (as a function of  W1)  \
+to yield solutions to Black-Scholes-type problems. Notice that subject to \
+regularity conditions such an integration yields solutions whatever function \
+of  W1  is integrated against the kernel. This allows us to derive \
+self-financing strategies delivering arbitrary functions of  W1  at time  t1.
+
+Rewritten in terms of the current share price  S the kernel is as follows \
+(but note here that in  Solve  Mathematica 5.1.1 warns about multiple \
+solutions!):\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(VV = \(VV /. First[Solve[SS == S, W]]\) /. 
+        Log[s_\^2] \[Rule] 2\ Log[s]\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    RowBox[{\(Solve::"ifun"\), \(\(:\)\(\ \)\), "\<\"Inverse functions are \
+being used by \\!\\(Solve\\), so some solutions may not be found; use Reduce \
+for complete solution information. \
+\\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", ButtonStyle->\\\"RefGuideLinkText\
+\\\", ButtonFrame->None, ButtonData:>\\\"Solve::ifun\\\"]\\)\"\>"}]], \
+"Message"],
+
+Cell[BoxData[
+    \(\[ExponentialE]\^\(\((t - t1)\)\ \[Alpha] - \((\(-W1\) - \(t\ \((\
+\[Alpha] - \[Mu])\)\)\/\[Sigma] + \(t1\ \((\[Alpha] - \[Mu])\)\)\/\[Sigma] + \
+\(\(-2\)\ t\ \[Mu] + t\ \[Sigma]\^2 + 2\ Log[S]\)\/\(2\ \[Sigma]\))\)\^2\/\(2\
+\ \((\(-t\) + t1)\)\)\)\/\(\@\(2\ \[Pi]\)\ \@\(\(-t\) + t1\)\)\)], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Analysis of value of option at time zero"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"We are principally interested in the value of this at time zero:"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(InitialKernel = Simplify[InitialValue[0, VV]]\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(\[ExponentialE]\^\(\(-t1\)\ \[Alpha] - \((t1\ \((\[Alpha] - \[Mu])\) - \
+W1\ \[Sigma] + Log[S0])\)\^2\/\(2\ t1\ \[Sigma]\^2\)\)\/\(\@\(2\ \[Pi]\)\ \
+\@t1\)\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"Using integration against  W1,  this tells us the value of the strategy we \
+must start with at time 0 in order to achieve value  f[S1]  at time  t1,  \
+since integration of the kernel multiplied by a function of  S1  \
+(equivalently,  W1)  against  W1  still yields a solution of the partial \
+differential equation, and therefore still yields a value process achievable \
+by a self-financing strategy. We first compute the value of  W1  required to \
+obtain  S1:"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(S1 = \(SS /. W \[Rule] W1\) /. t \[Rule] t1\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(\[ExponentialE]\^\(t1\ \[Mu] + W1\ \[Sigma] - \(t1\ \
+\[Sigma]\^2\)\/2\)\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"Thus the value required at time  0  to achieve  f[S1]  at time  t1  is given \
+by"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\[Integral]\_\(-\[Infinity]\)\%\[Infinity]\( f[
+            S1]\ InitialKernel\) \[DifferentialD]W1\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(\[Integral]\_\(-\[Infinity]\)\%\[Infinity]\(\( \[ExponentialE]\^\(\(-t1\
+\)\ \[Alpha] - \((t1\ \((\[Alpha] - \[Mu])\) - W1\ \[Sigma] + Log[S0])\)\^2\/\
+\(2\ t1\ \[Sigma]\^2\)\)\ f[\[ExponentialE]\^\(t1\ \[Mu] + W1\ \[Sigma] - \
+\(t1\ \[Sigma]\^2\)\/2\)]\)\/\(\@\(2\ \[Pi]\)\ \@t1\)\) \
+\[DifferentialD]W1\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+This values the option  f[S1]  at time  t1.  Here is how it works if instead \
+we value an option on buying the share at price  Soption  at time  t1.  \
+Firstly we calculate the value  Woption  of  W1  for a given option level  \
+Soption (ignore the spelling warning):\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(OptionLevel = 
+      First[\(Solve[SS == Soption, W] /. W \[Rule] Woption\) /. 
+            t \[Rule] t1] /. Log[s_\^2] \[Rule] 2\ Log[s]\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(Woption\\)\\\" is similar to existing symbol \
+\\\"\\!\\(Soption\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(Solve::"ifun"\), \(\(:\)\(\ \)\), "\<\"Inverse functions are \
+being used by \\!\\(Solve\\), so some solutions may not be found; use Reduce \
+for complete solution information. \
+\\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", ButtonStyle->\\\"RefGuideLinkText\
+\\\", ButtonFrame->None, ButtonData:>\\\"Solve::ifun\\\"]\\)\"\>"}]], \
+"Message"],
+
+Cell[BoxData[
+    \({Woption \[Rule] \(\(-2\)\ t1\ \[Mu] + t1\ \[Sigma]\^2 + 2\ \
+Log[Soption]\)\/\(2\ \[Sigma]\)}\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Some coaching is required in the integration procedure, since Mathematica has \
+no way of telling what is the sign of  t1  and therefore fails to integrate \
+to the limit at plus or minus  Infinity!  Note also that version 5.1.1 of \
+Mathematica warns again about multiple solutions.\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(TotalInitial = \[Integral]\_Woption\%bbb\( 
+                Soption\ InitialKernel\) \[DifferentialD]W1 + \
+\[Integral]\_\(-aaa\)\%Woption\( S1\ InitialKernel\) \[DifferentialD]W1 /. 
+        OptionLevel\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(1\/2\ \[ExponentialE]\^\(\(-t1\)\ \[Alpha]\)\ Soption\ \((Erf[\(\(-t1\)\
+\ \[Alpha] + t1\ \[Mu] + bbb\ \[Sigma] - Log[S0]\)\/\(\@2\ \@t1\ \[Sigma]\)] \
++ Erf[\(t1\ \[Alpha] - t1\ \[Mu] + Log[S0] + 1\/2\ \((2\ t1\ \[Mu] - t1\ \
+\[Sigma]\^2 - 2\ Log[Soption])\)\)\/\(\@2\ \@t1\ \[Sigma]\)])\) + 
+      1\/2\ S0\ \((Erf[\(aaa\ \[Sigma] + t1\ \((\[Alpha] - \[Mu] + \
+\[Sigma]\^2)\) + Log[S0]\)\/\(\@2\ \@t1\ \[Sigma]\)] - 
+            Erf[\(t1\ \((\[Alpha] - \[Mu] + \[Sigma]\^2)\) + Log[S0] + 1\/2\ \
+\((2\ t1\ \[Mu] - t1\ \[Sigma]\^2 - 2\ Log[Soption])\)\)\/\(\@2\ \@t1\ \
+\[Sigma]\)])\)\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"We now have to make a careful set of simplifications so as to ensure \
+Mathematica spots the special values of two of the  Erf  arguments (we also \
+add some simplifications for tidying up the answer!)."], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(Simplify[\(\(\(TotalInitial /. 
+                  aaa \[Rule] 
+                    xxx\ \@\(2\ t1\) - \(Log[S0] + \((alfa - mu)\)\ t1 + \
+sigma\^2\ t1\)\/sigma\) /. 
+                bbb \[Rule] 
+                  xxx\ \@\(2\ t1\) + \(Log[S0] + \((alfa - mu)\)\ t1\)\/sigma\
+\) /. \@\(\[Pi]\ t1\) \[Rule] \(\@\[Pi]\ \@\(2\ t1\)\)\/\@2\) /. 
+            xxx \[Rule] \[Infinity]] /. 
+        Log[s_] - Log[t_] \[Rule] 
+          Log[s\/t]\) /. \@t1 \[Rule] \@\(2\ t1\)\/\@2\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(1\/2\ \[ExponentialE]\^\(\(-t1\)\ \[Alpha]\)\ \((\[ExponentialE]\^\(t1\ \
+\[Alpha]\)\ S0 + 
+          Soption - \[ExponentialE]\^\(t1\ \[Alpha]\)\ S0\ Erf[\(2\ t1\ \
+\[Alpha] + t1\ \[Sigma]\^2 + 2\ Log[S0] - 2\ Log[Soption]\)\/\(2\ \@2\ \@t1\ \
+\[Sigma]\)] + 
+          Soption\ Erf[\(-\(\(\(-2\)\ t1\ \[Alpha] + t1\ \[Sigma]\^2 - 
+                      2\ Log[S0] + 
+                      2\ Log[Soption]\)\/\(2\ \@2\ \@t1\ \
+\[Sigma]\)\)\)])\)\)], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Further Exercise"], "Subsubsection",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData["Compute the amount  S  of share to be held at time  0"], "Text",
+  Evaluatable->False]
+}, Closed]]
+},
+FrontEndVersion->"5.1 for Microsoft Windows",
+ScreenRectangle->{{0, 1024}, {0, 685}},
+WindowToolbars->{},
+CellGrouping->Manual,
+WindowSize->{1016, 651},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+PrivateNotebookOptions->{"ColorPalette"->{RGBColor, -1}},
+ShowCellLabel->True,
+ShowCellTags->False,
+RenderingOptions->{"ObjectDithering"->True,
+"RasterDithering"->False},
+StyleDefinitions -> "PastelColor.nb"
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 123, 3, 147, "Title",
+  Evaluatable->False],
+Cell[1880, 56, 129, 3, 62, "Subtitle",
+  Evaluatable->False],
+Cell[2012, 61, 173, 4, 58, "Subsubtitle",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[2210, 69, 357, 12, 35, "SmallText",
+  Evaluatable->False],
+Cell[2570, 83, 265, 8, 31, "Name",
+  Evaluatable->False],
+Cell[2838, 93, 259, 8, 31, "Name",
+  Evaluatable->False]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3134, 106, 354, 12, 35, "SmallText",
+  Evaluatable->False],
+Cell[3491, 120, 955, 21, 70, "SmallText",
+  Evaluatable->False]
+}, Closed]],
+Cell[4461, 144, 383, 12, 56, "SmallText",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[4869, 160, 317, 11, 35, "SmallText",
+  Evaluatable->False],
+Cell[5189, 173, 418, 13, 35, "SmallText",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[5632, 190, 404, 13, 35, "SmallText",
+  Evaluatable->False],
+Cell[6039, 205, 364, 9, 58, "SmallText",
+  Evaluatable->False]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6440, 219, 382, 13, 35, "SmallText",
+  Evaluatable->False],
+Cell[6825, 234, 357, 9, 58, "SmallText",
+  Evaluatable->False]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[7231, 249, 244, 4, 130, "Text",
+  Evaluatable->False],
+Cell[7478, 255, 204, 7, 38, "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[7719, 267, 103, 2, 48, "Section",
+  Evaluatable->False],
+Cell[7825, 271, 164, 3, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[8014, 278, 234, 8, 75, "Input"],
+Cell[8251, 288, 871, 23, 137, "Output"]
+}, Open  ]],
+Cell[9137, 314, 470, 14, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[9632, 332, 529, 12, 333, "Input"],
+Cell[10164, 346, 3347, 78, 469, "Print"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[13560, 430, 92, 1, 74, "Section",
+  Evaluatable->False],
+Cell[13655, 433, 373, 6, 102, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[14053, 443, 309, 6, 125, "Input"],
+Cell[14365, 451, 78, 1, 88, "Output"],
+Cell[14446, 454, 417, 12, 89, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[14912, 472, 90, 1, 74, "Section",
+  Evaluatable->False],
+Cell[15005, 475, 294, 5, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[15324, 484, 327, 8, 150, "Input"],
+Cell[15654, 494, 253, 7, 74, "Output"],
+Cell[15910, 503, 760, 20, 88, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[16719, 529, 108, 2, 74, "Section",
+  Evaluatable->False],
+Cell[16830, 533, 561, 8, 192, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[17416, 545, 404, 10, 157, "Input"],
+Cell[17823, 557, 38, 1, 72, "Output"],
+Cell[17864, 560, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[17917, 564, 244, 4, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[18186, 572, 753, 19, 204, "Input"],
+Cell[18942, 593, 1043, 30, 93, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[20034, 629, 90, 1, 74, "Section",
+  Evaluatable->False],
+Cell[20127, 632, 318, 5, 102, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[20470, 641, 810, 20, 258, "Input"],
+Cell[21283, 663, 77, 1, 88, "Output"],
+Cell[21363, 666, 676, 18, 88, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[22088, 690, 101, 1, 74, "Section",
+  Evaluatable->False],
+Cell[22192, 693, 364, 6, 102, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[22581, 703, 832, 20, 256, "Input"],
+Cell[23416, 725, 138, 2, 88, "Output"],
+Cell[23557, 729, 737, 19, 88, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[24343, 754, 104, 2, 74, "Section",
+  Evaluatable->False],
+Cell[24450, 758, 456, 7, 132, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[24931, 769, 302, 7, 226, "Input"],
+Cell[25236, 778, 108, 2, 104, "Output"],
+Cell[25347, 782, 174, 3, 131, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[25570, 791, 73, 1, 74, "Section",
+  Evaluatable->False],
+Cell[25646, 794, 95, 1, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[25766, 799, 81, 2, 73, "Input"],
+Cell[25850, 803, 38, 1, 72, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[25937, 810, 99, 1, 74, "Section",
+  Evaluatable->False],
+Cell[26039, 813, 588, 11, 222, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[26652, 828, 136, 3, 74, "Input"],
+Cell[26791, 833, 368, 6, 56, "Message"],
+Cell[27162, 841, 321, 4, 136, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[27532, 851, 91, 1, 74, "Section",
+  Evaluatable->False],
+Cell[27626, 854, 113, 2, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[27764, 860, 101, 2, 73, "Input"],
+Cell[27868, 864, 189, 3, 120, "Output"]
+}, Open  ]],
+Cell[28072, 870, 513, 8, 132, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[28610, 882, 221, 7, 49, "Input"],
+Cell[28834, 891, 106, 2, 87, "Output"]
+}, Open  ]],
+Cell[28955, 896, 130, 3, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[29110, 903, 277, 8, 68, "Input"],
+Cell[29390, 913, 338, 5, 129, "Output"]
+}, Open  ]],
+Cell[29743, 921, 314, 6, 102, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[30082, 931, 315, 9, 50, "Input"],
+Cell[30400, 942, 362, 5, 56, "Message"],
+Cell[30765, 949, 368, 6, 56, "Message"],
+Cell[31136, 957, 128, 2, 94, "Output"]
+}, Open  ]],
+Cell[31279, 962, 329, 6, 102, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[31633, 972, 381, 10, 73, "Input"],
+Cell[32017, 984, 619, 9, 318, "Output"]
+}, Open  ]],
+Cell[32651, 996, 251, 4, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[32927, 1004, 528, 11, 114, "Input"],
+Cell[33458, 1017, 479, 9, 159, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[33986, 1032, 199, 6, 43, "Subsubsection",
+  Evaluatable->False],
+Cell[34188, 1040, 101, 1, 29, "Text",
+  Evaluatable->False]
+}, Closed]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

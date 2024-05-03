@@ -1,0 +1,1762 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.1'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     39028,       1442]*)
+(*NotebookOutlinePosition[     39923,       1472]*)
+(*  CellTagsIndexPosition[     39879,       1468]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[TextData["Reference.nb"], "Title",
+  Editable->False,
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[TextData["Wilfrid S. Kendall"], "Subtitle",
+  Editable->False,
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[TextData[
+"Statistics, University of Warwick,\nCoventry CV4 7AL, UK"], "Subsubtitle",
+  Editable->False,
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Contact information:"], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->RGBColor[0.501961, 0, 0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData["Email: w.s.kendall@warwick.ac.uk"], "Name",
+  Editable->False,
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->RGBColor[0, 0, 1],
+  Background->GrayLevel[1]],
+
+Cell["URL: http://www.warwick.ac.uk/go/WSK", "Name",
+  Editable->False,
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->RGBColor[0, 0, 1],
+  Background->GrayLevel[1]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Acknowledgements:"], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->RGBColor[0.501961, 0, 0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"The research reported here was supported by EPSRC grants GR/71677 \
+(Stochastic calculus in AXIOM using modules of stochastic differentials) and \
+GR/L56831 (Perfect simulation in stochastic geometry), and a joint \
+EPSRC/BBSRC research grant (Multi-strain species modelling and control via \
+differential algebra reductions). This Mathematica notebook was partly \
+written during a visit to MSRI Berkeley CA during its 1997-1998 program \
+Stochastic Analysis. Finally, it is a pleasure to express my gratitude to my \
+friends Suzanne Scotchmer and Joseph Farrell for the generous hospitality \
+they showed to me during my visit to MSRI."], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Open  ]],
+
+Cell["\<\
+This is a Mathematica notebook which is completely non-executable! It lists \
+the various Itovsn3 procedures (version 3.68) for reference: typical useage, \
+brief help statements, and relevant source code are attached in hidden cells. \
+All cells are inactive. The reader is advised that not all relevant source \
+code is included: for a complete overview inspect Itovsn3.m, the actual \
+Mathematica source. \
+\>", "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["References:"], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Symbolic Ito calculus in Mathematica:"], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"WSK: \"Doing stochastic calculus with Mathematica\", in Economic and \
+Financial Modeling with Mathematica, edited by H. Varian, Springer-Verlag, \
+New York, pp 214-238 (1993)."], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"Invoking, initializing, and inspecting the Itovsn3 package"], "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Itovsn3\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(Needs["\<Itovsn3`\>"]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This is how you should invoke the package, having placed the file Itovsn3.m \
+where it can be seen by Mathematica. "], "Text",
+  Editable->False,
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ItoInit\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(ItoInit[t, dt]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This starts things off with basic structures, using the  identifier  t  for \
+time variable and the identifier  dt  for its differential."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{\(ItoInit[time_, dtime_]\), ":=", 
+        RowBox[{"(", 
+          RowBox[{
+          \(t = time\), ";", \(dt = dtime\), ";", 
+            \(SetAttributes[Brktbydt, Orderless]\), ";", 
+            \(CurrentSemimartingales = {}\), ";", 
+            \(CurrentDifferentials = {}\), ";", \(ItoMultiplications = {}\), 
+            ";", \(Introduce[t, dt]\), ";", \(AddDrift[dt, dt]\), ";", 
+            \(ItoIntegral[dt] = t\), ";", \(Fixed[t0_, t] = t0\), ";", 
+            InterpretationBox[GridBox[{
+                  {"\<\"Itovsn3  initialized\"\>"},
+                  {
+                    
+                    InterpretationBox[
+                      \("with time semimartingale "\[InvisibleSpace]t\),
+                      SequenceForm[ 
+                      "with time semimartingale ", FE`Conversion`Private`t],
+                      Editable->False]},
+                  {
+                    
+                    InterpretationBox[
+                      \("and time differential "\[InvisibleSpace]dt\),
+                      SequenceForm[ 
+                      "and time differential ", FE`Conversion`Private`dt],
+                      Editable->False]}
+                  },
+                RowSpacings->1,
+                ColumnSpacings->3,
+                RowAlignments->Baseline,
+                ColumnAlignments->{Left}],
+              TableForm[ {"Itovsn3  initialized", 
+                SequenceForm[ 
+                "with time semimartingale ", FE`Conversion`Private`t], 
+                SequenceForm[ 
+                "and time differential ", FE`Conversion`Private`dt]}]]}], 
+          ")"}]}], ";"}]], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ItoReset\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(ItoReset[t, dt]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData["This resets all structures, using  ItoInit[t,dt]."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{\(ItoInit[time_, dtime_]\), ":=", 
+        RowBox[{"(", 
+          RowBox[{
+          \(t = time\), ";", \(dt = dtime\), ";", 
+            \(SetAttributes[Brktbydt, Orderless]\), ";", 
+            \(CurrentSemimartingales = {}\), ";", 
+            \(CurrentDifferentials = {}\), ";", \(ItoMultiplications = {}\), 
+            ";", \(Introduce[t, dt]\), ";", \(AddDrift[dt, dt]\), ";", 
+            \(ItoIntegral[dt] = t\), ";", \(Fixed[t0_, t] = t0\), ";", 
+            InterpretationBox[GridBox[{
+                  {"\<\"Itovsn3  initialized\"\>"},
+                  {
+                    
+                    InterpretationBox[
+                      \("with time semimartingale "\[InvisibleSpace]t\),
+                      SequenceForm[ 
+                      "with time semimartingale ", FE`Conversion`Private`t],
+                      Editable->False]},
+                  {
+                    
+                    InterpretationBox[
+                      \("and time differential "\[InvisibleSpace]dt\),
+                      SequenceForm[ 
+                      "and time differential ", FE`Conversion`Private`dt],
+                      Editable->False]}
+                  },
+                RowSpacings->1,
+                ColumnSpacings->3,
+                RowAlignments->Baseline,
+                ColumnAlignments->{Left}],
+              TableForm[ {"Itovsn3  initialized", 
+                SequenceForm[ 
+                "with time semimartingale ", FE`Conversion`Private`t], 
+                SequenceForm[ 
+                "and time differential ", FE`Conversion`Private`dt]}]]}], 
+          ")"}]}], ";"}]], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ItoStatus\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(ItoStatus[]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This reports current structures (stochastic differential multiplication \
+table, list of drifts)."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{\(ItoStatus[]\), ":=", 
+        RowBox[{"(", 
+          RowBox[{
+          \(Print["---------------"]\), ";", 
+            \(Print["Summary of current structure of stochastic \
+differentials"]\), ";", \(Print["- - - - - - - -"]\), ";", 
+            \(Print["Current second-order structure of semimartingale \
+differentials:"]\), ";", 
+            RowBox[{"Print", "[", 
+              
+              TagBox[\(Outer[ItoExpand[#1\ #2]&, CurrentDifferentials, 
+                  CurrentDifferentials]\),
+                (
+                TableForm[ #, TableHeadings -> {
+                  FE`Conversion`Private`CurrentDifferentials, 
+                  FE`Conversion`Private`CurrentDifferentials}]&)], "]"}], 
+            ";", \(Print["- - - - - - - -"]\), ";", 
+            \(Print["Current first-order structure of semimartingale \
+differentials:"]\), ";", 
+            RowBox[{"Print", "[", 
+              TagBox[\(\((Drift[#1]&)\)/@CurrentDifferentials\),
+                (
+                TableForm[ #, TableDirections -> Row, TableHeadings -> {
+                  FE`Conversion`Private`CurrentDifferentials, {
+                  "Drifts:"}}]&)], "]"}], ";", \(Print["- - - - - - - -"]\), 
+            ";", \(Print["Current initial values:"]\), ";", 
+            RowBox[{"Print", "[", 
+              TagBox[\(\((Fixed[0, #1]&)\)/@CurrentSemimartingales\),
+                (
+                TableForm[ #, TableDirections -> Row, TableHeadings -> {
+                  FE`Conversion`Private`CurrentSemimartingales, {
+                  "Initially:"}}]&)], "]"}], ";", 
+            \(Print["---------------"]\), ";"}], ")"}]}], ";"}]], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Introduction of semimartingales and diffusions"], "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Introduce\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(Introduce[Smgl, dSmgl]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This introduces the basic semimartingale identifier  Smgl  with associated \
+basic stochastic differential identifer  dSmgl.  Attempts to reintroduce \
+semimartingale or stochastic differential identifiers are reported as \
+errors."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    \(\(Introduce[X_, dX_] := 
+      If[\(\[InvisibleSpace]! \((MemberQ[CurrentSemimartingales, X])\)\) && 
+          \(\[InvisibleSpace]! \((MemberQ[CurrentDifferentials, dX])\)\), 
+        X /: Dt[X, t] = dX\/dt; dX /: Dt[dX, t] = 0; 
+        ItoIntegral[dX] = X - Fixed[0, X]; 
+        CurrentDifferentials = Prepend[CurrentDifferentials, dX]; 
+        CurrentSemimartingales = Prepend[CurrentSemimartingales, X]; 
+        ItoMultiplications = 
+          Join[\((dX\ #1 \[Rule] Brktbydt[dX, #1]\ dt&)\)/@
+              CurrentDifferentials, ItoMultiplications]; 
+        AddQuadVar[dX\ dt, 0]; RandomQ[X] = True; RandomQ[dX] = True; 
+        CurrentDifferentials, 
+        "Attempt to re-introduce a semimartingale\n or a stochastic \
+differential!"]; \)\)], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Itosde\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(Itosde[X, dX == sd, X0]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This introduces and sets up a basic semimartingale identifier X  with basic \
+stochastic differential identifier  dX  and initial value expression  X0,  \
+and satisfying the second- and first-order structure implied by the \
+stochastic differential equation  dX==sd."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    \(\(Itosde[X_, dX_ == sd_, X0_] := 
+      \((Introduce[X, dX]; AddDrift[dX, Drift[sd]]; Fixed[0, X] = X0; 
+        AddQuadVar[dX\^2, ItoExpand[sd\^2]]; 
+        \((AddQuadVar[dX\ #1, ItoExpand[sd\ #1]]&)\)/@CurrentDifferentials; )
+        \); \)\)], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(BrownBasis\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData["\tBrownBasis[SemimartingaleList,InitialValueList]"], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"This introduces and sets up second- and first-order structure for an \
+independent set of Brownian basic semimartingales, identifiers in  \
+SemimartingaleList,  with initial value expressions given by  \
+InitialValueList.  It uses  BrownSingle[X,X0] as a supplementary procedure. \
+Corresponding basic stochastic differential identifiers are created by \
+prepending 'd' to the  SemimartingaleList  identifiers."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    \(\(BrownBasis[SemimartingaleList_, InitialValueList_] := 
+      \((\((BrownSingle@@#1&)\)/@
+          Transpose[{SemimartingaleList, InitialValueList}]; 
+        BrownPairs[ItoD/@SemimartingaleList])\); \)\)], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(BrownSingle\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(BrownSingle[X, X0]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This introduces and sets up a single Brownian basic semimartingale \
+identifier  X  (creating the semimartingale differential identifier  dX)  \
+with initial value expression  X0. "], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    \(\(BrownSingle[X_, X0_] := 
+      Block[{dX = ToExpression["d"<>ToString[X]]}, Introduce[X, dX]; 
+        AddQuadVar[dX\^2, dt]; AddDrift[dX, 0]; Fixed[0, X] = X0]; \)\)], 
+  "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"Altering the second- and first-order structure, and initial value"], 
+  "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(AddQuadVar\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(AddQuadVar[dX, dY, xdt]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This sets  Brktbydt[dX,dY] = xdt/dt,  altering the effect of substitution \
+using  ItoMultiplications,  so that (for example)  ItoExpand[dX dY]  yields  \
+xdt.  Similarly for AddQuadVar[dX dY,xdt]  and  AddQuadVar[dX^2,xdt]."], 
+  "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[{
+    \(\(AddQuadVar[dX_\ dY_, xdt_] := AddQuadVar[dX, dY, xdt]; \)\), 
+    \(\(AddQuadVar[dX_\^2, xdt_] := AddQuadVar[dX, dX, xdt]; \)\), 
+    \(\(AddQuadVar[dX_, dY_, xdt_] := \(Brktbydt[dX, dY] = xdt\/dt\); \)\)}], 
+  "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(AddDrift\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(AddDrift[dX, DriftdX]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This sets  Drftbydt[dX] = DriftdX/dt,  so that (for example)  Drift[dX]  \
+yields  DriftdX."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    \(\(AddDrift[dX_, DriftdX_] := \(Drftbydt[dX] = DriftdX\/dt\); \)\)], 
+  "Output",
+  PageWidth->Infinity,
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(AddFixed\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(AddFixed[t0, X, X0]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False],
+
+Cell[TextData[
+"\nThis sets  Fixed[t0,X] = X0,  so that (for example)  InitialValue[t0,X]  \
+yields  X0."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    \(\(AddFixed[t0_, y_, y0_] := \(Fixed[t0, y] = y0\); \)\)], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Placeholders for structure"], "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Brktbydt\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(Brktbydt[dX, dY]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity],
+
+Cell[TextData[
+"This is a placeholder for the FORMAL quotient by  dt  of the bracket \
+differential  dX dY. See AddQuadVar. The Orderless property below means we \
+need set only Brktbydt[dX,dY], not Brktbydt[dY,dX] in addition."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    \(\(SetAttributes[Brktbydt, Orderless]; \)\)], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Drftbydt\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(Drftbydt[dX]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This is a placeholder for the FORMAL quotient by  dt  of Drift of  dX. See \
+AddDrift.\n\t"], "Text",
+  Editable->False,
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Fixed\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(Fixed[t0, X]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This is a placeholder for the fixed value of the basic semimartingale X  at \
+time  t0  (usually  t0=0)."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[{
+    RowBox[{
+      RowBox[{
+        RowBox[{
+          SuperscriptBox["Fixed", 
+            TagBox[\((1, 0)\),
+              Derivative],
+            MultilineFunction->None], "[", \(t0_, x_\), "]"}], ":=", "0"}], 
+      ";"}], 
+    RowBox[{
+      RowBox[{
+        RowBox[{
+          SuperscriptBox["Fixed", 
+            TagBox[\((0, 1)\),
+              Derivative],
+            MultilineFunction->None], "[", \(t0_, x_\), "]"}], ":=", "0"}], 
+      ";"}], \(Fixed[0, ItoIntegral[y_]] = 0; \)}], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Ito differential, expansion, drift, initial value"], "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ItoD\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(ItoD[f]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This computes the stochastic differential of the semimartingale expression  \
+f.  NOTE that  ItoD  assumes that  f  is a genuine semimartingale \
+expression!"], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    \(\(ItoD[f_] := 
+      Block[{ff = f /. ItoIntegral[sdx_] \[Rule] ItoIntegral[sdx, t]}, 
+        ItoExpand[
+          Dt[ff, t]\ dt + 1\/2\ Dt[ff, {t, 2}]\ dt\^2 /. 
+            Freeze[sd_] \[Rule] sd]]; \)\)], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ItoExpand\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(ItoExpand[sd]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This computes simplication of the stochastic differential products in the \
+expression  sd  which is its argument."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    \(\(ItoExpand[sd_] := 
+      \(Expand[sd] /. ItoIntegral[sdx_, t] \[Rule] ItoIntegral[sdx]\) /. 
+        ItoMultiplications; \)\)], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Drift\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(Drift[sd]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This computes the drift differential of the stochastic differential \
+expression  sd.  NOTE that  Drift  assumes that  sd  is genuinely a \
+stochastic differential expression."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    \(\(Drift[sd_] := 
+      Plus@@\(\((Coefficient[Expand[sd], #1]\ Drftbydt[#1]\ dt&)\)/@
+          CurrentDifferentials\); \)\)], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(InitialValue\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(InitialValue[t0, f]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This computes the value of the expression  f  at time  t0."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[
+    \(\(InitialValue[t0_, x_] := 
+      \(\(\(x /. 
+              \((#1 \[Rule] MayFix[t0, #1]&)\)/@CurrentSemimartingales\) /. 
+            ItoIntegral[y_] \[Rule] MayFix[t0, ItoIntegral[y]]\) /. 
+          MayFix[a_, y_] \[Rule] 
+            MayFix[a, y /. MayFix[t0, u_] \[Rule] u]\) /. 
+        MayFix[t0, u_] \[Rule] Fixed[t0, u]; \)\)], "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"Miscellaneous: Ito integral code and random predicate"], "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ItoIntegral\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(ItoIntegral[sd]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This represents the Ito integral of the stochastic differential expression  \
+sd."], "Text",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[BoxData[{
+    RowBox[{
+      RowBox[{
+        RowBox[{
+          SuperscriptBox["ItoIntegral", 
+            TagBox[\((0, 2)\),
+              Derivative],
+            MultilineFunction->None], "[", \(sd_, t_\), "]"}], ":=", "0"}], 
+      ";"}], 
+    RowBox[{
+      RowBox[{
+        RowBox[{
+          SuperscriptBox["ItoIntegral", 
+            TagBox[\((0, 1)\),
+              Derivative],
+            MultilineFunction->None], "[", \(sd_, t_\), "]"}], ":=", 
+        \(Freeze[sd]\/ItoD[t]\)}], ";"}], 
+    RowBox[{
+      RowBox[{
+        RowBox[{
+          SuperscriptBox["Freeze", "\[Prime]",
+            MultilineFunction->None], "[", "sd_", "]"}], ":=", "0"}], ";"}], 
+    RowBox[{
+      RowBox[{
+        RowBox[{
+          SuperscriptBox["ItoIntegral", 
+            TagBox[\((1, 0)\),
+              Derivative],
+            MultilineFunction->None], "[", \(sd_, t_\), "]"}], ":=", "0"}], 
+      ";"}], \(Fixed[0, ItoIntegral[y_]] = 0; \), \(ItoIntegral[0] = 0; \)}], 
+  "Output",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RandomQ\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(RandomQ[x]\)], "Input",
+  Editable->False,
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData[
+"This returns  True  if  x  is a basic semimartingale or stochastic \
+differential. See references in other functions."], "Text",
+  Editable->False,
+  Evaluatable->False]
+}, Open  ]]
+}, Closed]]
+},
+FrontEndVersion->"5.1 for Microsoft Windows",
+ScreenRectangle->{{0, 1024}, {0, 685}},
+WindowToolbars->{},
+CellGrouping->Manual,
+WindowSize->{1016, 651},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+PrivateNotebookOptions->{"ColorPalette"->{RGBColor, -1}},
+ShowCellLabel->True,
+ShowCellTags->False,
+RenderingOptions->{"ObjectDithering"->True,
+"RasterDithering"->False},
+StyleDefinitions -> "PastelColor.nb"
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 139, 4, 147, "Title",
+  Evaluatable->False],
+Cell[1896, 57, 148, 4, 62, "Subtitle",
+  Evaluatable->False],
+Cell[2047, 63, 190, 5, 58, "Subsubtitle",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[2262, 72, 357, 12, 35, "SmallText",
+  Evaluatable->False],
+Cell[2622, 86, 265, 8, 31, "Name",
+  Evaluatable->False],
+Cell[2890, 96, 259, 8, 31, "Name",
+  Evaluatable->False]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3186, 109, 354, 12, 35, "SmallText",
+  Evaluatable->False],
+Cell[3543, 123, 963, 21, 150, "SmallText",
+  Evaluatable->False]
+}, Open  ]],
+Cell[4521, 147, 586, 13, 104, "SmallText",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[5132, 164, 336, 12, 35, "SmallText",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[5493, 180, 362, 12, 35, "SmallText",
+  Evaluatable->False],
+Cell[5858, 194, 376, 10, 58, "SmallText",
+  Evaluatable->False]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6283, 210, 110, 2, 74, "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[6418, 216, 226, 9, 30, "Input",
+  Evaluatable->False],
+Cell[6647, 227, 240, 9, 30, "Input",
+  Evaluatable->False],
+Cell[6890, 238, 183, 4, 42, "Text",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[7110, 247, 226, 9, 28, "Input",
+  Evaluatable->False],
+Cell[7339, 258, 233, 9, 38, "Input",
+  Evaluatable->False],
+Cell[7575, 269, 458, 14, 35, "Text",
+  Evaluatable->False],
+Cell[8036, 285, 1983, 50, 65, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[10056, 340, 227, 9, 28, "Input",
+  Evaluatable->False],
+Cell[10286, 351, 234, 9, 38, "Input",
+  Evaluatable->False],
+Cell[10523, 362, 369, 12, 35, "Text",
+  Evaluatable->False],
+Cell[10895, 376, 1983, 50, 65, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[12915, 431, 228, 9, 28, "Input",
+  Evaluatable->False],
+Cell[13146, 442, 230, 9, 38, "Input",
+  Evaluatable->False],
+Cell[13379, 453, 418, 14, 35, "Text",
+  Evaluatable->False],
+Cell[13800, 469, 1991, 47, 37, "Output",
+  Evaluatable->False]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[15840, 522, 97, 1, 48, "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[15962, 527, 228, 9, 38, "Input",
+  Evaluatable->False],
+Cell[16193, 538, 241, 9, 38, "Input",
+  Evaluatable->False],
+Cell[16437, 549, 552, 16, 56, "Text",
+  Evaluatable->False],
+Cell[16992, 567, 1098, 27, 75, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[18127, 599, 225, 9, 38, "Input",
+  Evaluatable->False],
+Cell[18355, 610, 242, 9, 38, "Input",
+  Evaluatable->False],
+Cell[18600, 621, 587, 16, 56, "Text",
+  Evaluatable->False],
+Cell[19190, 639, 590, 18, 37, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[19817, 662, 229, 9, 38, "Input",
+  Evaluatable->False],
+Cell[20049, 673, 369, 12, 35, "Text",
+  Evaluatable->False],
+Cell[20421, 687, 731, 18, 77, "Text",
+  Evaluatable->False],
+Cell[21155, 707, 551, 17, 37, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[21743, 729, 230, 9, 38, "Input",
+  Evaluatable->False],
+Cell[21976, 740, 237, 9, 42, "Input",
+  Evaluatable->False],
+Cell[22216, 751, 501, 15, 58, "Text",
+  Evaluatable->False],
+Cell[22720, 768, 516, 17, 41, "Output",
+  Evaluatable->False]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[23285, 791, 120, 3, 48, "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[23430, 798, 229, 9, 42, "Input",
+  Evaluatable->False],
+Cell[23662, 809, 242, 9, 42, "Input",
+  Evaluatable->False],
+Cell[23907, 820, 548, 16, 58, "Text",
+  Evaluatable->False],
+Cell[24458, 838, 556, 17, 85, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[25051, 860, 227, 9, 42, "Input",
+  Evaluatable->False],
+Cell[25281, 871, 240, 9, 42, "Input",
+  Evaluatable->False],
+Cell[25524, 882, 412, 14, 41, "Text",
+  Evaluatable->False],
+Cell[25939, 898, 145, 4, 40, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[26121, 907, 227, 9, 42, "Input",
+  Evaluatable->False],
+Cell[26351, 918, 116, 4, 25, "Input",
+  Evaluatable->False],
+Cell[26470, 924, 409, 14, 58, "Text",
+  Evaluatable->False],
+Cell[26882, 940, 151, 4, 25, "Output",
+  Evaluatable->False]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[27082, 950, 77, 1, 48, "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[27184, 955, 227, 9, 42, "Input",
+  Evaluatable->False],
+Cell[27414, 966, 91, 3, 25, "Input"],
+Cell[27508, 971, 532, 15, 58, "Text",
+  Evaluatable->False],
+Cell[28043, 988, 138, 4, 25, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[28218, 997, 227, 9, 42, "Input",
+  Evaluatable->False],
+Cell[28448, 1008, 231, 9, 42, "Input",
+  Evaluatable->False],
+Cell[28682, 1019, 158, 4, 42, "Text",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[28877, 1028, 224, 9, 42, "Input",
+  Evaluatable->False],
+Cell[29104, 1039, 231, 9, 42, "Input",
+  Evaluatable->False],
+Cell[29338, 1050, 425, 14, 41, "Text",
+  Evaluatable->False],
+Cell[29766, 1066, 833, 29, 73, "Output",
+  Evaluatable->False]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[30648, 1101, 100, 1, 48, "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[30773, 1106, 223, 9, 42, "Input",
+  Evaluatable->False],
+Cell[30999, 1117, 226, 9, 42, "Input",
+  Evaluatable->False],
+Cell[31228, 1128, 478, 15, 41, "Text",
+  Evaluatable->False],
+Cell[31709, 1145, 551, 18, 53, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[32297, 1168, 228, 9, 42, "Input",
+  Evaluatable->False],
+Cell[32528, 1179, 232, 9, 42, "Input",
+  Evaluatable->False],
+Cell[32763, 1190, 435, 14, 41, "Text",
+  Evaluatable->False],
+Cell[33201, 1206, 472, 16, 41, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[33710, 1227, 224, 9, 42, "Input",
+  Evaluatable->False],
+Cell[33937, 1238, 228, 9, 42, "Input",
+  Evaluatable->False],
+Cell[34168, 1249, 496, 15, 58, "Text",
+  Evaluatable->False],
+Cell[34667, 1266, 220, 6, 25, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[34924, 1277, 231, 9, 42, "Input",
+  Evaluatable->False],
+Cell[35158, 1288, 238, 9, 42, "Input",
+  Evaluatable->False],
+Cell[35399, 1299, 379, 13, 41, "Text",
+  Evaluatable->False],
+Cell[35781, 1314, 430, 10, 25, "Output",
+  Evaluatable->False]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[36260, 1330, 105, 2, 48, "Section",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[36390, 1336, 230, 9, 38, "Input",
+  Evaluatable->False],
+Cell[36623, 1347, 234, 9, 42, "Input",
+  Evaluatable->False],
+Cell[36860, 1358, 402, 14, 41, "Text",
+  Evaluatable->False],
+Cell[37265, 1374, 1052, 33, 123, "Output",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[38354, 1412, 226, 9, 38, "Input",
+  Evaluatable->False],
+Cell[38583, 1423, 229, 9, 38, "Input",
+  Evaluatable->False],
+Cell[38815, 1434, 185, 4, 29, "Text",
+  Evaluatable->False]
+}, Open  ]]
+}, Closed]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

@@ -1,0 +1,903 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.1'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     20675,        691]*)
+(*NotebookOutlinePosition[     21570,        721]*)
+(*  CellTagsIndexPosition[     21526,        717]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[TextData["Itoarea.nb"], "Title",
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[TextData["Wilfrid S. Kendall"], "Subtitle",
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[TextData[
+"Statistics, University of Warwick, \nCoventry CV4 7AL, UK."], "Subsubtitle",
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Contact information:"], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->RGBColor[0.501961, 0, 0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell["Email: w.s.kendall@warwick.ac.uk", "Name",
+  Editable->False,
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->RGBColor[0, 0, 1],
+  Background->GrayLevel[1]],
+
+Cell["URL: http://www.warwick.ac.uk/go/WSK", "Name",
+  Editable->False,
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->RGBColor[0, 0, 1],
+  Background->GrayLevel[1]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Acknowledgements:"], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->RGBColor[0.501961, 0, 0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"The research reported here was supported by EPSRC grants GR/71677 \
+(Stochastic calculus in AXIOM using modules of stochastic differentials) and \
+GR/L56831 (Perfect simulation in stochastic geometry), and a joint \
+EPSRC/BBSRC research grant (Multi-strain species modelling and control via \
+differential algebra reductions). This Mathematica notebook was constructed \
+on a visit to MSRI Berkeley CA during its 1997-1998 program Stochastic \
+Analysis. Finally, it is a pleasure to expres my gratitude to my friends \
+Suzanne Scotchmer and Joseph Farrell for the generous hospitality they showed \
+to me during my visit to MSRI."], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]],
+
+Cell["\<\
+Purpose: this is a Mathematica package (working under  Mathematica 5.1.1) to \
+introduce a simple application of Ito calculus. It computes the distribution \
+of the Levy stochastic area at fixed time  t,  using a method due to S. \
+Jansson.\
+\>", "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["References:"], "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"A discussion of this particular application, in its original form using the \
+implementation of Itovsn3 in the REDUCE computer algebra package:"], 
+  "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"WSK: \"Computer algebra in Probability and Statistics\", Statistica \
+Neerlandica, 47:9-25 (1993)."], "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+IMPORTANT: this notebook assumes nothing has been previously defined. Quit \
+Mathematica and reload if this is not the case!
+
+First we must ensure that the Itovsn3 package is loaded.\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \(\(Needs["\<Itovsn3`\>"];\)\)], "Input",
+  PageWidth->Infinity]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Setting up the basic semimartingale framework", "Section",
+  Evaluatable->False],
+
+Cell["\<\
+Initialization of Itovsn3: the basic time semimartingale is t, X and Y are \
+introduced as independent scalar Brownian motions (so (X,Y) is a \
+two-dimensional Brownian motion) and we use Itosde to set up the stochastic \
+area process A:\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(ItoReset[t, dt]\), "\n", 
+    \(BrownBasis[{X, Y}, {0, 0}]\), "\n", 
+    \(Itosde[A, dA == X\ dY - Y\ dX, 0]\), "\n", 
+    \(ItoStatus[]\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    InterpretationBox[GridBox[{
+          {"\<\"Itovsn3  resetting ...\"\>"},
+          {"\<\"Itovsn3  initialized\"\>"},
+          {
+            
+            InterpretationBox[\("with time semimartingale "\[InvisibleSpace]t\
+\),
+              SequenceForm[ "with time semimartingale ", t],
+              Editable->False]},
+          {
+            
+            InterpretationBox[\("and time differential "\[InvisibleSpace]dt\),
+              
+              SequenceForm[ "and time differential ", dt],
+              Editable->False]}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      TableForm[ {"Itovsn3  resetting ...", "Itovsn3  initialized", 
+        SequenceForm[ "with time semimartingale ", t], 
+        SequenceForm[ "and time differential ", dt]}]]], "Output"],
+
+Cell[BoxData[
+    InterpretationBox[GridBox[{
+          {"\<\"---------------\"\>"},
+          {"\<\"Summary of current structure of stochastic \
+differentials\"\>"},
+          {"\<\"- - - - - - - -\"\>"},
+          {"\<\"Current second-order structure of semimartingale \
+differentials:\"\>"},
+          {
+            TagBox[GridBox[{
+                  {"\<\"\"\>", "dA", "dY", "dX", "dt"},
+                  {"dA", \(dt\ X\^2 + dt\ Y\^2\), \(dt\ X\), \(\(-dt\)\ Y\), 
+                    "0"},
+                  {"dY", \(dt\ X\), "dt", "0", "0"},
+                  {"dX", \(\(-dt\)\ Y\), "0", "dt", "0"},
+                  {"dt", "0", "0", "0", "0"}
+                  },
+                RowSpacings->1,
+                ColumnSpacings->3,
+                RowAlignments->Baseline,
+                ColumnAlignments->{Left}],
+              Function[ BoxForm`e$, 
+                TableForm[ 
+                BoxForm`e$, TableHeadings -> {{dA, dY, dX, dt}, {dA, dY, dX, 
+                  dt}}]]]},
+          {"\<\"- - - - - - - -\"\>"},
+          {"\<\"Current first-order structure of semimartingale \
+differentials:\"\>"},
+          {
+            InterpretationBox[GridBox[{
+                  {"dA", "dY", "dX", "dt"},
+                  {"0", "0", "0", "dt"}
+                  },
+                RowSpacings->3,
+                ColumnSpacings->1,
+                RowAlignments->Baseline,
+                ColumnAlignments->{Left}],
+              
+              TableForm[ {0, 0, 0, dt}, TableDirections -> Row, 
+                TableHeadings -> {{dA, dY, dX, dt}, {"Drifts:"}}]]},
+          {"\<\"- - - - - - - -\"\>"},
+          {"\<\"Current initial values:\"\>"},
+          {
+            InterpretationBox[GridBox[{
+                  {"A", "Y", "X", "t"},
+                  {"0", "0", "0", "0"}
+                  },
+                RowSpacings->3,
+                ColumnSpacings->1,
+                RowAlignments->Baseline,
+                ColumnAlignments->{Left}],
+              
+              TableForm[ {0, 0, 0, 0}, TableDirections -> Row, 
+                TableHeadings -> {{A, Y, X, t}, {"Initially:"}}]]},
+          {"\<\"---------------\"\>"}
+          },
+        GridBaseline->{Baseline, {1, 1}},
+        ColumnAlignments->{Left}],
+      ColumnForm[ {"---------------", 
+        "Summary of current structure of stochastic differentials", 
+        "- - - - - - - -", 
+        "Current second-order structure of semimartingale differentials:", 
+        TableForm[ {{
+          Plus[ 
+            Times[ dt, 
+              Power[ X, 2]], 
+            Times[ dt, 
+              Power[ Y, 2]]], 
+          Times[ dt, X], 
+          Times[ -1, dt, Y], 0}, {
+          Times[ dt, X], dt, 0, 0}, {
+          Times[ -1, dt, Y], 0, dt, 0}, {0, 0, 0, 0}}, TableHeadings -> {{dA, 
+          dY, dX, dt}, {dA, dY, dX, dt}}], "- - - - - - - -", 
+        "Current first-order structure of semimartingale differentials:", 
+        TableForm[ {0, 0, 0, dt}, TableDirections -> Row, TableHeadings -> {{
+          dA, dY, dX, dt}, {"Drifts:"}}], "- - - - - - - -", 
+        "Current initial values:", 
+        TableForm[ {0, 0, 0, 0}, TableDirections -> Row, TableHeadings -> {{A,
+           Y, X, t}, {"Initially:"}}], "---------------"}],
+      Editable->False]], "Print"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The basic calculation", "Section",
+  Evaluatable->False],
+
+Cell["\<\
+For constant  u, consider when the expression  exp(V)  is a local martingale. \
+ Here  alfa  and  beta  are undetermined deterministic functions vanishing at \
+the target time  t0. \
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(SetAttributes[u, Constant];\)\), "\n", 
+    \(Print["\<V=\>", 
+      V = I\ u\ A - 
+          1\/2\ \[Alpha][t]\ \((X\^2 + Y\^2)\) + \[Beta][t]]\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    InterpretationBox[\("V="\[InvisibleSpace]\(\[ImaginaryI]\ A\ u - 
+          1\/2\ \((X\^2 + Y\^2)\)\ \[Alpha][t] + \[Beta][t]\)\),
+      SequenceForm[ "V=", 
+        Plus[ 
+          Times[ 
+            Complex[ 0, 1], A, u], 
+          Times[ 
+            Rational[ -1, 2], 
+            Plus[ 
+              Power[ X, 2], 
+              Power[ Y, 2]], 
+            \[Alpha][ t]], 
+          \[Beta][ t]]],
+      Editable->False]], "Print"]
+}, Open  ]],
+
+Cell["\<\
+The drift of  exp(V)  should vanish, so we calculate it as the first step \
+towards a solution:\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(criterion = Together[Drift[ItoD[Exp[V]]]\/Exp[V]]\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    RowBox[{\(-\(1\/2\)\), " ", "dt", " ", 
+      RowBox[{"(", 
+        RowBox[{\(u\^2\ X\^2\), "+", \(u\^2\ Y\^2\), "+", \(2\ \[Alpha][t]\), 
+          "-", \(X\^2\ \[Alpha][t]\^2\), "-", \(Y\^2\ \[Alpha][t]\^2\), "+", 
+          RowBox[{\(X\^2\), " ", 
+            RowBox[{
+              SuperscriptBox["\[Alpha]", "\[Prime]",
+                MultilineFunction->None], "[", "t", "]"}]}], "+", 
+          RowBox[{\(Y\^2\), " ", 
+            RowBox[{
+              SuperscriptBox["\[Alpha]", "\[Prime]",
+                MultilineFunction->None], "[", "t", "]"}]}], "-", 
+          RowBox[{"2", " ", 
+            RowBox[{
+              SuperscriptBox["\[Beta]", "\[Prime]",
+                MultilineFunction->None], "[", "t", "]"}]}]}], 
+        ")"}]}]], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Analysis of the criterion", "Section",
+  Evaluatable->False],
+
+Cell["\<\
+Split criterion into two parts. Notice we divide here by a stochastic \
+differential! this is rather improper and demonstrates the weakness of this \
+implementation: what here is legitimate might elsewhere be nonsense. The \
+AXIOM implementation will do better, by implementing stochastic differentials \
+as module elements which cannot be divided into each other!\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Print["\<criterion1 = \>", 
+      criterion1 = criterion\/dt /. {X \[Rule] 0, Y \[Rule] 0}]\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    InterpretationBox[
+      RowBox[{"\<\"criterion1 = \"\>", "\[InvisibleSpace]", 
+        RowBox[{\(1\/2\), " ", 
+          RowBox[{"(", 
+            RowBox[{\(\(-2\)\ \[Alpha][t]\), "+", 
+              RowBox[{"2", " ", 
+                RowBox[{
+                  SuperscriptBox["\[Beta]", "\[Prime]",
+                    MultilineFunction->None], "[", "t", "]"}]}]}], ")"}]}]}],
+      SequenceForm[ "criterion1 = ", 
+        Times[ 
+          Rational[ 1, 2], 
+          Plus[ 
+            Times[ -2, 
+              \[Alpha][ t]], 
+            Times[ 2, 
+              Derivative[ 1][ \[Beta]][ t]]]]],
+      Editable->False]], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Print["\<criterion2 = \>", 
+      criterion2 = 
+        Together[
+          Expand[criterion\/dt - criterion1]\/\(X\^2 + Y\^2\)]]\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    InterpretationBox[
+      RowBox[{"\<\"criterion2 = \"\>", "\[InvisibleSpace]", 
+        RowBox[{\(1\/2\), " ", 
+          RowBox[{"(", 
+            RowBox[{\(-u\^2\), "+", \(\[Alpha][t]\^2\), "-", 
+              RowBox[{
+                SuperscriptBox["\[Alpha]", "\[Prime]",
+                  MultilineFunction->None], "[", "t", "]"}]}], ")"}]}]}],
+      SequenceForm[ "criterion2 = ", 
+        Times[ 
+          Rational[ 1, 2], 
+          Plus[ 
+            Times[ -1, 
+              Power[ u, 2]], 
+            Power[ 
+              \[Alpha][ t], 2], 
+            Times[ -1, 
+              Derivative[ 1][ \[Alpha]][ t]]]]],
+      Editable->False]], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Solving the resulting ordinary differential equations", "Subsection",
+  Evaluatable->False],
+
+Cell["\<\
+These criteria must both vanish if the drift is to vanish, and this leads to \
+two ordinary differential equations. It is simple to solve the first one, \
+using the fact that  beta[t0]=0. First we define the initial time t0 as a \
+constant:\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \(\(SetAttributes[t0, Constant];\)\)], "Input",
+  PageWidth->Infinity],
+
+Cell["\<\
+Here is Mathematica's solution, using the requirement that  beta  should \
+vanish at time t0:\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(betatrial = 
+      First[DSolve[{criterion1 == 0, \[Beta][t0] == 0}, \[Beta], 
+          t]]\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \({\[Beta] \[Rule] 
+        Function[{t}, \[Integral]\_1\%t \[Alpha][
+                  K$42] \[DifferentialD]K$42 - \[Integral]\_1\%t0 \[Alpha][
+                  K$42] \[DifferentialD]K$42]}\)], "Output"]
+}, Open  ]],
+
+Cell["We see that Mathematica got it right!", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\((criterion1 /. betatrial)\) == 0 && \((\[Beta][t0] /. betatrial)\) == 
+        0\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+However we have to re-arrange the solution by hand to avoid trouble with \
+complex numbers later on.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(betatrial = {\[Beta] \[Rule] 
+          Function[{t}, \[Integral]\_t0\%t \[Alpha][
+                  K$11381] \[DifferentialD]K$11381]}\)], "Input"],
+
+Cell[BoxData[
+    \({\[Beta] \[Rule] 
+        Function[{t}, \[Integral]\_t0\%t \[Alpha][
+                K$11381] \[DifferentialD]K$11381]}\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Here is Mathematica's attempt at the second criterion, this time using a \
+requirement that  alfa  should vanish at time t0:\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(alfatrial = 
+      First[DSolve[{criterion2 == 0, \[Alpha][t0] == 0}, \[Alpha], 
+          t]]\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    RowBox[{\(Solve::"ifun"\), \(\(:\)\(\ \)\), "\<\"Inverse functions are \
+being used by \\!\\(Solve\\), so some solutions may not be found; use Reduce \
+for complete solution information. \
+\\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", ButtonStyle->\\\"RefGuideLinkText\
+\\\", ButtonFrame->None, ButtonData:>\\\"Solve::ifun\\\"]\\)\"\>"}]], \
+"Message"],
+
+Cell[BoxData[
+    \({\[Alpha] \[Rule] 
+        Function[{t}, \(-u\)\ Tanh[t\ u - t0\ u]]}\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+In Mathematica version 5.1.1 there is a warning about inverses. Were that to \
+be a problem we could solve the above by hand as below, but in fact the above \
+manipulation gives the correct answer.\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \(alfatrial = {\[Alpha] \[Rule] 
+          Function[t, \(-u\)\ Tanh[u\ \((t - t0)\)]]}\)], "Input",
+  PageWidth->Infinity,
+  Evaluatable->False,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->RGBColor[0.501961, 0, 0],
+  Background->GrayLevel[1]]
+}, Open  ]],
+
+Cell["Now we check this out:", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Simplify[criterion2 /. alfatrial] == 
+        0 && \((\[Alpha][t0] /. alfatrial)\) == 0\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell["And here is a portmanteau check that criterion vanishes:", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Simplify[\(criterion /. betatrial\) /. alfatrial] == 0\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Computing the answer", "Section",
+  Evaluatable->False],
+
+Cell["\<\
+The answer can now be computed: notice that Mathematica worries here about \
+convergence of definite integrals!\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(EVtrial\  = \ 
+      Refine[\(Exp[V] /. betatrial\) /. alfatrial, 
+        t > t0\  && \ t0 > 0\  && \ u > 0]\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(\[ExponentialE]\^\(\[ImaginaryI]\ A\ u - \(\((t - t0)\)\ u\ \
+Log[Cosh[\((t - t0)\)\ u]]\)\/\(t\ u - t0\ u\) + 1\/2\ u\ \((X\^2 + Y\^2)\)\ \
+Tanh[t\ u - t0\ u]\)\)], "Output"]
+}, Open  ]],
+
+Cell["We confirm it has zero drift:", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\((driftdV = Simplify[Drift[ItoD[EVtrial]]])\) == 0\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Subject to the integrability issue of checking that Exp[V] is a martingale, \
+not just a local martingale (an analytic exercise we probably should not \
+expect to do by computer algebra!), we can deduce the following:\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Print[Expectation == InitialValue[0, EVtrial]]\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(Expectation \[Equal] Sech[t0\ u]\)], "Print"]
+}, Open  ]]
+}, Open  ]]
+},
+FrontEndVersion->"5.1 for Microsoft Windows",
+ScreenRectangle->{{0, 1024}, {0, 685}},
+WindowToolbars->{},
+CellGrouping->Manual,
+WindowSize->{1016, 651},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+PrivateNotebookOptions->{"ColorPalette"->{RGBColor, -1}},
+ShowCellLabel->True,
+ShowCellTags->False,
+RenderingOptions->{"ObjectDithering"->True,
+"RasterDithering"->False},
+StyleDefinitions -> "PastelColor.nb"
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 118, 3, 147, "Title",
+  Evaluatable->False],
+Cell[1875, 56, 129, 3, 62, "Subtitle",
+  Evaluatable->False],
+Cell[2007, 61, 173, 4, 58, "Subsubtitle",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[2205, 69, 357, 12, 35, "SmallText",
+  Evaluatable->False],
+Cell[2565, 83, 255, 8, 31, "Name",
+  Evaluatable->False],
+Cell[2823, 93, 259, 8, 31, "Name",
+  Evaluatable->False]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3119, 106, 354, 12, 35, "SmallText",
+  Evaluatable->False],
+Cell[3476, 120, 955, 21, 88, "SmallText",
+  Evaluatable->False]
+}, Closed]],
+Cell[4446, 144, 418, 11, 56, "SmallText",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[4889, 159, 317, 11, 35, "SmallText",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[5231, 174, 453, 14, 58, "SmallText",
+  Evaluatable->False],
+Cell[5687, 190, 279, 8, 70, "SmallText",
+  Evaluatable->False]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6015, 204, 228, 6, 132, "Text",
+  Evaluatable->False],
+Cell[6246, 212, 82, 2, 73, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6365, 219, 86, 1, 74, "Section",
+  Evaluatable->False],
+Cell[6454, 222, 283, 6, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[6762, 232, 194, 5, 151, "Input"],
+Cell[6959, 239, 871, 23, 137, "Output"],
+Cell[7833, 264, 3267, 79, 469, "Print"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[11149, 349, 62, 1, 74, "Section",
+  Evaluatable->False],
+Cell[11214, 352, 227, 5, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[11466, 361, 204, 5, 125, "Input"],
+Cell[11673, 368, 458, 14, 72, "Print"]
+}, Open  ]],
+Cell[12146, 385, 141, 4, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[12312, 393, 105, 2, 98, "Input"],
+Cell[12420, 397, 778, 17, 88, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[13247, 420, 66, 1, 74, "Section",
+  Evaluatable->False],
+Cell[13316, 423, 410, 7, 102, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[13751, 434, 147, 3, 95, "Input"],
+Cell[13901, 439, 654, 18, 72, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[14592, 462, 185, 5, 110, "Input"],
+Cell[14780, 469, 680, 19, 72, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[15497, 493, 97, 1, 55, "Subsection",
+  Evaluatable->False],
+Cell[15597, 496, 286, 6, 72, "Text",
+  Evaluatable->False],
+Cell[15886, 504, 88, 2, 73, "Input"],
+Cell[15977, 508, 139, 4, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[16141, 516, 148, 4, 73, "Input"],
+Cell[16292, 522, 224, 4, 94, "Output"]
+}, Open  ]],
+Cell[16531, 529, 75, 1, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[16631, 534, 138, 3, 73, "Input"],
+Cell[16772, 539, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[16825, 543, 124, 3, 42, "Text"],
+
+Cell[CellGroupData[{
+Cell[16974, 550, 168, 3, 93, "Input"],
+Cell[17145, 555, 153, 3, 93, "Output"]
+}, Open  ]],
+Cell[17313, 561, 170, 4, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[17508, 569, 150, 4, 73, "Input"],
+Cell[17661, 575, 368, 6, 56, "Message"],
+Cell[18032, 583, 103, 2, 72, "Output"]
+}, Open  ]],
+Cell[18150, 588, 243, 5, 72, "Text",
+  Evaluatable->False],
+Cell[18396, 595, 296, 9, 30, "Input",
+  Evaluatable->False]
+}, Open  ]],
+Cell[18707, 607, 60, 1, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[18792, 612, 143, 3, 73, "Input"],
+Cell[18938, 617, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[18991, 621, 94, 1, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[19110, 626, 110, 2, 73, "Input"],
+Cell[19223, 630, 38, 1, 72, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[19310, 637, 61, 1, 74, "Section",
+  Evaluatable->False],
+Cell[19374, 640, 157, 4, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[19556, 648, 165, 4, 73, "Input"],
+Cell[19724, 654, 195, 3, 84, "Output"]
+}, Open  ]],
+Cell[19934, 660, 67, 1, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[20026, 665, 107, 2, 73, "Input"],
+Cell[20136, 669, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[20189, 673, 263, 5, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[20477, 682, 102, 2, 73, "Input"],
+Cell[20582, 686, 65, 1, 56, "Print"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

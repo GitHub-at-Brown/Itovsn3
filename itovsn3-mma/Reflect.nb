@@ -1,0 +1,2100 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.1'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     71342,       1812]*)
+(*NotebookOutlinePosition[     72237,       1842]*)
+(*  CellTagsIndexPosition[     72193,       1838]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[TextData["Reflect.nb"], "Title",
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[TextData["Wilfrid S. Kendall"], "Subtitle",
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[TextData[
+"Statistics, University of Warwick, \nCoventry CV4 7AL, UK."], "Subsubtitle",
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  TextAlignment->Center],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Contact information:"], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->RGBColor[0.501961, 0, 0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData["Email: w.s.kendall@warwick.ac.uk"], "Name",
+  Editable->False,
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->RGBColor[0, 0, 1],
+  Background->GrayLevel[1]],
+
+Cell["URL: http://www.warwick.ac.uk/go/WSK", "Name",
+  Editable->False,
+  Evaluatable->False,
+  CellHorizontalScrolling->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->RGBColor[0, 0, 1],
+  Background->GrayLevel[1]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Acknowledgements:"], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->RGBColor[0.501961, 0, 0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"The research reported here was supported by EPSRC grants GR/71677 \
+(Stochastic calculus in AXIOM using modules of stochastic differentials) and \
+GR/L56831 (Perfect simulation in stochastic geometry), and a joint \
+EPSRC/BBSRC research grant (Multi-strain species modelling and control via \
+differential algebra reductions). This Mathematica notebook was constructed \
+on a visit to MSRI Berkeley CA during its 1997-1998 program Stochastic \
+Analysis. Finally, it is a pleasure to expres my gratitude to my friends \
+Suzanne Scotchmer and Joseph Farrell for the generous hospitality they showed \
+to me during my visit to MSRI."], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]],
+
+Cell["\<\
+Purpose: this is a Mathematica package (working under Mathematica 5.1.1) \
+which demonstrates a pretty fact about coupled pairs of Brownian motions \
+reflecting off a half-plane, and coupled by reflection. The result is easy to \
+prove directly once known: however it is indeed the case that it was \
+discovered using Itovsn3 (in fact in its REDUCE implementation).\
+\>", "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["References:"], "SmallText",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"This calculation was a significant step in the following paper:"], 
+  "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"K.Burdzy and WSK: \"Efficient Markovian Couplings: Examples and \
+Counterexamples\", in preparation (1998)."], "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[TextData["It also contributed usefully to"], "SmallText",
+  Editable->False,
+  Evaluatable->False],
+
+Cell[TextData[
+"R. Banuelos and K. Burdzy: \"On the `hot spots' conjecture of J. Rauch\", \
+Preprint, Department of Mathematics, University of Washington (1997),\nK. \
+Burdzy and W. Werner: \"A counterexample to the ``hot spots'' conjecture\", \
+Preprint, Department of Mathematics, University of Washington (1998)."], 
+  "SmallText",
+  Editable->False,
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->10,
+  FontSlant->"Italic",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"IMPORTANT: this notebook assumes nothing has been previously defined. Quit \
+Mathematica and reload if this is not the case!\n\nFirst we must load the \
+Itovsn3 package."], "Text",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \(Needs["\<Itovsn3`\>"]\)], "Input",
+  PageWidth->Infinity]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Set up basic semimartingales including local times"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"Now we set up Itovsn3 with time t as the basic semimartingale and add a \
+two-dimensional Brownian motion:"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(ItoReset[t, dt]\), "\n", 
+    \(BrownBasis[{A, B}, {A0, B0}]\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    InterpretationBox[GridBox[{
+          {"\<\"Itovsn3  resetting ...\"\>"},
+          {"\<\"Itovsn3  initialized\"\>"},
+          {
+            
+            InterpretationBox[\("with time semimartingale "\[InvisibleSpace]t\
+\),
+              SequenceForm[ "with time semimartingale ", t],
+              Editable->False]},
+          {
+            
+            InterpretationBox[\("and time differential "\[InvisibleSpace]dt\),
+              
+              SequenceForm[ "and time differential ", dt],
+              Editable->False]}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      TableForm[ {"Itovsn3  resetting ...", "Itovsn3  initialized", 
+        SequenceForm[ "with time semimartingale ", t], 
+        SequenceForm[ "and time differential ", dt]}]]], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"Next step is to introduce the two local times, one for each of the two \
+coupled two-dimensional reflecting Brownian motions."], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Introduce[L, dL]\), "\n", 
+    \(\(AddQuadVar[dL\^2, 0];\)\), "\n", 
+    \(\(AddQuadVar[dL\ dA, 0];\)\), "\n", 
+    \(\(AddQuadVar[dL\ dB, 0];\)\), "\n", 
+    \(\(AddDrift[dL, dL];\)\), "\n", 
+    \(\(AddFixed[0, L, L0];\)\), "\n", 
+    \(Introduce[H, dH]\), "\n", 
+    \(\(AddQuadVar[dH\^2, 0];\)\), "\n", 
+    \(\(AddQuadVar[dH\ dA, 0];\)\), "\n", 
+    \(\(AddQuadVar[dH\ dB, 0];\)\), "\n", 
+    \(\(AddQuadVar[dH\ dL, 0];\)\), "\n", 
+    \(\(AddDrift[dH, dH];\)\), "\n", 
+    \(\(AddFixed[0, H, H0];\)\)}], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \({dL, dB, dA, dt}\)], "Output"],
+
+Cell[BoxData[
+    \({dH, dL, dB, dA, dt}\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"We now redefine the drifts for  (A,B)  to allow for reflection (more \
+economical than introducing further semimartingales!). We assume the \
+half-plane of reflection is the region where A  is negative."], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(AddDrift[dA, dL]\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(dL\/dt\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"Notice that the output is mathematically formal nonsense! Note also that the \
+local time  dL  has the property  A*dL == 0,  which we will need to use in \
+simplifications at the end!"], "Text",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"We inspect the status of the stochastic differential multiplication and \
+drift tables:"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ItoStatus[]\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    InterpretationBox[GridBox[{
+          {"\<\"---------------\"\>"},
+          {"\<\"Summary of current structure of stochastic \
+differentials\"\>"},
+          {"\<\"- - - - - - - -\"\>"},
+          {"\<\"Current second-order structure of semimartingale \
+differentials:\"\>"},
+          {
+            TagBox[GridBox[{
+                  {"\<\"\"\>", "dH", "dL", "dB", "dA", "dt"},
+                  {"dH", "0", "0", "0", "0", "0"},
+                  {"dL", "0", "0", "0", "0", "0"},
+                  {"dB", "0", "0", "dt", "0", "0"},
+                  {"dA", "0", "0", "0", "dt", "0"},
+                  {"dt", "0", "0", "0", "0", "0"}
+                  },
+                RowSpacings->1,
+                ColumnSpacings->3,
+                RowAlignments->Baseline,
+                ColumnAlignments->{Left}],
+              Function[ BoxForm`e$, 
+                TableForm[ 
+                BoxForm`e$, TableHeadings -> {{dH, dL, dB, dA, dt}, {dH, dL, 
+                  dB, dA, dt}}]]]},
+          {"\<\"- - - - - - - -\"\>"},
+          {"\<\"Current first-order structure of semimartingale \
+differentials:\"\>"},
+          {
+            InterpretationBox[GridBox[{
+                  {"dH", "dL", "dB", "dA", "dt"},
+                  {"dH", "dL", "0", "dL", "dt"}
+                  },
+                RowSpacings->3,
+                ColumnSpacings->1,
+                RowAlignments->Baseline,
+                ColumnAlignments->{Left}],
+              
+              TableForm[ {dH, dL, 0, dL, dt}, TableDirections -> Row, 
+                TableHeadings -> {{dH, dL, dB, dA, dt}, {"Drifts:"}}]]},
+          {"\<\"- - - - - - - -\"\>"},
+          {"\<\"Current initial values:\"\>"},
+          {
+            InterpretationBox[GridBox[{
+                  {"H", "L", "B", "A", "t"},
+                  {"H0", "L0", "B0", "A0", "0"}
+                  },
+                RowSpacings->3,
+                ColumnSpacings->1,
+                RowAlignments->Baseline,
+                ColumnAlignments->{Left}],
+              
+              TableForm[ {H0, L0, B0, A0, 0}, TableDirections -> Row, 
+                TableHeadings -> {{H, L, B, A, t}, {"Initially:"}}]]},
+          {"\<\"---------------\"\>"}
+          },
+        GridBaseline->{Baseline, {1, 1}},
+        ColumnAlignments->{Left}],
+      ColumnForm[ {"---------------", 
+        "Summary of current structure of stochastic differentials", 
+        "- - - - - - - -", 
+        "Current second-order structure of semimartingale differentials:", 
+        TableForm[ {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, dt, 0, 0}, {0, 0,
+           0, dt, 0}, {0, 0, 0, 0, 0}}, TableHeadings -> {{dH, dL, dB, dA, 
+          dt}, {dH, dL, dB, dA, dt}}], "- - - - - - - -", 
+        "Current first-order structure of semimartingale differentials:", 
+        TableForm[ {dH, dL, 0, dL, dt}, TableDirections -> Row, 
+          TableHeadings -> {{dH, dL, dB, dA, dt}, {"Drifts:"}}], 
+        "- - - - - - - -", "Current initial values:", 
+        TableForm[ {H0, L0, B0, A0, 0}, TableDirections -> Row, 
+          TableHeadings -> {{H, L, B, A, t}, {"Initially:"}}], 
+        "---------------"}],
+      Editable->False]], "Print"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"Set up reflection coupling using elementary geometry"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"The next step involves some simple geometry. We construct a unit vector  UU  \
+pointing from  (A,B)  to  (X,Y),  and a perpendicular unit vector  VV."], 
+  "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(AA = {A, B}; XX = {X, Y};\), "\n", 
+    \(\(UU = XX - AA;\)\), "\n", 
+    \(UU = UU\/\@\(UU . UU\)\), "\n", 
+    \(VV = {{0, \(-1\)}, {1, 0}} . UU\), "\n", 
+    \(0 == UU . VV\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \({\(\(-A\) + X\)\/\@\(\((\(-A\) + X)\)\^2 + \((\(-B\) + Y)\)\^2\), \
+\(\(-B\) + Y\)\/\@\(\((\(-A\) + X)\)\^2 + \((\(-B\) + Y)\)\^2\)}\)], "Output"],
+
+Cell[BoxData[
+    \({\(-\(\(\(-B\) + 
+              Y\)\/\@\(\((\(-A\) + X)\)\^2 + \((\(-B\) + Y)\)\^2\)\)\), \
+\(\(-A\) + X\)\/\@\(\((\(-A\) + X)\)\^2 + \((\(-B\) + Y)\)\^2\)}\)], "Output"],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"We use the unit vector  UU  to build a vector of stochastic differentials \
+reflected in the  UU direction based on  {dA-dL,dB}:  notice we take out the \
+local time term from the  dA  differential to make it into a standard \
+Brownian differential!"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(dAA = {dA - dL, dB}\), "\n", 
+    \(dXX = \((IdentityMatrix[2] - 2\ Transpose[{UU}] . {UU})\) . 
+        dAA\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \({dA - dL, dB}\)], "Output"],
+
+Cell[BoxData[
+    \({\(-\(\(2\ dB\ \((\(-A\) + X)\)\ \((\(-B\) + 
+                    Y)\)\)\/\(\((\(-A\) + X)\)\^2 + \((\(-B\) + Y)\)\^2\)\)\) \
++ \((dA - 
+              dL)\)\ \((1 - \(2\ \((\(-A\) + X)\)\^2\)\/\(\((\(-A\) + X)\)\^2 \
++ \((\(-B\) + Y)\)\^2\))\), \(-\(\(2\ \((dA - dL)\)\ \((\(-A\) + 
+                    X)\)\ \((\(-B\) + 
+                    Y)\)\)\/\(\((\(-A\) + X)\)\^2 + \((\(-B\) + Y)\)\^2\)\)\) \
++ dB\ \((1 - \(2\ \((\(-B\) + Y)\)\^2\)\/\(\((\(-A\) + X)\)\^2 + \((\(-B\) + \
+Y)\)\^2\))\)}\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"We now introduce the reflection coupling, by using the geometry to construct \
+the coupled process  (X,Y).  Note the local time term added in the  dX  \
+sde."], "Text",
+  Evaluatable->False],
+
+Cell[BoxData[{
+    \(Itosde[X, dX == dXX . {1, 0} + dH, X0]\), "\n", 
+    \(Itosde[Y, dY == dXX . {0, 1}, Y0]\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[TextData[
+"Again the local time term  dH  has the property  X*dH == 0.  We summarize \
+the local time relationships:"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(localtimes = {A\ dL \[Rule] 0, X\ dH \[Rule] 0}\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \({A\ dL \[Rule] 0, dH\ X \[Rule] 0}\)], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Computation of hinge location"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"The next step is to compute the location of the hinge (in the terminology of \
+Burdzy and Kendall, 1998), the vertical intercept  Z  of the perpendicular \
+bisector between {A,B} and {X,Y}.  We do this by solving the appropriate \
+simultaneous linear equations:"], "Text",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(bisector = \(AA + XX\)\/2;\)\), "\n", 
+    \(\(ZZ = {0, Z};\)\), "\n", 
+    \(\(solution = 
+        First[Solve[rho\ VV + bisector == ZZ, {rho, Z}]];\)\), "\n", 
+    \(Z = Simplify[Z /. solution]\)}], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(\(A\^2 + B\^2 - X\^2 - Y\^2\)\/\(2\ B - 2\ Y\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Figure to illustrate coupling"], "Subsection",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(picture = 
+      Graphics[{PointSize[0.05], Point[AA], 
+            Text["\<(A,B)\>", AA, {1, \(-1\)}], Point[XX], 
+            Text["\<(X,Y)\>", XX, {2, 0}], Line[{AA, XX}], Point[bisector], 
+            Text["\<bisector\>", bisector, {0, 1}], Point[ZZ], 
+            Text["\<(0,Z)\>", ZZ, {0, \(-1\)}], Dashing[{0.1}], 
+            Line[{bisector, ZZ}], 
+            Text["\<rho\>", \(bisector + ZZ\)\/2, {0, \(-1\)}], 
+            Thickness[0.01], Dashing[{0.02}], RGBColor[1.0, 0.0, 0.0], 
+            Line[{AA, \(\(AA + dAA /. dL \[Rule] 0\) /. dA \[Rule] 0.4\) /. 
+                  dB \[Rule] 0.0}], 
+            Line[{XX, \(\(XX + dXX /. dL \[Rule] 0\) /. dA \[Rule] 0.4\) /. 
+                  dB \[Rule] 0.0}]} /. {A \[Rule] 1, B \[Rule] \(-2\), 
+            X \[Rule] 2, Y \[Rule] 2}, {Axes \[Rule] {False, True}, 
+          AxesOrigin \[Rule] {0, \(-2\)}, 
+          AspectRatio \[Rule] GoldenRatio}]\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    TagBox[\(\[SkeletonIndicator]  Graphics  \[SkeletonIndicator]\),
+      False,
+      Editable->False]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(Show[picture];\)\)], "Input",
+  PageWidth->Infinity],
+
+Cell[GraphicsData["PostScript", "\<\
+%!
+%%Creator: Mathematica
+%%AspectRatio: 1.61803 
+MathPictureStart
+/Mabs {
+Mgmatrix idtransform
+Mtmatrix dtransform
+} bind def
+/Mabsadd { Mabs
+3 -1 roll add
+3 1 roll add
+exch } bind def
+%% Graphics
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10  scalefont  setfont
+% Scaling calculations
+0.0238095 0.404762 0.809017 0.385246 [
+[.01131 .03852 -12 -4.5 ]
+[.01131 .03852 0 4.5 ]
+[.01131 .42377 -12 -4.5 ]
+[.01131 .42377 0 4.5 ]
+[.01131 .80902 -6 -4.5 ]
+[.01131 .80902 0 4.5 ]
+[.01131 1.19426 -6 -4.5 ]
+[.01131 1.19426 0 4.5 ]
+[.01131 1.57951 -6 -4.5 ]
+[.01131 1.57951 0 4.5 ]
+[ 0 0 0 0 ]
+[ 1 1.61803 0 0 ]
+] MathScale
+% Start of Graphics
+1 setlinecap
+1 setlinejoin
+newpath
+0 g
+.25 Mabswid
+[ ] 0 setdash
+.02381 .03852 m
+.03006 .03852 L
+s
+[(-2)] .01131 .03852 1 0 Mshowa
+.02381 .42377 m
+.03006 .42377 L
+s
+[(-1)] .01131 .42377 1 0 Mshowa
+.02381 .80902 m
+.03006 .80902 L
+s
+[(0)] .01131 .80902 1 0 Mshowa
+.02381 1.19426 m
+.03006 1.19426 L
+s
+[(1)] .01131 1.19426 1 0 Mshowa
+.02381 1.57951 m
+.03006 1.57951 L
+s
+[(2)] .01131 1.57951 1 0 Mshowa
+.125 Mabswid
+.02381 .11557 m
+.02756 .11557 L
+s
+.02381 .19262 m
+.02756 .19262 L
+s
+.02381 .26967 m
+.02756 .26967 L
+s
+.02381 .34672 m
+.02756 .34672 L
+s
+.02381 .50082 m
+.02756 .50082 L
+s
+.02381 .57787 m
+.02756 .57787 L
+s
+.02381 .65492 m
+.02756 .65492 L
+s
+.02381 .73197 m
+.02756 .73197 L
+s
+.02381 .88607 m
+.02756 .88607 L
+s
+.02381 .96312 m
+.02756 .96312 L
+s
+.02381 1.04016 m
+.02756 1.04016 L
+s
+.02381 1.11721 m
+.02756 1.11721 L
+s
+.02381 1.27131 m
+.02756 1.27131 L
+s
+.02381 1.34836 m
+.02756 1.34836 L
+s
+.02381 1.42541 m
+.02756 1.42541 L
+s
+.02381 1.50246 m
+.02756 1.50246 L
+s
+.25 Mabswid
+.02381 0 m
+.02381 1.61803 L
+s
+0 0 m
+1 0 L
+1 1.61803 L
+0 1.61803 L
+closepath
+clip
+newpath
+.05 w
+.42857 .03852 Mdot
+gsave
+.42857 .03852 -95.4375 -4 Mabsadd m
+1 1 Mabs scale
+currentpoint translate
+0 20.875 translate 1 -1 scale
+/g { setgray} bind def
+/k { setcmykcolor} bind def
+/p { gsave} bind def
+/r { setrgbcolor} bind def
+/w { setlinewidth} bind def
+/C { curveto} bind def
+/F { fill} bind def
+/L { lineto} bind def
+/rL { rlineto} bind def
+/P { grestore} bind def
+/s { stroke} bind def
+/S { show} bind def
+/N {currentpoint 3 -1 roll show moveto} bind def
+/Msf { findfont exch scalefont [1 0 0 -1 0 0 ] makefont setfont} bind def
+/m { moveto} bind def
+/Mr { rmoveto} bind def
+/Mx {currentpoint exch pop moveto} bind def
+/My {currentpoint pop exch moveto} bind def
+/X {0 rmoveto} bind def
+/Y {0 exch rmoveto} bind def
+63.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+0.000 0.000 rmoveto
+%%IncludeResource: font Mathematica2Mono
+%%IncludeFont: Mathematica2Mono
+/Mathematica2Mono findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+63.000 13.000 moveto
+(H) show
+69.188 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+(A) show
+75.438 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+(,) show
+81.438 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+(B) show
+%%IncludeResource: font Mathematica2Mono
+%%IncludeFont: Mathematica2Mono
+/Mathematica2Mono findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+87.438 13.000 moveto
+(L) show
+93.438 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+0.000 0.000 rmoveto
+1.000 setlinewidth
+grestore
+.83333 1.57951 Mdot
+gsave
+.83333 1.57951 -112 -10.4375 Mabsadd m
+1 1 Mabs scale
+currentpoint translate
+0 20.875 translate 1 -1 scale
+/g { setgray} bind def
+/k { setcmykcolor} bind def
+/p { gsave} bind def
+/r { setrgbcolor} bind def
+/w { setlinewidth} bind def
+/C { curveto} bind def
+/F { fill} bind def
+/L { lineto} bind def
+/rL { rlineto} bind def
+/P { grestore} bind def
+/s { stroke} bind def
+/S { show} bind def
+/N {currentpoint 3 -1 roll show moveto} bind def
+/Msf { findfont exch scalefont [1 0 0 -1 0 0 ] makefont setfont} bind def
+/m { moveto} bind def
+/Mr { rmoveto} bind def
+/Mx {currentpoint exch pop moveto} bind def
+/My {currentpoint pop exch moveto} bind def
+/X {0 rmoveto} bind def
+/Y {0 exch rmoveto} bind def
+63.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+0.000 0.000 rmoveto
+%%IncludeResource: font Mathematica2Mono
+%%IncludeFont: Mathematica2Mono
+/Mathematica2Mono findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+63.000 13.000 moveto
+(H) show
+69.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+(X) show
+75.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+(,) show
+81.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+(Y) show
+%%IncludeResource: font Mathematica2Mono
+%%IncludeFont: Mathematica2Mono
+/Mathematica2Mono findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+87.000 13.000 moveto
+(L) show
+93.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+0.000 0.000 rmoveto
+1.000 setlinewidth
+grestore
+.5 Mabswid
+.42857 .03852 m
+.83333 1.57951 L
+s
+.05 w
+.63095 .80902 Mdot
+gsave
+.63095 .80902 -87 -16.875 Mabsadd m
+1 1 Mabs scale
+currentpoint translate
+0 20.875 translate 1 -1 scale
+/g { setgray} bind def
+/k { setcmykcolor} bind def
+/p { gsave} bind def
+/r { setrgbcolor} bind def
+/w { setlinewidth} bind def
+/C { curveto} bind def
+/F { fill} bind def
+/L { lineto} bind def
+/rL { rlineto} bind def
+/P { grestore} bind def
+/s { stroke} bind def
+/S { show} bind def
+/N {currentpoint 3 -1 roll show moveto} bind def
+/Msf { findfont exch scalefont [1 0 0 -1 0 0 ] makefont setfont} bind def
+/m { moveto} bind def
+/Mr { rmoveto} bind def
+/Mx {currentpoint exch pop moveto} bind def
+/My {currentpoint pop exch moveto} bind def
+/X {0 rmoveto} bind def
+/Y {0 exch rmoveto} bind def
+63.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+0.000 0.000 rmoveto
+63.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+(bisector) show
+111.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+0.000 0.000 rmoveto
+1.000 setlinewidth
+grestore
+.02381 .95348 Mdot
+gsave
+.02381 .95348 -78 -4 Mabsadd m
+1 1 Mabs scale
+currentpoint translate
+0 20.875 translate 1 -1 scale
+/g { setgray} bind def
+/k { setcmykcolor} bind def
+/p { gsave} bind def
+/r { setrgbcolor} bind def
+/w { setlinewidth} bind def
+/C { curveto} bind def
+/F { fill} bind def
+/L { lineto} bind def
+/rL { rlineto} bind def
+/P { grestore} bind def
+/s { stroke} bind def
+/S { show} bind def
+/N {currentpoint 3 -1 roll show moveto} bind def
+/Msf { findfont exch scalefont [1 0 0 -1 0 0 ] makefont setfont} bind def
+/m { moveto} bind def
+/Mr { rmoveto} bind def
+/Mx {currentpoint exch pop moveto} bind def
+/My {currentpoint pop exch moveto} bind def
+/X {0 rmoveto} bind def
+/Y {0 exch rmoveto} bind def
+63.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+0.000 0.000 rmoveto
+%%IncludeResource: font Mathematica2Mono
+%%IncludeFont: Mathematica2Mono
+/Mathematica2Mono findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+63.000 13.000 moveto
+(H) show
+69.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+(0) show
+75.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+(,) show
+81.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+(Z) show
+%%IncludeResource: font Mathematica2Mono
+%%IncludeFont: Mathematica2Mono
+/Mathematica2Mono findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+87.000 13.000 moveto
+(L) show
+93.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+0.000 0.000 rmoveto
+1.000 setlinewidth
+grestore
+.5 Mabswid
+[ .1 ] 0 setdash
+.63095 .80902 m
+.02381 .95348 L
+s
+gsave
+.32738 .88125 -72 -4 Mabsadd m
+1 1 Mabs scale
+currentpoint translate
+0 20.875 translate 1 -1 scale
+/g { setgray} bind def
+/k { setcmykcolor} bind def
+/p { gsave} bind def
+/r { setrgbcolor} bind def
+/w { setlinewidth} bind def
+/C { curveto} bind def
+/F { fill} bind def
+/L { lineto} bind def
+/rL { rlineto} bind def
+/P { grestore} bind def
+/s { stroke} bind def
+/S { show} bind def
+/N {currentpoint 3 -1 roll show moveto} bind def
+/Msf { findfont exch scalefont [1 0 0 -1 0 0 ] makefont setfont} bind def
+/m { moveto} bind def
+/Mr { rmoveto} bind def
+/Mx {currentpoint exch pop moveto} bind def
+/My {currentpoint pop exch moveto} bind def
+/X {0 rmoveto} bind def
+/Y {0 exch rmoveto} bind def
+63.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+0.000 0.000 rmoveto
+63.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+(rho) show
+81.000 13.000 moveto
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10.000 scalefont
+[1 0 0 -1 0 0 ] makefont setfont
+0.000 0.000 0.000 setrgbcolor
+0.000 0.000 rmoveto
+1.000 setlinewidth
+grestore
+1 0 0 r
+.01 w
+[ .02 ] 0 setdash
+.42857 .03852 m
+.59048 .03852 L
+s
+.83333 1.57951 m
+.97619 1.50699 L
+s
+% End of Graphics
+MathPictureEnd
+\
+\>"], "Graphics",
+  ImageSize->{177.938, 287.875},
+  ImageMargins->{{43, 0}, {0, 0}},
+  ImageRegion->{{0, 1}, {0, 1}},
+  ImageCache->GraphicsData["Bitmap", "\<\
+CF5dJ6E]HGAYHf4PAg9QL6QYHg<PAVmbKF5d0`40004:0001[b000`400?l00000o`00003oo`3Vc80;
+0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;
+0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;
+0>K<P000o`3Vc80;0>K<P0005@3Vc8000`000000i/b00>K<P03b0>K<P0005@3Vc8000`000000i/b0
+0>K<P03b0>K<P0005@3Vc8000`000000i/b00>K<P03b0>K<P0005@3Vc8000`000000i/b00>K<P03b
+0>K<P0005@3Vc8000`000000i/b00>K<P03b0>K<P0005@3Vc8000`000000i/b00>K<P01Q0>K<P080
+0000S`3Vc80000X0i/b01P0000050>K<P0030000003Vc800i/b005h0i/b02000002<0>K<P0002P3V
+c8000`000000i/b00>K<P0020>K<P0030000003Vc800i/b000<0i/b000<000000>K<P03Vc800G@3V
+c80:000008/0i/b0000;0>K<P0030000003Vc800i/b000L0i/b000<000000>K<P03Vc800G@3Vc80:
+000008/0i/b0000<0>K<P0030000003Vc800i/b000H0i/b000<000000>K<P03Vc800G@3Vc80:0000
+08/0i/b000000`3Vc800000000000004000000H0i/b000<000000>K<P03Vc8001@3Vc802000005d0
+i/b01@0000070?l000<0i/b01`3o00030>K<P0L0o`000`3Vc8070?l000<0i/b00`3o001V0>K<P000
+3P3Vc8000`000000i/b00>K<P0040>K<P0030000003Vc800i/b005`0i/b01@0000070?l000<0i/b0
+1`3o00030>K<P0L0o`000`3Vc8070?l000<0i/b00`3o001V0>K<P0002P3Vc8000`000000i/b00>K<
+P0020>K<P0030000003Vc800i/b000<0i/b000<000000>K<P03Vc800G@3Vc80:000008/0i/b0000:
+0>K<P0030000003Vc800i/b00080i/b000<000000>K<P03Vc8000`3Vc8000`000000i/b00>K<P01M
+0>K<P0X00000R`3Vc80000/0i/b0100000060>K<P0030000003Vc800i/b003P0i/b000<000000>K<
+P03Vc8007@3Vc8000`000000i/b00>K<P0020>K<P0X00000R`3Vc80001D0i/b000<000000>K<P03V
+c800=`3Vc8000`000000i/b00>K<P00<0>K<P0030000003Vc800i/b00100i/b000<000000>K<P03V
+c8000P3Vc808000008`0i/b0000E0>K<P0030000003Vc800i/b003L0i/b000<000000>K<P03Vc800
+303Vc80200000140i/b000<000000>K<P03Vc8001@3Vc802000000030>K<P0000000i/b008`0i/b0
+000E0>K<P0030000003Vc800i/b003H0i/b000<000000>K<P03Vc8000P3Vc803000000<0i/b00`00
+00030>K<P0030000003Vc800i/b000@0i/b01P0000060>K<P0030000003Vc800i/b000L0i/b000<0
+00000>K<P03Vc800R`3Vc80001D0i/b000<000000>K<P03Vc800=P3Vc8000`000000i/b00>K<P003
+0>K<P0030000003Vc800i/b000<0i/b000<000000>K<P03Vc8000P3Vc802000000H0i/b000<00000
+0>K<P03Vc8000P3Vc8000`000000i/b00>K<P0030>K<P0030000003Vc800i/b000L0i/b000<00000
+0>K<P03Vc800R`3Vc80001D0i/b000<000000>K<P03Vc800=P3Vc8000`000000i/b00>K<P0040>K<
+P0D000003@3Vc8000`000000i/b00>K<P0020>K<P0030000003Vc800i/b000<0i/b000<000000>K<
+P03Vc8001`3Vc8000`000000i/b00>K<P02;0>K<P0005@3Vc8000`000000i/b00>K<P00f0>K<P003
+0000003Vc800i/b000@0i/b000D000000>K<P03Vc800i/b00000000=0>K<P0030000003Vc800i/b0
+0080i/b000<000000>K<P03Vc8000`3Vc8000`000000i/b00>K<P0080>K<P0030000003Vc800i/b0
+08X0i/b0000E0>K<P0030000003Vc800i/b003H0i/b000<000000>K<P03Vc8001@3Vc8000`000000
+i/b00000000>0>K<P0D000001P3Vc8000`000000i/b00>K<P0080>K<P0030000003Vc800i/b008X0
+i/b0000E0>K<P0030000003Vc800i/b003H0i/b000<000000>K<P03Vc8001@3Vc8000`000000i/b0
+0000000>0>K<P0030000003Vc800i/b00080i/b000<000000>K<P03Vc8000`3Vc8000`000000i/b0
+0>K<P0080>K<P0030000003Vc800i/b008X0i/b0000E0>K<P0030000003Vc800i/b003L0i/b000<0
+00000>K<P03Vc8001@3Vc8000`000000i/b00>K<P00=0>K<P0030000003Vc800i/b00080i/b000<0
+00000>K<P03Vc8000P3Vc8000`000000i/b00>K<P0090>K<P0030000003Vc800i/b008X0i/b0000E
+0>K<P0030000003Vc800i/b003L0i/b000<000000>K<P03Vc800103Vc802000000h0i/b01P000005
+0>K<P0030000003Vc800i/b000X0i/b000<000000>K<P03Vc800R@3Vc80001D0i/b000<000000>K<
+P03Vc800>03Vc8000`000000i/b00>K<P00M0>K<P0030000003Vc800i/b000/0i/b000<000000>K<
+P03Vc800R@3Vc80001D0i/b000<000000>K<P03Vc800IP3Vc8000`000000i/b00>K<P0290>K<P000
+5@3Vc8000`000000i/b00>K<P01V0>K<P0030000003Vc800i/b008T0i/b0000E0>K<P0030000003V
+c800i/b006L0i/b000<000000>K<P03Vc800R03Vc80001D0i/b00P00001X0>K<P0030000003Vc800
+i/b008P0i/b0000E0>K<P0030000003Vc800i/b006L0i/b000<000000>K<P03Vc800R03Vc80001D0
+i/b000<000000>K<P03Vc800J03Vc8000`000000i/b00>K<P0270>K<P0005@3Vc8000`000000i/b0
+0>K<P01X0>K<P0030000003Vc800i/b008L0i/b0000E0>K<P0030000003Vc800i/b006P0i/b000<0
+00000>K<P03Vc800Q`3Vc80001D0i/b000<000000>K<P03Vc800J03Vc8000`000000i/b00>K<P027
+0>K<P0005@3Vc8000`000000i/b00>K<P01Y0>K<P0030000003Vc800i/b008H0i/b0000E0>K<P003
+0000003Vc800i/b006T0i/b000<000000>K<P03Vc800QP3Vc80001D0i/b000<000000>K<P03Vc800
+J@3Vc8000`000000i/b00>K<P0260>K<P0005@3Vc8000`000000i/b00>K<P01Y0>K<P0030000003V
+c800i/b008H0i/b0000E0>K<P0030000003Vc800i/b006X0i/b000<000000>K<P03Vc800Q@3Vc800
+01D0i/b000<000000>K<P03Vc800JP3Vc8000`000000i/b00>K<P0250>K<P0005@3Vc8000`000000
+i/b00>K<P01Z0>K<P0030000003Vc800i/b008D0i/b0000E0>K<P0030000003Vc800i/b006X0i/b0
+00<000000>K<P03Vc800Q@3Vc80001D0i/b000<000000>K<P03Vc800J`3Vc8000`000000i/b00>K<
+P0240>K<P0005@3Vc8000`000000i/b00>K<P01[0>K<P0030000003Vc800i/b008@0i/b0000E0>K<
+P0030000003Vc800i/b006/0i/b000<000000>K<P03Vc800Q03Vc80001D0i/b000<000000>K<P03V
+c800K03Vc8000`000000i/b00>K<P0230>K<P0005@3Vc8000`000000i/b00>K<P01/0>K<P0030000
+003Vc800i/b008<0i/b0000E0>K<P0030000003Vc800i/b006`0i/b000<000000>K<P03Vc800P`3V
+c80001D0i/b00P00001]0>K<P0030000003Vc800i/b008<0i/b0000E0>K<P0030000003Vc800i/b0
+06d0i/b000<000000>K<P03Vc800PP3Vc80001D0i/b000<000000>K<P03Vc800K@3Vc8000`000000
+i/b00>K<P0220>K<P0005@3Vc8000`000000i/b00>K<P01]0>K<P0030000003Vc800i/b00880i/b0
+000E0>K<P0030000003Vc800i/b006d0i/b000<000000>K<P03Vc800PP3Vc80001D0i/b000<00000
+0>K<P03Vc800KP3Vc8000`000000i/b00>K<P0210>K<P0005@3Vc8000`000000i/b00>K<P01^0>K<
+P0030000003Vc800i/b00840i/b0000E0>K<P0030000003Vc800i/b006h0i/b000<000000>K<P03V
+c800P@3Vc80001D0i/b000<000000>K<P03Vc800KP3Vc8000`000000i/b00>K<P0210>K<P0005@3V
+c8000`000000i/b00>K<P01_0>K<P0030000003Vc800i/b00800i/b0000E0>K<P0030000003Vc800
+i/b006l0i/b000<000000>K<P03Vc800P03Vc80001D0i/b000<000000>K<P03Vc800K`3Vc8000`00
+0000i/b00>K<P0200>K<P0005@3Vc8000`000000i/b00>K<P01_0>K<P0030000003Vc800i/b00800
+i/b0000E0>K<P0030000003Vc800i/b00700i/b000<000000>K<P03Vc800O`3Vc80001D0i/b000<0
+00000>K<P03Vc800L03Vc8000`000000i/b00>K<P01o0>K<P0005@3Vc8000`000000i/b00>K<P01`
+0>K<P0030000003Vc800i/b007l0i/b0000E0>K<P0030000003Vc800i/b00740i/b000<000000>K<
+P03Vc800OP3Vc80001D0i/b000<000000>K<P03Vc800L@3Vc8000`000000i/b00>K<P01n0>K<P000
+5@3Vc8000`000000i/b00>K<P01a0>K<P0030000003Vc800i/b007h0i/b0000E0>K<P0800000LP3V
+c8000`000000i/b00>K<P01n0>K<P0005@3Vc8000`000000i/b00>K<P01b0>K<P0030000003Vc800
+i/b007d0i/b0000E0>K<P0030000003Vc800i/b00780i/b000<000000>K<P03Vc800O@3Vc80001D0
+i/b000<000000>K<P03Vc800LP3Vc8000`000000i/b00>K<P01m0>K<P0005@3Vc8000`000000i/b0
+0>K<P01b0>K<P0030000003Vc800i/b007d0i/b0000E0>K<P0030000003Vc800i/b007<0i/b000<0
+00000>K<P03Vc800O03Vc80001D0i/b000<000000>K<P03Vc800L`3Vc8000`000000i/b00>K<P01l
+0>K<P0005@3Vc8000`000000i/b00>K<P01c0>K<P0030000003Vc800i/b007`0i/b0000E0>K<P003
+0000003Vc800i/b007<0i/b000<000000>K<P03Vc800O03Vc80001D0i/b000<000000>K<P03Vc800
+M03Vc8000`000000i/b00>K<P01k0>K<P0005@3Vc8000`000000i/b00>K<P01d0>K<P0030000003V
+c800i/b007/0i/b0000E0>K<P0030000003Vc800i/b007@0i/b000<000000>K<P03Vc800N`3Vc800
+01D0i/b000<000000>K<P03Vc800M03Vc8000`000000i/b00>K<P01k0>K<P0005@3Vc8000`000000
+i/b00>K<P01e0>K<P0030000003Vc800i/b007X0i/b0000E0>K<P0030000003Vc800i/b007D0i/b0
+00<000000>K<P03Vc800NP3Vc80001D0i/b000<000000>K<P03Vc800M@3Vc8000`000000i/b00>K<
+P01j0>K<P0005@3Vc8000`000000i/b00>K<P01f0>K<P0030000003Vc800i/b007T0i/b0000E0>K<
+P0030000003Vc800i/b007H0i/b000<000000>K<P03Vc800N@3Vc80001D0i/b000<000000>K<P03V
+c800MP3Vc8000`000000i/b00>K<P01i0>K<P0005@3Vc802000007L0i/b000<000000>K<P03Vc800
+N@3Vc80001D0i/b000<000000>K<P03Vc800M`3Vc8000`000000i/b00>K<P01h0>K<P0005@3Vc800
+0`000000i/b00>K<P01g0>K<P0030000003Vc800i/b007P0i/b0000E0>K<P0030000003Vc800i/b0
+07L0i/b000<000000>K<P03Vc800N03Vc80001D0i/b000<000000>K<P03Vc800M`3Vc8000`000000
+i/b00>K<P01h0>K<P0005@3Vc8000`000000i/b00>K<P01h0>K<P0030000003Vc800i/b007L0i/b0
+000E0>K<P0030000003Vc800i/b007P0i/b000<000000>K<P03Vc800M`3Vc80001D0i/b000<00000
+0>K<P03Vc800N03Vc8000`000000i/b00>K<P01g0>K<P0005@3Vc8000`000000i/b00>K<P01h0>K<
+P0030000003Vc800i/b007L0i/b0000E0>K<P0030000003Vc800i/b007T0i/b000<000000>K<P03V
+c800MP3Vc80001D0i/b000<000000>K<P03Vc800N@3Vc8000`000000i/b00>K<P01f0>K<P0005@3V
+c8000`000000i/b00>K<P01i0>K<P0030000003Vc800i/b007H0i/b0000E0>K<P0030000003Vc800
+i/b007X0i/b000<000000>K<P03Vc800M@3Vc80001D0i/b000<000000>K<P03Vc800NP3Vc8000`00
+0000i/b00>K<P01e0>K<P0005@3Vc8000`000000i/b00>K<P01j0>K<P0030000003Vc800i/b007D0
+i/b0000E0>K<P0030000003Vc800i/b007X0i/b000<000000>K<P03Vc800M@3Vc80000X0i/b01`00
+00040>K<P0030000003Vc800i/b007/0i/b000<000000>K<P03Vc800M03Vc80000d0i/b000<00000
+0>K<P03Vc8001@3Vc8000`000000i/b00>K<P01k0>K<P0030000003Vc800i/b007@0i/b0000=0>K<
+P0030000003Vc800i/b000D0i/b000<000000>K<P03Vc800N`3Vc8000`000000i/b00>K<P01d0>K<
+P0003@3Vc8000`000000i/b00>K<P0050>K<P0030000003Vc800i/b007/0i/b000<000000>K<P03V
+c800M03Vc80000030>K<P0000000000000@000001P3Vc8000`000000i/b00>K<P0050>K<P0800000
+O@3Vc8000`000000i/b00>K<P01c0>K<P0003@3Vc8000`000000i/b00>K<P0050>K<P0030000003V
+c800i/b007`0i/b000<000000>K<P03Vc800L`3Vc80000d0i/b000<000000>K<P03Vc8001@3Vc800
+0`000000i/b00>K<P01l0>K<P0030000003Vc800i/b007<0i/b0000;0>K<P0<000001`3Vc8000`00
+0000i/b00>K<P01l0>K<P0030000003Vc800i/b007<0i/b0000=0>K<P0030000003Vc800i/b000D0
+i/b000<000000>K<P03Vc800O@3Vc8000`000000i/b00>K<P01b0>K<P0005@3Vc8000`000000i/b0
+0>K<P01m0>K<P0030000003Vc800i/b00780i/b0000E0>K<P0030000003Vc800i/b007d0i/b000<0
+00000>K<P03Vc800LP3Vc80001D0i/b000<000000>K<P03Vc800O@3Vc8000`000000i/b00>K<P01b
+0>K<P0005@3Vc8000`000000i/b00>K<P01n0>K<P0030000003Vc800i/b00740i/b0000E0>K<P003
+0000003Vc800i/b007h0i/b000<000000>K<P03Vc800L@3Vc80001D0i/b000<000000>K<P03Vc800
+OP3Vc8000`000000i/b00>K<P01a0>K<P0005@3Vc8000`000000i/b00>K<P01o0>K<P0030000003V
+c800i/b00700i/b0000E0>K<P0030000003Vc800i/b007l0i/b000<000000>K<P03Vc800L03Vc800
+01D0i/b000<000000>K<P03Vc800O`3Vc8000`000000i/b00>K<P01`0>K<P0005@3Vc8000`000000
+i/b00>K<P01o0>K<P0030000003Vc800i/b00700i/b0000E0>K<P0030000003Vc800i/b00800i/b0
+00<000000>K<P03Vc800K`3Vc80001D0i/b000<000000>K<P03Vc800P03Vc8000`000000i/b00>K<
+P01_0>K<P0005@3Vc8000`000000i/b00>K<P0200>K<P0030000003Vc800i/b006l0i/b0000E0>K<
+P0030000003Vc800i/b00800i/b000<000000>K<P03Vc800K`3Vc80001D0i/b00P0000220>K<P003
+0000003Vc800i/b006h0i/b0000E0>K<P0030000003Vc800i/b00840i/b000<000000>K<P03Vc800
+KP3Vc80001D0i/b000<000000>K<P03Vc800P@3Vc8000`000000i/b00>K<P01^0>K<P0005@3Vc800
+0`000000i/b00>K<P0210>K<P0030000003Vc800i/b006h0i/b0000E0>K<P0030000003Vc800i/b0
+0880i/b000<000000>K<P03Vc800K@3Vc80001D0i/b000<000000>K<P03Vc800PP3Vc8000`000000
+i/b00>K<P01]0>K<P0005@3Vc8000`000000i/b00>K<P0220>K<P0030000003Vc800i/b006d0i/b0
+000E0>K<P0030000003Vc800i/b008<0i/b000<000000>K<P03Vc800K03Vc80001D0i/b000<00000
+0>K<P03Vc800P`3Vc8000`000000i/b00>K<P01/0>K<P0005@3Vc8000`000000i/b00>K<P0230>K<
+P0030000003Vc800i/b006`0i/b0000E0>K<P0030000003Vc800i/b008<0i/b000<000000>K<P03V
+c800K03Vc80001D0i/b000<000000>K<P03Vc800Q03Vc8000`000000i/b00>K<P01[0>K<P0005@3V
+c8000`000000i/b00>K<P0240>K<P0030000003Vc800i/b006/0i/b0000E0>K<P0030000003Vc800
+i/b008@0i/b000<000000>K<P03Vc800J`3Vc80001D0i/b000<000000>K<P03Vc800Q03Vc8000`00
+0000i/b00>K<P01[0>K<P0005@3Vc8000`000000i/b00>K<P0250>K<P0030000003Vc800i/b006X0
+i/b0000E0>K<P0030000003Vc800i/b008D0i/b000<000000>K<P03Vc800JP3Vc80001D0i/b000<0
+00000>K<P03Vc800Q@3Vc8000`000000i/b00>K<P01Z0>K<P0005@3Vc8000`000000i/b00>K<P025
+0>K<P0030000003Vc800i/b006X0i/b0000E0>K<P0800000Q`3Vc8000`000000i/b00>K<P01Y0>K<
+P0005@3Vc8000`000000i/b00>K<P0260>K<P0030000003Vc800i/b006T0i/b0000E0>K<P0030000
+003Vc800i/b008H0i/b000<000000>K<P03Vc800J@3Vc80001D0i/b000<000000>K<P03Vc800QP3V
+c8000`000000i/b00>K<P01Y0>K<P0005@3Vc8000`000000i/b00>K<P0270>K<P0030000003Vc800
+i/b006P0i/b0000E0>K<P0030000003Vc800i/b008L0i/b000<000000>K<P03Vc800J03Vc80001D0
+i/b000<000000>K<P03Vc800Q`3Vc8000`000000i/b00>K<P01X0>K<P0005@3Vc8000`000000i/b0
+0>K<P0280>K<P0030000003Vc800i/b006L0i/b0000E0>K<P0030000003Vc800i/b008P0i/b000<0
+00000>K<P03Vc800I`3Vc80001D0i/b000<000000>K<P03Vc800R03Vc8000`000000i/b00>K<P01W
+0>K<P0005@3Vc8000`000000i/b00>K<P0280>K<P0030000003Vc800i/b006L0i/b0000E0>K<P003
+0000003Vc800i/b008T0i/b000<000000>K<P03Vc800IP3Vc80001D0i/b000<000000>K<P03Vc800
+R@3Vc8000`000000i/b00>K<P01V0>K<P0005@3Vc8000`000000i/b00>K<P0290>K<P0030000003V
+c800i/b006H0i/b0000E0>K<P0030000003Vc800i/b008T0i/b000<000000>K<P03Vc800IP3Vc800
+01D0i/b000<000000>K<P03Vc800RP3Vc8000`000000i/b00>K<P01U0>K<P0005@3Vc8000`000000
+i/b00>K<P02:0>K<P0030000003Vc800i/b006D0i/b0000E0>K<P0030000003Vc800i/b008X0i/b0
+00<000000>K<P03Vc800I@3Vc80001D0i/b000<000000>K<P03Vc800RP3Vc8000`000000i/b00>K<
+P01U0>K<P0005@3Vc802000008`0i/b000<000000>K<P03Vc800I03Vc80001D0i/b000<000000>K<
+P03Vc800R`3Vc8000`000000i/b00>K<P01T0>K<P0005@3Vc8000`000000i/b00>K<P02;0>K<P003
+0000003Vc800i/b006@0i/b0000E0>K<P0030000003Vc800i/b008/0i/b000<000000>K<P03Vc800
+I03Vc80001D0i/b000<000000>K<P03Vc800S03Vc8000`000000i/b00>K<P01S0>K<P0005@3Vc800
+0`000000i/b00>K<P02<0>K<P0030000003Vc800i/b006<0i/b0000E0>K<P0030000003Vc800i/b0
+08`0i/b000<000000>K<P03Vc800H`3Vc80001D0i/b000<000000>K<P03Vc800S@3Vc8000`000000
+i/b00>K<P01R0>K<P0005@3Vc8000`000000i/b00>K<P02=0>K<P0030000003Vc800i/b00680i/b0
+000E0>K<P0030000003Vc800i/b008d0i/b000<000000>K<P03Vc800HP3Vc80001D0i/b000<00000
+0>K<P03Vc800S@3Vc8000`000000i/b00>K<P01R0>K<P0005@3Vc8000`000000i/b00>K<P02>0>K<
+P0030000003Vc800i/b00640i/b0000E0>K<P0030000003Vc800i/b008h0i/b000<000000>K<P03V
+c800H@3Vc80001D0i/b000<000000>K<P03Vc800SP3Vc8000`000000i/b00>K<P01Q0>K<P0005@3V
+c8000`000000i/b00>K<P02>0>K<P0030000003Vc800i/b00640i/b0000E0>K<P0030000003Vc800
+i/b008l0i/b000<000000>K<P03Vc800H03Vc80001D0i/b000<000000>K<P03Vc800S`3Vc8000`00
+0000i/b00>K<P01P0>K<P0005@3Vc8000`000000i/b00>K<P02?0>K<P0030000003Vc800i/b00600
+i/b0000E0>K<P0030000003Vc800i/b008l0i/b000<000000>K<P03Vc800H03Vc80001D0i/b000<0
+00000>K<P03Vc800T03Vc8000`000000i/b00>K<P01O0>K<P0005@3Vc80200000940i/b000<00000
+0>K<P03Vc800G`3Vc80001D0i/b000<000000>K<P03Vc800T03Vc8000`000000i/b00>K<P01O0>K<
+P0005@3Vc8000`000000i/b00>K<P02A0>K<P0030000003Vc800i/b005h0i/b0000E0>K<P0030000
+003Vc800i/b00940i/b000<000000>K<P03Vc800GP3Vc80001D0i/b000<000000>K<P03Vc800T@3V
+c8000`000000i/b00>K<P01N0>K<P0005@3Vc8000`000000i/b00>K<P02A0>K<P0030000003Vc800
+i/b005h0i/b0000E0>K<P0030000003Vc800i/b00980i/b000<000000>K<P03Vc800G@3Vc80001D0
+i/b000<000000>K<P03Vc800LP3Vc802000000040>K<P00000000000000000<0i/b01`0000030>K<
+P0D000001@3Vc804000000D0i/b0100000060>K<P0@00000103Vc804000000@0i/b01@00000k0>K<
+P0005@3Vc8000`000000i/b00>K<P01c0>K<P08000000`3Vc8000`000000i/b00>K<P0030>K<P003
+0000003Vc800i/b000@0i/b000<000000>K<P03Vc8000P3Vc8001@000000i/b00>K<P03Vc8000000
+00<0i/b00P0000030>K<P0030000003Vc800i/b00080i/b000<000000>K<P03Vc8000P3Vc8000`00
+0000i/b00>K<P0020>K<P0040000003Vc800i/b0000000@0i/b000<000000>K<P03Vc8000P3Vc800
+0`000000i/b00>K<P00l0>K<P0005@3Vc8000`000000i/b00>K<P01c0>K<P0030000003Vc800i/b0
+0080i/b000<000000>K<P03Vc8000`3Vc8000`000000i/b00>K<P0090>K<P0050000003Vc800i/b0
+0>K<P00000000`3Vc8001@000000i/b00>K<P03Vc800000000X0i/b000<000000>K<P03Vc8001@3V
+c8000`000000i/b00>K<P0020>K<P0030000003Vc800i/b00080i/b000<000000>K<P03Vc800?03V
+c80001D0i/b000<000000>K<P03Vc800L`3Vc8000`000000i/b00>K<P0020>K<P0030000003Vc800
+i/b000<0i/b000<000000>K<P03Vc8001@3Vc804000000@0i/b01P0000020>K<P0030000003Vc800
+i/b000P0i/b000<000000>K<P03Vc8001@3Vc8000`000000i/b00>K<P0020>K<P0030000003Vc800
+i/b00080i/b000<000000>K<P03Vc800?03Vc80001D0i/b000<000000>K<P03Vc800L`3Vc8020000
+00<0i/b000<000000>K<P03Vc8000`3Vc8000`000000i/b00>K<P0040>K<P0030000003Vc800i/b0
+0080i/b000D000000>K<P03Vc800i/b0000000040>K<P0050000003Vc800i/b00>K<P00000000`3V
+c802000000@0i/b000<000000>K<P03Vc8001@3Vc8000`000000i/b00>K<P0020>K<P0030000003V
+c800i/b00080i/b00P00000m0>K<P0005@3Vc8000`000000i/b00>K<P01c0>K<P0030000003Vc800
+000000800000103Vc803000000L0i/b01@0000040>K<P0D00000103Vc803000000040>K<P0000000
+i/b00>K<P0L00000103Vc804000000@0i/b00P000000103Vc800000000000000000j0>K<P0005@3V
+c8000`000000i/b00>K<P01c0>K<P0030000003Vc800i/b001d0i/b000<000000>K<P03Vc8002`3V
+c8000`000000i/b00>K<P01>0>K<P0005@3Vc8000`000000i/b00>K<P01c0>K<P0030000003Vc800
+i/b001h0i/b00P00000;0>K<P0030000003Vc800i/b004h0i/b0000E0>K<P0030000003Vc800i/b0
+0780i/b00P00000:0>K<P0030000003Vc800i/b00100i/b02000001I0>K<P0002`3Vc804000000H0
+i/b000<000000>K<P03Vc800OP3Vc8000`000000i/b00>K<P00?0>K<P0X00000F03Vc80000X0i/b0
+00<000000>K<P03Vc8000P3Vc8000`000000i/b00>K<P0030>K<P0030000003Vc800i/b00900i/b0
+2P00001H0>K<P0002P3Vc8000`000000i/b00>K<P0020>K<P0030000003Vc800i/b000<0i/b000<0
+00000>K<P03Vc800T03Vc80:000005P0i/b0000:0>K<P0030000003Vc800i/b00080i/b000<00000
+0>K<P03Vc8000`3Vc80200000900i/b03000001G0>K<P0002P3Vc8000`000000i/b00>K<P0020>K<
+P0030000003Vc800i/b000<0i/b000<000000>K<P03Vc800S`3Vc80<000005L0i/b0000:0>K<P003
+0000003Vc800i/b00080i/b000<000000>K<P03Vc8000`3Vc8000`000000i/b00>K<P02;0>K<P0@0
+000000<0i/b00000000000002000001H0>K<P0002P3Vc8000`000000i/b00>K<P0020>K<P0030000
+003Vc800i/b000<0i/b000<000000>K<P03Vc800Q`3Vc804000000D0i/b02P00001H0>K<P0002P3V
+c8000`000000i/b00>K<P0020>K<P0030000003Vc800i/b000<0i/b000<000000>K<P03Vc800P`3V
+c804000000T0i/b02P00001H0>K<P0002`3Vc804000000H0i/b000<000000>K<P03Vc800O`3Vc804
+000000h0i/b02000001I0>K<P0005@3Vc8000`000000i/b00>K<P01l0>K<P0<000005@3Vc8020000
+00030>K<P0000000i/b005T0i/b0000E0>K<P0030000003Vc800i/b009L0i/b000<000000>K<P03V
+c800F03Vc80001D0i/b000<000000>K<P03Vc800U`3Vc8000`000000i/b00>K<P01H0>K<P0005@3V
+c8000`000000i/b00>K<P02G0>K<P0030000003Vc800i/b005P0i/b0000E0>K<P0030000003Vc800
+i/b009P0i/b000<000000>K<P03Vc800E`3Vc80001D0i/b000<000000>K<P03Vc800V03Vc8000`00
+0000i/b00>K<P01G0>K<P0005@3Vc8000`000000i/b00>K<P01S0>K<P0800000<`3Vc8000`000000
+i/b00>K<P01G0>K<P0005@3Vc8000`000000i/b00>K<P01O0>K<P0@00000=@3Vc8000`000000i/b0
+0>K<P01G0>K<P0005@3Vc8000`000000i/b00>K<P01K0>K<P0@00000>P3Vc8000`000000i/b00>K<
+P01F0>K<P0005@3Vc8000`000000i/b00>K<P01G0>K<P0@00000?P3Vc8000`000000i/b00>K<P01F
+0>K<P0005@3Vc8000`000000i/b00>K<P01C0>K<P0@00000@P3Vc8000`000000i/b00>K<P01F0>K<
+P0005@3Vc8000`000000i/b00>K<P01?0>K<P0@00000AP3Vc8000`000000i/b00>K<P01F0>K<P000
+5@3Vc8000`000000i/b00>K<P01<0>K<P0<00000B`3Vc8000`000000i/b00>K<P01E0>K<P0005@3V
+c802000009/0i/b000<000000>K<P03Vc800E@3Vc80001D0i/b000<000000>K<P03Vc800VP3Vc800
+0`000000i/b00>K<P01E0>K<P0005@3Vc8000`000000i/b00>K<P02K0>K<P0030000003Vc800i/b0
+05@0i/b0000E0>K<P0030000003Vc800i/b009/0i/b000<000000>K<P03Vc800E03Vc80001D0i/b0
+00<000000>K<P03Vc800<P3Vc802000006L0i/b000<000000>K<P03Vc800E03Vc80001D0i/b000<0
+00000>K<P03Vc800;P3Vc804000006T0i/b000<000000>K<P03Vc800E03Vc80001D0i/b000<00000
+0>K<P03Vc800:P3Vc804000000l0i/b01@0000030>K<P0<000000P3Vc803000000<0i/b010000018
+0>K<P0030000003Vc800i/b005<0i/b0000E0>K<P0030000003Vc800i/b002H0i/b01000000D0>K<
+P0030000003Vc800i/b000D0i/b000<000000>K<P03Vc8000P3Vc8001@000000i/b00>K<P03Vc800
+000000@0i/b000<000000>K<P03Vc800A@3Vc8000`000000i/b00>K<P01C0>K<P0005@3Vc8000`00
+0000i/b00>K<P00R0>K<P0@00000603Vc8000`000000i/b00>K<P0050>K<P0030000003Vc800i/b0
+0080i/b000D000000>K<P03Vc800i/b0000000040>K<P0030000003Vc800i/b004D0i/b000<00000
+0>K<P03Vc800D`3Vc80001D0i/b000<000000>K<P03Vc8007P3Vc804000001`0i/b000<000000>K<
+P03Vc8001@3Vc8000`000000i/b00>K<P0020>K<P0050000003Vc800i/b00>K<P0000000103Vc800
+0`000000i/b00>K<P0150>K<P0030000003Vc800i/b005<0i/b0000E0>K<P0030000003Vc800i/b0
+01/0i/b00`00000P0>K<P08000001P3Vc802000000<0i/b000D000000>K<P03Vc800i/b000000004
+0>K<P0030000003Vc800i/b004H0i/b000<000000>K<P03Vc800DP3Vc80001D0i/b000<000000>K<
+P03Vc800?@3Vc802000000040>K<P00000000000000000<0i/b000<000000>K<P00000000P000005
+0>K<P0@00000B@3Vc8000`000000i/b00>K<P01B0>K<P000503Vc802000004P0i/b000<000000>K<
+P03Vc800E03Vc8000`000000i/b00>K<P01B0>K<P0004@3Vc808000004D0i/b000<000000>K<P03V
+c800E03Vc8000`000000i/b00>K<P01B0>K<P000403Vc80:000004<0i/b00P00001G0>K<P0030000
+003Vc800i/b00540i/b0000@0>K<P0X00000W03Vc8000`000000i/b00>K<P01A0>K<P000403Vc80;
+000009/0i/b000<000000>K<P03Vc800D@3Vc80000l0i/b03000002L0>K<P0030000003Vc800i/b0
+0500i/b0000?0>K<P0`00000W03Vc8000`000000i/b00>K<P01@0>K<P000403Vc80:000009d0i/b0
+00<000000>K<P03Vc800D03Vc8000100i/b02P00002M0>K<P0030000003Vc800i/b00500i/b0000@
+0>K<P0X000002P3Vc8000`000000i/b00>K<P02A0>K<P0030000003Vc800i/b004l0i/b0000A0>K<
+P0P00000303Vc8000`000000i/b00>K<P02@0>K<P0030000003Vc800i/b004l0i/b0000B0>K<P0@0
+00003`3Vc8000`000000i/b00>K<P02@0>K<P0030000003Vc800i/b004l0i/b0000C0>K<P0030000
+003Vc800000000D0i/b01P0000050>K<P0030000003Vc800i/b008l0i/b000<000000>K<P03Vc800
+C`3Vc80001<0i/b00`0000050>K<P0030000003Vc800i/b00080i/b000<000000>K<P03Vc8000`3V
+c8000`000000i/b00>K<P02@0>K<P0030000003Vc800i/b004h0i/b0000E0>K<P0030000003Vc800
+i/b000@0i/b000D000000>K<P03Vc800i/b0000000050>K<P0030000003Vc800i/b00900i/b000<0
+00000>K<P03Vc800CP3Vc80001D0i/b000<000000>K<P03Vc8001@3Vc8000`000000i/b00>K<P006
+0>K<P0030000003Vc800i/b00900i/b000<000000>K<P03Vc800CP3Vc80001D0i/b000<000000>K<
+P03Vc8001P3Vc8000`000000i/b00>K<P0050>K<P0030000003Vc800i/b00900i/b000<000000>K<
+P03Vc800CP3Vc80001D0i/b000<000000>K<P03Vc8001`3Vc8000`000000i/b00>K<P0040>K<P003
+0000003Vc800i/b00940i/b000<000000>K<P03Vc800C@3Vc80001D0i/b000<000000>K<P03Vc800
+0`3Vc8000`000000i/b00>K<P0020>K<P0030000003Vc800i/b00080i/b000<000000>K<P03Vc800
+TP3Vc8000`000000i/b00>K<P01=0>K<P0005@3Vc8000`000000i/b00>K<P0030>K<P0H00000103V
+c8000`000000i/b00>K<P02B0>K<P0030000003Vc800i/b004d0i/b0000E0>K<P0030000003Vc800
+i/b000`0i/b000<000000>K<P03Vc800T`3Vc8000`000000i/b00>K<P01=0>K<P0005@3Vc8000`00
+0000i/b00>K<P02S0>K<P0030000003Vc800i/b004`0i/b0000E0>K<P0030000003Vc800i/b00:<0
+i/b000<000000>K<P03Vc800C03Vc80001D0i/b000<000000>K<P03Vc800X`3Vc8000`000000i/b0
+0>K<P01<0>K<P0005@3Vc8000`000000i/b00>K<P02T0>K<P0030000003Vc800i/b004/0i/b0000E
+0>K<P0030000003Vc800i/b00:@0i/b000<000000>K<P03Vc800B`3Vc80001D0i/b000<000000>K<
+P03Vc800Y03Vc8000`000000i/b00>K<P01;0>K<P0005@3Vc80200000:D0i/b000<000000>K<P03V
+c800B`3Vc80001D0i/b000<000000>K<P03Vc800Y@3Vc8000`000000i/b00>K<P01:0>K<P0005@3V
+c8000`000000i/b00>K<P02U0>K<P0030000003Vc800i/b004X0i/b0000E0>K<P0030000003Vc800
+i/b00:D0i/b000<000000>K<P03Vc800BP3Vc80001D0i/b000<000000>K<P03Vc800Y@3Vc8000`00
+0000i/b00>K<P01:0>K<P0005@3Vc8000`000000i/b00>K<P02V0>K<P0030000003Vc800i/b004T0
+i/b0000E0>K<P0030000003Vc800i/b00:H0i/b000<000000>K<P03Vc800B@3Vc80001D0i/b000<0
+00000>K<P03Vc800YP3Vc8000`000000i/b00>K<P0190>K<P0005@3Vc8000`000000i/b00>K<P02V
+0>K<P0030000003Vc800i/b004T0i/b0000E0>K<P0030000003Vc800i/b00:L0i/b000<000000>K<
+P03Vc800B03Vc80001D0i/b000<000000>K<P03Vc800Y`3Vc8000`000000i/b00>K<P0180>K<P000
+5@3Vc8000`000000i/b00>K<P02W0>K<P0030000003Vc800i/b004P0i/b0000E0>K<P0030000003V
+c800i/b00:L0i/b000<000000>K<P03Vc800B03Vc80001D0i/b000<000000>K<P03Vc800Z03Vc800
+0`000000i/b00>K<P0170>K<P0005@3Vc8000`000000i/b00>K<P02X0>K<P0030000003Vc800i/b0
+04L0i/b0000E0>K<P0030000003Vc800i/b00:P0i/b000<000000>K<P03Vc800A`3Vc80001D0i/b0
+00<000000>K<P03Vc800Z@3Vc8000`000000i/b00>K<P0160>K<P0005@3Vc8000`000000i/b00>K<
+P02Y0>K<P0030000003Vc800i/b004H0i/b0000E0>K<P0030000003Vc800i/b00:T0i/b000<00000
+0>K<P03Vc800AP3Vc80001D0i/b00P00002Z0>K<P0030000003Vc800i/b004H0i/b0000E0>K<P003
+0000003Vc800i/b00:X0i/b000<000000>K<P03Vc800A@3Vc80001D0i/b000<000000>K<P03Vc800
+ZP3Vc8000`000000i/b00>K<P0150>K<P0005@3Vc8000`000000i/b00>K<P02Z0>K<P0030000003V
+c800i/b004D0i/b0000E0>K<P0030000003Vc800i/b00:X0i/b000<000000>K<P03Vc800A@3Vc800
+01D0i/b000<000000>K<P03Vc800Z`3Vc8000`000000i/b00>K<P0140>K<P0005@3Vc8000`000000
+i/b00>K<P02[0>K<P0030000003Vc800i/b004@0i/b0000E0>K<P0030000003Vc800i/b00:/0i/b0
+00<000000>K<P03Vc800A03Vc80001D0i/b000<000000>K<P03Vc800Z`3Vc8000`000000i/b00>K<
+P0140>K<P0005@3Vc8000`000000i/b00>K<P02/0>K<P0030000003Vc800i/b004<0i/b0000E0>K<
+P0030000003Vc800i/b00:`0i/b000<000000>K<P03Vc800@`3Vc80001D0i/b000<000000>K<P03V
+c800[03Vc8000`000000i/b00>K<P0130>K<P0005@3Vc8000`000000i/b00>K<P02]0>K<P0030000
+003Vc800i/b00480i/b0000E0>K<P0030000003Vc800i/b00:d0i/b000<000000>K<P03Vc800@P3V
+c80001D0i/b000<000000>K<P03Vc800[@3Vc8000`000000i/b00>K<P0120>K<P0005@3Vc8000`00
+0000i/b00>K<P02]0>K<P0030000003Vc800i/b00480i/b0000:0>K<P0L00000103Vc8000`000000
+i/b00>K<P02^0>K<P0030000003Vc800i/b00440i/b0000=0>K<P0030000003Vc800i/b000D0i/b0
+00<000000>K<P03Vc800[P3Vc8000`000000i/b00>K<P0110>K<P0003@3Vc8000`000000i/b00>K<
+P0050>K<P0030000003Vc800i/b00:h0i/b000<000000>K<P03Vc800@@3Vc80000d0i/b000<00000
+0>K<P03Vc8001@3Vc8000`000000i/b00>K<P02^0>K<P0030000003Vc800i/b00440i/b0000=0>K<
+P0030000003Vc800i/b000D0i/b00P00002`0>K<P0030000003Vc800i/b00400i/b0000=0>K<P003
+0000003Vc800i/b000D0i/b000<000000>K<P03Vc800[`3Vc8000`000000i/b00>K<P0100>K<P000
+3@3Vc8000`000000i/b00>K<P0050>K<P0030000003Vc800i/b00:l0i/b000<000000>K<P03Vc800
+@03Vc80000/0i/b00`0000070>K<P0030000003Vc800i/b00:l0i/b000<000000>K<P03Vc800@03V
+c80000d0i/b000<000000>K<P03Vc8001@3Vc8000`000000i/b00>K<P02`0>K<P0030000003Vc800
+i/b003l0i/b0000E0>K<P0030000003Vc800i/b00;00i/b000<000000>K<P03Vc800?`3Vc80001D0
+i/b000<000000>K<P03Vc800/03Vc8000`000000i/b00>K<P00o0>K<P0005@3Vc8000`000000i/b0
+0>K<P02`0>K<P0030000003Vc800i/b003l0i/b0000E0>K<P0030000003Vc800i/b00;40i/b000<0
+00000>K<P03Vc800?P3Vc80001D0i/b000<000000>K<P03Vc800/@3Vc8000`000000i/b00>K<P00n
+0>K<P0005@3Vc8000`000000i/b00>K<P02a0>K<P0030000003Vc800i/b003h0i/b0000E0>K<P003
+0000003Vc800i/b00;80i/b000<000000>K<P03Vc800?@3Vc80001D0i/b000<000000>K<P03Vc800
+/P3Vc8000`000000i/b00>K<P00m0>K<P0005@3Vc8000`000000i/b00>K<P02b0>K<P0030000003V
+c800i/b003d0i/b0000E0>K<P0030000003Vc800i/b00;80i/b000<000000>K<P03Vc800?@3Vc800
+01D0i/b000<000000>K<P03Vc800/`3Vc8000`000000i/b00>K<P00l0>K<P0005@3Vc8000`000000
+i/b00>K<P02c0>K<P0030000003Vc800i/b003`0i/b0000E0>K<P0030000003Vc800i/b00;<0i/b0
+00<000000>K<P03Vc800?03Vc80001D0i/b000<000000>K<P03Vc800/`3Vc8000`000000i/b00>K<
+P00l0>K<P0005@3Vc80200000;D0i/b000<000000>K<P03Vc800>`3Vc80001D0i/b000<000000>K<
+P03Vc800]03Vc8000`000000i/b00>K<P00k0>K<P0005@3Vc8000`000000i/b00>K<P02d0>K<P003
+0000003Vc800i/b003/0i/b0000E0>K<P0030000003Vc800i/b00;@0i/b000<000000>K<P03Vc800
+>`3Vc80001D0i/b000<000000>K<P03Vc800]@3Vc8000`000000i/b00>K<P00j0>K<P0005@3Vc800
+0`000000i/b00>K<P02e0>K<P0030000003Vc800i/b003X0i/b0000E0>K<P0030000003Vc800i/b0
+0;D0i/b000<000000>K<P03Vc800>P3Vc80001D0i/b000<000000>K<P03Vc800]P3Vc8000`000000
+i/b00>K<P00i0>K<P0005@3Vc8000`000000i/b00>K<P02f0>K<P0030000003Vc800i/b003T0i/b0
+000E0>K<P0030000003Vc800i/b00;H0i/b000<000000>K<P03Vc800>@3Vc80001D0i/b000<00000
+0>K<P03Vc800]P3Vc8000`000000i/b00>K<P00i0>K<P0005@3Vc8000`000000i/b00>K<P02g0>K<
+P0030000003Vc800i/b003P0i/b0000E0>K<P0030000003Vc800i/b00;L0i/b000<000000>K<P03V
+c800>03Vc80001D0i/b000<000000>K<P03Vc800]`3Vc8000`000000i/b00>K<P00h0>K<P0005@3V
+c8000`000000i/b00>K<P02g0>K<P0030000003Vc800i/b003P0i/b0000E0>K<P0030000003Vc800
+i/b00;P0i/b000<000000>K<P03Vc800=`3Vc80001D0i/b000<000000>K<P03Vc800^03Vc8000`00
+0000i/b00>K<P00g0>K<P0005@3Vc8000`000000i/b00>K<P02h0>K<P0030000003Vc800i/b003L0
+i/b0000E0>K<P0030000003Vc800i/b00;P0i/b000<000000>K<P03Vc800=`3Vc80001D0i/b00P00
+002j0>K<P0030000003Vc800i/b003H0i/b0000E0>K<P0030000003Vc800i/b00;T0i/b000<00000
+0>K<P03Vc800=P3Vc80001D0i/b000<000000>K<P03Vc800^@3Vc8000`000000i/b00>K<P00f0>K<
+P0005@3Vc8000`000000i/b00>K<P02i0>K<P0030000003Vc800i/b003H0i/b0000E0>K<P0030000
+003Vc800i/b00;X0i/b000<000000>K<P03Vc800=@3Vc80001D0i/b000<000000>K<P03Vc800^P3V
+c8000`000000i/b00>K<P00e0>K<P0005@3Vc8000`000000i/b00>K<P02j0>K<P0030000003Vc800
+i/b003D0i/b0000E0>K<P0030000003Vc800i/b00;/0i/b000<000000>K<P03Vc800=03Vc80001D0
+i/b000<000000>K<P03Vc800^`3Vc8000`000000i/b00>K<P00d0>K<P0005@3Vc8000`000000i/b0
+0>K<P02k0>K<P0030000003Vc800i/b003@0i/b0000E0>K<P0030000003Vc800i/b00;/0i/b000<0
+00000>K<P03Vc800=03Vc80001D0i/b000<000000>K<P03Vc800_03Vc8000`000000i/b00>K<P00c
+0>K<P0005@3Vc8000`000000i/b00>K<P02l0>K<P0030000003Vc800i/b003<0i/b0000E0>K<P003
+0000003Vc800i/b00;`0i/b000<000000>K<P03Vc800<`3Vc80001D0i/b000<000000>K<P03Vc800
+_03Vc8000`000000i/b00>K<P00c0>K<P0005@3Vc8000`000000i/b00>K<P02m0>K<P0030000003V
+c800i/b00380i/b0000E0>K<P0030000003Vc800i/b00;d0i/b000<000000>K<P03Vc800<P3Vc800
+01D0i/b000<000000>K<P03Vc800_@3Vc8000`000000i/b00>K<P00b0>K<P0005@3Vc8000`000000
+i/b00>K<P02m0>K<P0030000003Vc800i/b00380i/b0000E0>K<P0030000003Vc800i/b00;h0i/b0
+00<000000>K<P03Vc800<@3Vc80001D0i/b00P00002o0>K<P0030000003Vc800i/b00340i/b0000E
+0>K<P0030000003Vc800i/b00;h0i/b000<000000>K<P03Vc800<@3Vc80001D0i/b000<000000>K<
+P03Vc800_P3Vc8000`000000i/b00>K<P00a0>K<P0005@3Vc8000`000000i/b00>K<P02o0>K<P003
+0000003Vc800i/b00300i/b0000E0>K<P0030000003Vc800i/b00;l0i/b000<000000>K<P03Vc800
+<03Vc80001D0i/b000<000000>K<P03Vc800_`3Vc8000`000000i/b00>K<P00`0>K<P0005@3Vc800
+0`000000i/b00>K<P0300>K<P0030000003Vc800i/b002l0i/b0000E0>K<P0030000003Vc800i/b0
+0<00i/b000<000000>K<P03Vc800;`3Vc80001D0i/b000<000000>K<P03Vc800`03Vc8000`000000
+i/b00>K<P00_0>K<P0005@3Vc8000`000000i/b00>K<P0300>K<P0030000003Vc800i/b002l0i/b0
+000E0>K<P0030000003Vc800i/b00<40i/b000<000000>K<P03Vc800;P3Vc80001D0i/b000<00000
+0>K<P03Vc800`@3Vc8000`000000i/b00>K<P00^0>K<P0005@3Vc8000`000000i/b00>K<P0310>K<
+P0030000003Vc800i/b002h0i/b0000E0>K<P0030000003Vc800i/b00<40i/b000<000000>K<P03V
+c800;P3Vc80001D0i/b000<000000>K<P03Vc800`P3Vc8000`000000i/b00>K<P00]0>K<P0005@3V
+c8000`000000i/b00>K<P0320>K<P0030000003Vc800i/b002d0i/b0000E0>K<P0030000003Vc800
+i/b00<80i/b000<000000>K<P03Vc800;@3Vc80001D0i/b000<000000>K<P03Vc800`P3Vc8000`00
+0000i/b00>K<P00]0>K<P0005@3Vc8000`000000i/b00>K<P0330>K<P0030000003Vc800i/b002`0
+i/b0000E0>K<P0800000a03Vc8000`000000i/b00>K<P00/0>K<P0005@3Vc8000`000000i/b00>K<
+P0330>K<P0030000003Vc800i/b002<0i/b00`3o00060>K<P0005@3Vc8000`000000i/b00>K<P034
+0>K<P0030000003Vc800i/b00200i/b000<0o`000>K<P03o00000P3o00060>K<P0005@3Vc8000`00
+0000i/b00>K<P0340>K<P0030000003Vc800i/b001h0i/b0103o00090>K<P0005@3Vc8000`000000
+i/b00>K<P0340>K<P0030000003Vc800i/b001d0i/b0103o000:0>K<P0005@3Vc8000`000000i/b0
+0>K<P0340>K<P0030000003Vc800i/b001/0i/b0103o000<0>K<P0005@3Vc8000`000000i/b00>K<
+P0350>K<P0030000003Vc800i/b001T0i/b0103o000=0>K<P0005@3Vc8000`000000i/b00>K<P035
+0>K<P0030000003Vc800i/b001H0i/b000D0o`000>K<P03Vc800i/b00?l0000?0>K<P0005@3Vc800
+0`000000i/b00>K<P0350>K<P0030000003Vc800i/b001<0i/b01@3o000B0>K<P0005@3Vc8000`00
+0000i/b00>K<P0350>K<P0030000003Vc800i/b00140i/b01P3o000C0>K<P0005@3Vc8000`000000
+i/b00>K<P0360>K<P0030000003Vc800i/b000l0i/b0103o000F0>K<P0005@3Vc8000`000000i/b0
+0>K<P0360>K<P0030000003Vc800i/b000`0i/b000D0o`000>K<P03Vc800i/b00?l0000H0>K<P000
+5@3Vc8000`000000i/b00>K<P0360>K<P0030000003Vc800i/b000/0i/b00`3o000K0>K<P0005@3V
+c8000`000000i/b00>K<P0240>K<P0030000003Vc800i/b001d0i/b000<000000>K<P03Vc8007`3V
+c8000`000000i/b00>K<P0090>K<P0@0o`00703Vc80001D0i/b000<000000>K<P03Vc800P`3Vc800
+0`000000i/b00>K<P00<0>K<P0030000003Vc800i/b00100i/b000<000000>K<P03Vc8007`3Vc802
+000000P0i/b0103o000M0>K<P0005@3Vc8000`000000i/b00>K<P0230>K<P0030000003Vc800i/b0
+00`0i/b00P00000A0>K<P0030000003Vc800i/b001`0i/b0200000040>K<P0<0o`007`3Vc80000X0
+i/b01P0000050>K<P0030000003Vc800i/b00880i/b000<000000>K<P03Vc8000`3Vc80300000004
+0>K<P00000000000000000@0i/b000<000000>K<P03Vc8001@3Vc805000000H0i/b000<000000>K<
+P03Vc8006P3Vc809000000030?l0003Vc800i/b00080i/b000<0o`000>K<P03Vc8007P3Vc80000X0
+i/b000<000000>K<P03Vc8000P3Vc8000`000000i/b00>K<P0030>K<P0030000003Vc800i/b00880
+i/b000<000000>K<P03Vc800103Vc8001@000000i/b00>K<P03Vc800000000D0i/b00P0000080>K<
+P0030000003Vc800i/b000H0i/b000<000000>K<P03Vc8006P3Vc807000000@0o`00903Vc80000/0
+i/b000<000000>K<P03Vc8001`3Vc8000`000000i/b00>K<P0220>K<P0030000003Vc800i/b000D0
+i/b000<000000>K<P0000000403Vc8000`000000i/b00>K<P0060>K<P0030000003Vc800i/b001X0
+i/b01@0000050?l002D0i/b0000<0>K<P0030000003Vc800i/b000H0i/b00P0000230>K<P0030000
+003Vc800i/b000H0i/b000<000000>K<P03Vc8003`3Vc8000`000000i/b00>K<P0060>K<P0030000
+003Vc800i/b001T0i/b01@0000040?l000<00000903Vc80000d0i/b000<000000>K<P03Vc8001@3V
+c8000`000000i/b00>K<P0220>K<P0030000003Vc800i/b000H0i/b000<000000>K<P03Vc8003P3V
+c8000`000000i/b0000000070>K<P0030000003Vc800i/b001T0i/b01P0000000`3o000000000000
+0003000002@0i/b0000>0>K<P0030000003Vc800i/b000@0i/b000<000000>K<P03Vc800PP3Vc800
+0`000000i/b00>K<P0050>K<P0030000003Vc800000000h0i/b000D000000>K<P03Vc800i/b00000
+00060>K<P0030000003Vc800i/b001X0i/b02P00000U0>K<P0002P3Vc8000`000000i/b00>K<P002
+0>K<P0030000003Vc800i/b000<0i/b000<000000>K<P03Vc800P`3Vc8000`000000i/b00>K<P003
+0>K<P0050000003Vc800i/b00>K<P0000000303Vc8000`000000i/b00>K<P0030>K<P0030000003V
+c800i/b00080i/b000<000000>K<P03Vc8006`3Vc80:000002D0i/b0000:0>K<P0030000003Vc800
+i/b00080i/b000<000000>K<P03Vc8000`3Vc8000`000000i/b00>K<P0230>K<P0030000003Vc800
+i/b00080i/b00`000000103Vc800000000000000000:0>K<P0<000000`3Vc803000000<0i/b000<0
+00000>K<P03Vc8006`3Vc80:000002D0i/b0000;0>K<P0@000001P3Vc8000`000000i/b00>K<P024
+0>K<P0030000003Vc800i/b001d0i/b000<000000>K<P03Vc8007@3Vc808000002H0i/b0000E0>K<
+P0030000003Vc800i/b00<L0i/b00P00000Y0>K<P0005@3Vc8000`000000i/b00>K<P03b0>K<P000
+5@3Vc8000`000000i/b00>K<P03b0>K<P0005@3Vc8000`000000i/b00>K<P03b0>K<P0005@3Vc800
+0`000000i/b00>K<P03b0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3V
+c80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3V
+c80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000o`3Vc80;0>K<P000\
+\>"],
+  ImageRangeCache->{{{0, 265.875}, {430.813, 0}} -> {-0.208273, -2.23025, \
+0.0147817, 0.0155305}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Stochastic dynamics of hinge location"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"Finally we examine the characteristics of the semimartingale  Z"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(dZ = ItoD[Z];\)\), "\n", 
+    \(0 == Together[Drift[dZ]] /. localtimes\), "\n", 
+    \(0 == Together[ItoExpand[dZ\^2]]\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(True\)], "Output"],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell[TextData["So  Z  doesn't move at all! "], "Text",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[CellGroupData[{
+
+Cell[TextData["Click here for an amusing exercise: "], "Subsubsection",
+  Evaluatable->False],
+
+Cell[TextData["Now figure out a computation-free approach. "], "Text",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[CellGroupData[{
+
+Cell[TextData["OPEN THIS CELL-GROUP FOR A HINT"], "Text",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[TextData[
+"\t... it all depends on looking at the problem from the right viewpoint, or \
+origin ..."], "Text",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}]
+}, Closed]]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[
+"Stochastic dynamics of distance between hinge and bisector"], "Section",
+  Evaluatable->False],
+
+Cell[TextData[
+"Just to finish off, we examine the distance  rho  between  {0,Z}  and the \
+perpendicular bisector point. First we obtain the expression for  rho  from \
+our previous solution of simultaneous linear equations:"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(rho = Simplify[rho /. solution]\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(\(\((A + X)\)\ \@\(\((A - X)\)\^2 + \((B - Y)\)\^2\)\)\/\(2\ \((\(-B\) \
++ Y)\)\)\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"Now we compute its stochastic differential  sd  and its drift  sd1.  It is \
+immediately clear that the drift is zero when the local time terms vanish, as \
+the coefficient of  dt  is zero: "], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(sd = ItoD[rho];\)\), "\n", 
+    \(\(sd1 = Expand[Together[Drift[sd]]];\)\), "\n", 
+    \(0 == Coefficient[sd1, dt]\)}], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"So consider the coefficient of  dL.  Here we know  A  must be zero, as we \
+interpret  dL  as the differential of the local time of  A  at zero:"], "Text",\
+
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(0 == Together[Coefficient[sd1, dL] - \(X - A\)\/\(4\ rho\)] /. 
+      A \[Rule] 0\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"Now consider the differential of  dH. Similarly, here we know  X  must be \
+zero, as we interpret  dH  as the differential of the local time of  X  at \
+zero:"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(0 == Together[Coefficient[sd1, dH] - \(A - X\)\/\(4\ rho\)] /. 
+      X \[Rule] 0\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"These last two calculations give us simpler forms for the drift of  rho  \
+when either  A  or  X  is zero. We deduce the drift of  rho  is given in \
+general by"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(driftdrho = \(\((dL - dH)\)\ \((X - A)\)\)\/\(4\ rho\)\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(\(\((\(-dH\) + dL)\)\ \((\(-A\) + X)\)\ \((\(-B\) + Y)\)\)\/\(2\ \((A + \
+X)\)\ \@\(\((A - X)\)\^2 + \((B - Y)\)\^2\)\)\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"Here is a check. We know either  dH, dL  are both zero (off the boundary!)"],
+   "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(0 == Together[sd1 - driftdrho] /. {dL \[Rule] 0, 
+        dH \[Rule] 0}\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell[TextData["or  X, dL  are both zero  (AA  is on the axis  X=0)"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(0 == Together[sd1 - driftdrho] /. {dL \[Rule] 0, 
+        X \[Rule] 0}\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell[TextData["or  dH, A  are both zero  (XX  is on the axis  X=0)"], "Text",
+  Evaluatable->False,
+  FontFamily->"Times New Roman",
+  FontSize->12,
+  FontWeight->"Plain",
+  FontSlant->"Plain",
+  FontTracking->"Plain",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1],
+  FontVariations->{"Underline"->False,
+  "Outline"->False,
+  "Shadow"->False}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(0 == Together[sd1 - driftdrho] /. {A \[Rule] 0, 
+        dH \[Rule] 0}\)], "Input",
+  PageWidth->Infinity,
+  FontFamily->"Courier New",
+  FontSize->12,
+  FontWeight->"Bold",
+  FontColor->GrayLevel[0],
+  Background->GrayLevel[1]],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Now consider the second-order aspect of  sd = ItoD[rho].  For some reason it \
+is computationally burdensome to compute  ItoExpand[sd^2]  so we ease the \
+task by noting that  dA  and  dB  generate the filtration. (Ignore the \
+spelling warning!)\
+\>", "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(sd2a = Together[ItoExpand[sd\ dA]\/dt]\), "\n", 
+    \(sd2b = Together[ItoExpand[sd\ dB]\/dt]\)}], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(\(\(-B\) + Y\)\/\@\(\((A - X)\)\^2 + \((B - Y)\)\^2\)\)], "Output"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(sd2b\\)\\\" is similar to existing symbol \\\
+\"\\!\\(sd2a\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    \(\(A - X\)\/\@\(\((A - X)\)\^2 + \((B - Y)\)\^2\)\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"We deduce that  rho  behaves as a Brownian motion when  XX  and  AA  are \
+away from the boundary: we have already computed the behaviour on the \
+boundary!"], "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(1 == Together[sd2a\^2 + sd2b\^2]\)], "Input",
+  PageWidth->Infinity],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Open  ]],
+
+Cell[TextData[
+"So  rho  behaves as a standard Brownian motion with a singular drift imposed \
+whenever one of the coupled Brownian motions hits the boundary.\n\nAs a \
+further exercise, use Itovsn3 to compute the characteristics of the \
+semimartingale given by the angle made by the bisector with the boundary."], 
+  "Text",
+  Evaluatable->False]
+}, Open  ]]
+},
+FrontEndVersion->"5.1 for Microsoft Windows",
+ScreenRectangle->{{0, 1024}, {0, 685}},
+WindowToolbars->{},
+CellGrouping->Manual,
+WindowSize->{1016, 651},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+PrivateNotebookOptions->{"ColorPalette"->{RGBColor, -1}},
+ShowCellLabel->True,
+ShowCellTags->False,
+RenderingOptions->{"ObjectDithering"->True,
+"RasterDithering"->False},
+StyleDefinitions -> "PastelColor.nb"
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 118, 3, 147, "Title",
+  Evaluatable->False],
+Cell[1875, 56, 129, 3, 62, "Subtitle",
+  Evaluatable->False],
+Cell[2007, 61, 173, 4, 58, "Subsubtitle",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[2205, 69, 357, 12, 35, "SmallText",
+  Evaluatable->False],
+Cell[2565, 83, 265, 8, 31, "Name",
+  Evaluatable->False],
+Cell[2833, 93, 259, 8, 31, "Name",
+  Evaluatable->False]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3129, 106, 354, 12, 35, "SmallText",
+  Evaluatable->False],
+Cell[3486, 120, 955, 21, 88, "SmallText",
+  Evaluatable->False]
+}, Closed]],
+Cell[4456, 144, 543, 12, 102, "SmallText",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[5024, 160, 317, 11, 35, "SmallText",
+  Evaluatable->False],
+Cell[5344, 173, 392, 14, 40, "SmallText",
+  Evaluatable->False],
+Cell[5739, 189, 307, 9, 40, "SmallText",
+  Evaluatable->False],
+Cell[6049, 200, 103, 2, 24, "SmallText",
+  Evaluatable->False],
+Cell[6155, 204, 502, 12, 56, "SmallText",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[6694, 221, 218, 4, 130, "Text",
+  Evaluatable->False],
+Cell[6915, 227, 77, 2, 73, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[7029, 234, 101, 1, 74, "Section",
+  Evaluatable->False],
+Cell[7133, 237, 155, 3, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[7313, 244, 118, 3, 99, "Input"],
+Cell[7434, 249, 871, 23, 137, "Output"]
+}, Open  ]],
+Cell[8320, 275, 174, 3, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[8519, 282, 684, 19, 361, "Input"],
+Cell[9206, 303, 50, 1, 72, "Output"],
+Cell[9259, 306, 54, 1, 72, "Output"]
+}, Open  ]],
+Cell[9328, 310, 251, 4, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[9604, 318, 194, 7, 49, "Input"],
+Cell[9801, 327, 40, 1, 88, "Output"]
+}, Open  ]],
+Cell[9856, 331, 485, 14, 72, "Text",
+  Evaluatable->False],
+Cell[10344, 347, 136, 3, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[10505, 354, 189, 7, 49, "Input"],
+Cell[10697, 363, 3179, 72, 486, "Print"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[13925, 441, 104, 2, 74, "Section",
+  Evaluatable->False],
+Cell[14032, 445, 201, 4, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[14258, 453, 233, 6, 216, "Input"],
+Cell[14494, 461, 166, 2, 96, "Output"],
+Cell[14663, 465, 190, 3, 96, "Output"],
+Cell[14856, 470, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[14909, 474, 298, 5, 102, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[15232, 483, 166, 4, 99, "Input"],
+Cell[15401, 489, 47, 1, 72, "Output"],
+Cell[15451, 492, 528, 9, 150, "Output"]
+}, Open  ]],
+Cell[15994, 504, 206, 4, 72, "Text",
+  Evaluatable->False],
+Cell[16203, 510, 146, 3, 99, "Input"],
+Cell[16352, 515, 154, 3, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[16531, 522, 103, 2, 73, "Input"],
+Cell[16637, 526, 68, 1, 72, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[16754, 533, 80, 1, 74, "Section",
+  Evaluatable->False],
+Cell[16837, 536, 563, 15, 102, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[17425, 555, 377, 11, 152, "Input"],
+Cell[17805, 568, 80, 1, 94, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[17922, 574, 83, 1, 55, "Subsection",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[18030, 579, 968, 17, 50, "Input"],
+Cell[19001, 598, 130, 3, 70, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[19180, 607, 74, 2, 71, "Input"],
+Cell[19257, 611, 43778, 879, 456, 10986, 470, "GraphicsData", "PostScript", \
+"Graphics"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[63084, 1496, 88, 1, 74, "Section",
+  Evaluatable->False],
+Cell[63175, 1499, 112, 2, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[63312, 1505, 178, 4, 125, "Input"],
+Cell[63493, 1511, 38, 1, 72, "Output"],
+Cell[63534, 1514, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[63587, 1518, 329, 11, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[63941, 1533, 93, 1, 43, "Subsubsection",
+  Evaluatable->False],
+Cell[64037, 1536, 345, 11, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[64407, 1551, 332, 11, 42, "Text",
+  Evaluatable->False],
+Cell[64742, 1564, 390, 13, 42, "Text",
+  Evaluatable->False]
+}, Closed]]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[65193, 1584, 110, 2, 74, "Section",
+  Evaluatable->False],
+Cell[65306, 1588, 258, 4, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[65589, 1596, 209, 7, 49, "Input"],
+Cell[65801, 1605, 115, 2, 99, "Output"]
+}, Open  ]],
+Cell[65931, 1610, 239, 4, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[66195, 1618, 296, 9, 101, "Input"],
+Cell[66494, 1629, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[66547, 1633, 195, 4, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[66767, 1641, 259, 8, 72, "Input"],
+Cell[67029, 1651, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[67082, 1655, 207, 4, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[67314, 1663, 259, 8, 72, "Input"],
+Cell[67576, 1673, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[67629, 1677, 209, 4, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[67863, 1685, 110, 2, 96, "Input"],
+Cell[67976, 1689, 153, 2, 97, "Output"]
+}, Open  ]],
+Cell[68144, 1694, 126, 3, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[68295, 1701, 127, 3, 73, "Input"],
+Cell[68425, 1706, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[68478, 1710, 99, 1, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[68602, 1715, 248, 8, 49, "Input"],
+Cell[68853, 1725, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[68906, 1729, 352, 11, 42, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[69283, 1744, 248, 8, 49, "Input"],
+Cell[69534, 1754, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[69587, 1758, 292, 6, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[69904, 1768, 151, 3, 148, "Input"],
+Cell[70058, 1773, 87, 1, 96, "Output"],
+Cell[70148, 1776, 356, 5, 56, "Message"],
+Cell[70507, 1783, 82, 1, 96, "Output"]
+}, Open  ]],
+Cell[70604, 1787, 205, 4, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[70834, 1795, 88, 2, 74, "Input"],
+Cell[70925, 1799, 38, 1, 72, "Output"]
+}, Open  ]],
+Cell[70978, 1803, 348, 6, 162, "Text",
+  Evaluatable->False]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+
