@@ -1,15 +1,18 @@
 # Itovsn3: A Mathematica package for Symbolic Ito calculus
 
 This repository contains the source code for the
-[`FernandoDuarte/Itovsn3`](https://www.wolframcloud.com/obj/fernandoduarte/DeployedResources/Paclet/FernandoDuarte/Itovsn3/)
+[`FernandoDuarte/Itovsn3`](https://resources.wolframcloud.com/PacletRepository/resources/FernandoDuarte/Itovsn3/)
 paclet.
 
 ## Installation
 
-`FernandoDuarte/Itovsn3` is available for installation as a [ResourceObject](https://reference.wolfram.com/language/ref/ResourceObject.html) from the [Wolfram Resource System](https://resources.wolframcloud.com). To install this paclet in your Wolfram Language environment, evaluate this code:
+`FernandoDuarte/Itovsn3` is available for installation from the [Wolfram Paclet Repository][https://resources.wolframcloud.com/PacletRepository/]:
+
+
+To install this paclet in your Wolfram Language environment, evaluate this code:
 
 ```wolfram
-PacletInstall[ResourceObject["https://wolfr.am/1m37usp8B"]]
+PacletInstall[ResourceObject["FernandoDuarte/Itovsn3"]]
 ```
 
 To load the code after installation, evaluate this code:
@@ -20,14 +23,14 @@ Needs["FernandoDuarte`Itovsn3`"]
 
 ## Documentation
 
-* [Main guide](https://www.wolframcloud.com/obj/fernandoduarte/DeployedResources/Paclet/FernandoDuarte/Itovsn3/Documentation/guide/Main.html)
+* [Main guide](https://resources.wolframcloud.com/PacletRepository/resources/FernandoDuarte/Itovsn3/guide/Main.html)
 * Tech notes
-  - [Stochastic Integration](https://www.wolframcloud.com/obj/fernandoduarte/DeployedResources/Paclet/FernandoDuarte/Itovsn3/Documentation/tutorial/StochasticIntegration.html)
-  - [Bessel processes](https://www.wolframcloud.com/obj/fernandoduarte/DeployedResources/Paclet/FernandoDuarte/Itovsn3/Documentation/tutorial/Bessel.html)
-  - [Derivation of the Black-Scholes formula](https://www.wolframcloud.com/obj/fernandoduarte/DeployedResources/Paclet/FernandoDuarte/Itovsn3/Documentation/tutorial/BlackScholes.html)
-  - [Distribution of the Levy stochastic area](https://www.wolframcloud.com/obj/fernandoduarte/DeployedResources/Paclet/FernandoDuarte/Itovsn3/Documentation/tutorial/ItoArea.html)
-  - [Mardia-Dryden distribution](https://www.wolframcloud.com/obj/fernandoduarte/DeployedResources/Paclet/FernandoDuarte/Itovsn3/Documentation/tutorial/MardiaDryden.html)
-  - [Coupled pairs of Brownian motions reflecting off a half-plane](https://www.wolframcloud.com/obj/fernandoduarte/DeployedResources/Paclet/FernandoDuarte/Itovsn3/Documentation/tutorial/Reflect.html)
+  - [Stochastic Integration](https://resources.wolframcloud.com/PacletRepository/resources/FernandoDuarte/Itovsn3/tutorial/StochasticIntegration.html)
+  - [Bessel processes](https://resources.wolframcloud.com/PacletRepository/resources/FernandoDuarte/Itovsn3/tutorial/Bessel.html)
+  - [Derivation of the Black-Scholes formula](https://resources.wolframcloud.com/PacletRepository/resources/FernandoDuarte/Itovsn3/tutorial/BlackScholes.html)
+  - [Distribution of the Levy stochastic area](https://resources.wolframcloud.com/PacletRepository/resources/FernandoDuarte/Itovsn3/tutorial/ItoArea.html)
+  - [Mardia-Dryden distribution](https://resources.wolframcloud.com/PacletRepository/resources/FernandoDuarte/Itovsn3/tutorial/MardiaDryden.html)
+  - [Coupled pairs of Brownian motions reflecting off a half-plane](https://resources.wolframcloud.com/PacletRepository/resources/FernandoDuarte/Itovsn3/tutorial/Reflect.html)
 
 # Original Source and Attributions
 `Itovsn3` is a package created by [Wilfrid S. Kendall](http://www.warwick.ac.uk/go/WSK), emeritus professor in the

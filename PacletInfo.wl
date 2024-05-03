@@ -5,13 +5,13 @@ PacletObject[
     "Name" -> "FernandoDuarte/Itovsn3",
     "Description" -> "A Mathematica package for Symbolic Ito calculus",
     "Creator" -> "Wilfrid S. Kendall",
-    "URL" -> "https://www.wolframcloud.com/obj/fernandoduarte/DeployedResources/Paclet/FernandoDuarte/Itovsn3/",
+    "URL" -> "https://resources.wolframcloud.com/PacletRepository/resources/FernandoDuarte/Itovsn3/",
     "License" -> "MIT",
     "PublisherID" -> "FernandoDuarte",
-    "Version" -> "1.0.0",
+    "Version" -> "1.0.1",
     "WolframVersion" -> "13+",
     "PrimaryContext" -> "FernandoDuarte`Itovsn3`",
-    "DocumentationURL" -> "https://www.wolframcloud.com/obj/fernandoduarte/DeployedResources/Paclet/FernandoDuarte/Itovsn3/Documentation/guide/Main.html",
+    "DocumentationURL" -> "https://resources.wolframcloud.com/PacletRepository/resources/FernandoDuarte/Itovsn3/",
     "Extensions" -> {
       {
         "Kernel",
